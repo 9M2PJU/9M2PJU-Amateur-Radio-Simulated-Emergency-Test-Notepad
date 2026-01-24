@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-tactical-bg text-gray-100;
+  }
+}
+
+@layer components {
+  .btn-tactical {
+    @apply bg-tactical-surface hover:bg-tactical-highlight text-white font-bold py-2 px-4 rounded border border-tactical-highlight transition-colors;
+  }
+
+  .input-tactical {
+    @apply bg-tactical-bg border border-tactical-highlight text-white p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-radio-green;
+  }
+
+  .panel-tactical {
+    @apply bg-tactical-surface border border-tactical-highlight rounded-lg p-4 shadow-lg backdrop-blur-sm bg-opacity-90;
+  }
+}
