@@ -3,7 +3,7 @@
 # 📡 MySET Digital Notepad
 ### DIGITAL AMATEUR RADIO EMERGENCY SUITE
 
-[![Web App](https://img.shields.io/badge/Status-Online-green)](https://9M2PJU.github.io/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/)
+[![Web App](https://img.shields.io/badge/Status-Online-green)](https://setpad.hamradio.my)
 [![Version](https://img.shields.io/badge/version-1.2.0-blue)](https://github.com/9M2PJU/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/releases)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
@@ -13,7 +13,7 @@
 
 *A lightweight, offline-capable digital logging assistant for Malaysian Amateur Radio operators during emergency communication exercises.*
 
-[**🚀 Launch App**](https://9M2PJU.github.io/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/) · [Report Bug](https://github.com/9M2PJU/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/issues) · [Request Feature](https://github.com/9M2PJU/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/issues)
+[**🚀 Launch App**](https://setpad.hamradio.my) · [Report Bug](https://github.com/9M2PJU/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/issues) · [Request Feature](https://github.com/9M2PJU/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/issues)
 
 </div>
 
