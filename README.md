@@ -3,7 +3,7 @@
 # 📡 MySET Digital Notepad
 ### Malaysian Amateur Radio Simulated Emergency Test Tool
 
-[![Deploy to GitHub Pages](https://github.com/9M2PJU/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/actions/workflows/deploy.yml/badge.svg)](https://github.com/9M2PJU/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/actions/workflows/deploy.yml)
+[![Web App](https://img.shields.io/badge/Status-Online-green)](https://9M2PJU.github.io/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=flat&logo=react&logoColor=%2361DAFB)
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=flat&logo=tailwind-css&logoColor=white)
