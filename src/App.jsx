@@ -38,8 +38,8 @@ function App() {
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={`px-4 py-2 text-sm font-bold uppercase rounded transition-all ${activeTab === tab
-                    ? 'bg-radio-green text-black shadow-sm'
-                    : 'text-gray-400 hover:text-white hover:bg-white/5'
+                  ? 'bg-radio-green text-black shadow-sm'
+                  : 'text-gray-400 hover:text-white hover:bg-white/5'
                   }`}
               >
                 {tab === 'logger' && 'Logger'}
@@ -71,6 +71,10 @@ function App() {
             <ICS213Form stationSettings={stationSettings} />
           )}
         </div>
+
+        <footer className="py-8 text-center text-[10px] uppercase tracking-widest text-gray-600">
+          <p>Made for 🇲🇾 by <a href="https://hamradio.my" target="_blank" rel="noopener noreferrer" className="font-bold text-radio-amber hover:text-white transition-colors">9M2PJU</a></p>
+        </footer>
       </main>
 
       {/* Mobile Bottom Navigation - Hidden on Desktop */}
