@@ -3,6 +3,7 @@ import { Send, Clock, Radio, Hash, MessageSquare, Trash2, Download } from 'lucid
 
 export default function TacticalLogger({ logs, setLogs, stationSettings }) {
     const [entry, setEntry] = useState({
+        date: new Date().toISOString().split('T')[0],
         time: '',
         callsign: '',
         freq: '145.500',
@@ -43,15 +44,11 @@ export default function TacticalLogger({ logs, setLogs, stationSettings }) {
         const timer = setInterval(() => {
             const now = new Date();
             setEntry(prev => {
-                // Only update if callsign hasn't been started, or keep time current? 
-                // Standard: Current time until Log button pressed? 
-                // Better: Default to current time, but let user override.
-                // Actually for a "Hot" logger, you want the time you click "Log" usually, 
-                // OR the time you start typing? 
-                // Let's just set default time on mount and update every minute if field is empty?
-                // Simplest: Button "Now" next to time. 
-                // For now, let's pre-fill with current time formatted HH:MM
-                return prev.time ? prev : { ...prev, time: formatTime(now) };
+                return {
+                    ...prev,
+                    time: prev.time || formatTime(now),
+                    date: prev.date || now.toISOString().split('T')[0]
+                };
             });
         }, 1000);
         return () => clearInterval(timer);
@@ -76,10 +73,10 @@ export default function TacticalLogger({ logs, setLogs, stationSettings }) {
 
         const newLog = {
             id: Date.now(),
-            date: new Date().toISOString().split('T')[0],
             operator: stationSettings.callsign || 'MYSTATION',
             ...entry,
             remarks: finalRemarks,
+            date: entry.date || new Date().toISOString().split('T')[0],
             time: entry.time || formatTime(new Date()) // Ensure time is set
         };
 
@@ -114,6 +111,17 @@ export default function TacticalLogger({ logs, setLogs, stationSettings }) {
                 <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
 
                     <div className="md:col-span-2">
+                        <label className="text-xs uppercase text-gray-400 font-bold block mb-1 font-orbitron tracking-wider">Date</label>
+                        <input
+                            type="date"
+                            name="date"
+                            value={entry.date}
+                            onChange={handleChange}
+                            className="input-tactical"
+                        />
+                    </div>
+
+                    <div className="md:col-span-1">
                         <label className="text-xs uppercase text-gray-400 font-bold block mb-1 font-orbitron tracking-wider">Time</label>
                         <div className="relative">
                             <Clock className="w-4 h-4 absolute left-2 top-3 text-gray-500" />
@@ -245,7 +253,7 @@ export default function TacticalLogger({ logs, setLogs, stationSettings }) {
                         ) : (
                             logs.map(log => (
                                 <tr key={log.id} className="hover:bg-white/5 transition-colors group">
-                                    <td className="p-3 font-mono text-gray-500 text-xs">{log.date}</td>
+                                    <td className="p-3 font-mono text-gray-500 text-xs">{log.date || '---'}</td>
                                     <td className="p-3 font-mono text-radio-amber">{log.time}</td>
                                     <td className="p-3 font-bold text-white tracking-wide font-mono group-hover:text-radio-cyan transition-colors">{log.callsign}</td>
                                     <td className="p-3 text-gray-400 font-mono">{log.freq}</td>
