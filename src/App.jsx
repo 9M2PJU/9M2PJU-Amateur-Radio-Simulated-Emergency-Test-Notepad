@@ -68,7 +68,10 @@ function App() {
           )}
 
           {activeTab === 'ics213' && (
-            <ICS213Form stationSettings={stationSettings} />
+            <ICS213Form
+              stationSettings={stationSettings}
+              onAddToLog={(logEntry) => setLogs(prev => [logEntry, ...prev])}
+            />
           )}
         </div>
 

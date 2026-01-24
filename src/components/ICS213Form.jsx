@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useLocalStorage } from '../utils/useLocalStorage';
 import { FileText, Copy, Download, Trash } from 'lucide-react';
 
-export default function ICS213Form({ stationSettings }) {
+export default function ICS213Form({ stationSettings, onAddToLog }) {
     const [form, setForm] = useState({
         incident: 'SET-2026',
         toName: '',
@@ -49,8 +49,24 @@ Approved By: ${form.approvedName} (${form.approvedPos})
     const saveMessage = () => {
         const msg = { ...form, id: Date.now() };
         setSavedMessages([msg, ...savedMessages]);
-        // Optional: Clear form or keep for next?
-        alert('Message saved to local Outbox.');
+
+        // Auto-add to Tactical Logger
+        if (onAddToLog) {
+            onAddToLog({
+                id: Date.now(),
+                date: form.date,
+                time: form.time,
+                callsign: form.toName || 'STATION', // Use To Name as callsign if available
+                freq: 'MSG', // Indicate it's a message
+                mode: 'ICS213',
+                rstSent: '59',
+                rstRcvd: '59',
+                remarks: `MSG: ${form.subject}`,
+                operator: stationSettings.callsign || 'OP'
+            });
+        }
+
+        alert('Message saved to Outbox and added to Tactical Logger.');
     };
 
     return (
