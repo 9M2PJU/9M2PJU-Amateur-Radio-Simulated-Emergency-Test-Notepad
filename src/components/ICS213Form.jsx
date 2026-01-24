@@ -109,9 +109,16 @@ Approved By: ${ form.approvedName } (${ form.approvedPos })
                     </div>
 
                     <div>
-                        <label className="text-xs uppercase text-gray-400 font-bold block mb-1">6. Message</label>
-                        <textarea rows="6" name="message" value={form.message} onChange={handleChange} className="input-tactical font-mono text-sm"></textarea>
-                    </div>
+                <label className="text-xs uppercase text-gray-400 font-bold block mb-1">6. Message</label>
+                <textarea 
+                    rows="6" 
+                    name="message" 
+                    value={form.message} 
+                    onChange={handleChange} 
+                    placeholder="E.g.: UPDATE ON FLOOD STATUS. WATER LEVEL RISING AT SUNGAI BATU. REQUESTING LOGISTICS SUPPORT AT EVACUATION CENTER A."
+                    className="input-tactical font-mono text-sm placeholder:text-gray-600 uppercase"
+                ></textarea>
+            </div>
 
                     <div className="grid grid-cols-2 gap-4">
                         <div>
