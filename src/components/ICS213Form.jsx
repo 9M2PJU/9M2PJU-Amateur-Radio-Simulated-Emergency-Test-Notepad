@@ -5,6 +5,7 @@ import { FileText, Copy, Download, Trash } from 'lucide-react';
 export default function ICS213Form({ stationSettings, onAddToLog }) {
     const [form, setForm] = useState({
         incident: 'SET-2026',
+        priority: 'ROUTINE', // EMERGENCY, PRIORITY, ROUTINE, WELFARE
         toName: '',
         toPos: '',
         fromName: stationSettings.callsign || '',
@@ -29,6 +30,7 @@ export default function ICS213Form({ stationSettings, onAddToLog }) {
 ICS - 213 MESSAGE
 ---------------
     Incident: ${form.incident}
+    Priority: ${form.priority}
 To: ${form.toName} (${form.toPos})
 From: ${form.fromName} (${form.fromPos})
 Subject: ${form.subject}
@@ -61,7 +63,7 @@ Approved By: ${form.approvedName} (${form.approvedPos})
                 mode: 'ICS213',
                 rstSent: '59',
                 rstRcvd: '59',
-                remarks: `MSG: ${form.subject}`,
+                remarks: `[${form.priority}] ${form.subject}`,
                 operator: stationSettings.callsign || 'OP'
             });
         }
@@ -80,9 +82,27 @@ Approved By: ${form.approvedName} (${form.approvedPos})
                 </div>
 
                 <div className="space-y-4">
-                    <div>
-                        <label className="text-xs uppercase text-gray-400 font-bold block mb-1">1. Incident Name</label>
-                        <input name="incident" value={form.incident} onChange={handleChange} className="input-tactical" />
+                    <div className="grid grid-cols-3 gap-4">
+                        <div className="col-span-2">
+                            <label className="text-xs uppercase text-gray-400 font-bold block mb-1">1. Incident Name</label>
+                            <input name="incident" value={form.incident} onChange={handleChange} className="input-tactical" />
+                        </div>
+                        <div>
+                            <label className="text-xs uppercase text-gray-400 font-bold block mb-1">Priority</label>
+                            <select
+                                name="priority"
+                                value={form.priority}
+                                onChange={handleChange}
+                                className={`input-tactical font-bold ${form.priority === 'EMERGENCY' ? 'text-red-500 border-red-500' :
+                                        form.priority === 'PRIORITY' ? 'text-amber-500 border-amber-500' :
+                                            'text-white'
+                                    }`}
+                            >
+                                <option value="ROUTINE">ROUTINE</option>
+                                <option value="PRIORITY">PRIORITY</option>
+                                <option value="EMERGENCY">EMERGENCY</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
