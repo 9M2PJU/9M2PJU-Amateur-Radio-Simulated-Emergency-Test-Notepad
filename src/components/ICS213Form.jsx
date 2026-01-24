@@ -22,7 +22,7 @@ export default function ICS213Form({ stationSettings, onAddToLog }) {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setForm(prev => ({ ...prev, [name]: value }));
+        setForm(prev => ({ ...prev, [name]: value.toUpperCase() }));
     };
 
     const generateText = () => {
@@ -94,8 +94,8 @@ Approved By: ${form.approvedName} (${form.approvedPos})
                                 value={form.priority}
                                 onChange={handleChange}
                                 className={`input-tactical font-bold ${form.priority === 'EMERGENCY' ? 'text-red-500 border-red-500' :
-                                        form.priority === 'PRIORITY' ? 'text-amber-500 border-amber-500' :
-                                            'text-white'
+                                    form.priority === 'PRIORITY' ? 'text-amber-500 border-amber-500' :
+                                        'text-white'
                                     }`}
                             >
                                 <option value="ROUTINE">ROUTINE</option>

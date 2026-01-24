@@ -4,7 +4,7 @@ import { Settings, Battery, Zap, MapPin } from 'lucide-react';
 export default function StationSettings({ settings, updateSettings }) {
     const handleChange = (e) => {
         const { name, value } = e.target;
-        updateSettings({ ...settings, [name]: value });
+        updateSettings({ ...settings, [name]: value.toUpperCase() });
     };
 
     return (

@@ -63,7 +63,7 @@ export default function TacticalLogger({ logs, setLogs, stationSettings }) {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setEntry(prev => ({ ...prev, [name]: value }));
+        setEntry(prev => ({ ...prev, [name]: value.toUpperCase() }));
     };
 
     const handleSubmit = (e) => {
