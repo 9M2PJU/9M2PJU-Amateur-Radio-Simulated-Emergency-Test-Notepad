@@ -1,12 +1,11 @@
 <div align="center">
 
 # 📡 MySET Digital Notepad
-### Malaysian Amateur Radio Simulated Emergency Test Tool
+### DIGITAL AMATEUR RADIO EMERGENCY SUITE
 
 [![Web App](https://img.shields.io/badge/Status-Online-green)](https://9M2PJU.github.io/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/)
+[![Version](https://img.shields.io/badge/version-1.2.0-blue)](https://github.com/9M2PJU/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/releases)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=flat&logo=react&logoColor=%2361DAFB)
-![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=flat&logo=tailwind-css&logoColor=white)
 
 <p align="center">
   <img src="https://images.unsplash.com/photo-1626266061368-46a8383a8080?q=80&w=2670&auto=format&fit=crop" width="600" alt="Tactical Radio Setup">
@@ -22,12 +21,13 @@
 
 ## ⚡ Key Features
 
-- **📝 Tactical Logger**: Rapidly log contacts (Callsign, Freq, RST, Remarks) with one hand.
-- **📄 ICS-213 Generator**: Create standard emergency messages compatible with MARTS/IARU protocols.
-- **💾 Auto-Save**: All data is stored locally in your browser—no internet required.
-- **📊 CSV Export**: Download your logs instantly for easy report submission.
-- **🌙 Tactical Theme**: High-contrast dark mode designed for low-light field operations.
-- **🔋 Privacy Focused**: No cloud tracking. Your data stays on your device.
+- **📝 Tactical Logger**: Rapidly log contacts (Callsign, Freq, RST, Mode, Remarks).
+- **🕒 MYT Enforcement**: All timestamps legally bound to **Malaysia Standard Time**.
+- **🔋 Power Status**: Auto-logs `[MAINS]` or `[BATT]` status for simple compliance reporting.
+- **📄 ICS-213 Generator**: Create, **Print**, and Copy standard emergency messages.
+- **💾 Auto-Save**: Session data persists via LocalStorage (privacy-first, no cloud).
+- **📊 CSV Export**: One-click export for post-event submission.
+- **🌙 Orbitron Theme**: Futuristic, high-contrast neon aesthetics for night operations.
 
 ## 🛠️ Usage
 
@@ -81,5 +81,5 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ---
 
 <div align="center">
-  <small>Built with ❤️ for the Malaysian Amateur Radio Community by 9M2PJU</small>
+   <small>MADE FOR 🇲🇾 BY <a href="https://hamradio.my">9M2PJU</a></small>
 </div>

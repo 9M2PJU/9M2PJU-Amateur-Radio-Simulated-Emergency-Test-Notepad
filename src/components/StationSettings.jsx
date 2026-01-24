@@ -8,29 +8,29 @@ export default function StationSettings({ settings, updateSettings }) {
     };
 
     return (
-        <div className="panel-tactical mb-6">
+        <div className="panel-tactical mb-6 border-l-4 border-l-radio-amber">
             <div className="flex items-center gap-2 mb-4 text-radio-amber">
-                <Settings className="w-6 h-6" />
-                <h2 className="text-xl font-bold uppercase tracking-wider">Station Configuration</h2>
+                <Settings className="w-6 h-6 animate-spin-slow" />
+                <h2 className="text-xl font-bold uppercase tracking-wider font-orbitron text-glow-amber">Station Configuration</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {/* Operator Callsign */}
                 <div>
-                    <label className="block text-gray-400 text-xs uppercase font-semibold mb-1">Operator Callsign</label>
+                    <label className="block text-gray-400 text-xs uppercase font-semibold mb-1 font-orbitron tracking-wider">Operator Callsign</label>
                     <input
                         type="text"
                         name="callsign"
                         value={settings.callsign || ''}
                         onChange={handleChange}
                         placeholder="YOUR CALLSIGN"
-                        className="input-tactical font-mono text-lg uppercase"
+                        className="input-tactical font-mono text-lg uppercase border-radio-amber/50 focus:border-radio-amber focus:ring-radio-amber text-radio-amber bg-radio-amber/5 placeholder:text-gray-600"
                     />
                 </div>
 
                 {/* Grid Square */}
                 <div>
-                    <label className="block text-gray-400 text-xs uppercase font-semibold mb-1 flex items-center gap-1">
+                    <label className="block text-gray-400 text-xs uppercase font-semibold mb-1 flex items-center gap-1 font-orbitron tracking-wider">
                         <MapPin className="w-3 h-3" /> Grid Square
                     </label>
                     <input
@@ -39,24 +39,24 @@ export default function StationSettings({ settings, updateSettings }) {
                         value={settings.grid || ''}
                         onChange={handleChange}
                         placeholder="OJ03"
-                        className="input-tactical font-mono text-lg uppercase"
+                        className="input-tactical font-mono text-lg uppercase border-radio-amber/50 focus:border-radio-amber focus:ring-radio-amber text-radio-amber bg-radio-amber/5 placeholder:text-gray-600"
                     />
                 </div>
 
                 {/* Power Source */}
                 <div>
-                    <label className="block text-gray-400 text-xs uppercase font-semibold mb-1">Power Source</label>
+                    <label className="block text-gray-400 text-xs uppercase font-semibold mb-1 font-orbitron tracking-wider">Power Source</label>
                     <div className="flex gap-2">
                         <button
                             onClick={() => updateSettings({ ...settings, power: 'MAINS' })}
-                            className={`flex-1 py-2 rounded border border-tactical-highlight flex items-center justify-center gap-2 transition-colors ${settings.power === 'MAINS' ? 'bg-radio-red text-white' : 'bg-transparent text-gray-500 hover:text-white'
+                            className={`flex-1 py-2 rounded border flex items-center justify-center gap-2 transition-all font-orbitron tracking-wider text-sm font-bold ${settings.power === 'MAINS' ? 'bg-radio-red text-white border-radio-red shadow-[0_0_10px_rgba(239,68,68,0.4)]' : 'bg-transparent text-gray-500 border-gray-700 hover:text-white hover:border-gray-500'
                                 }`}
                         >
                             <Zap className="w-4 h-4" /> Mains
                         </button>
                         <button
                             onClick={() => updateSettings({ ...settings, power: 'BATTERY' })}
-                            className={`flex-1 py-2 rounded border border-tactical-highlight flex items-center justify-center gap-2 transition-colors ${settings.power === 'BATTERY' ? 'bg-radio-green text-black' : 'bg-transparent text-gray-500 hover:text-white'
+                            className={`flex-1 py-2 rounded border flex items-center justify-center gap-2 transition-all font-orbitron tracking-wider text-sm font-bold ${settings.power === 'BATTERY' ? 'bg-radio-green text-black border-radio-green shadow-[0_0_10px_rgba(34,197,94,0.4)]' : 'bg-transparent text-gray-500 border-gray-700 hover:text-white hover:border-gray-500'
                                 }`}
                         >
                             <Battery className="w-4 h-4" /> Batt
@@ -64,13 +64,13 @@ export default function StationSettings({ settings, updateSettings }) {
                     </div>
                 </div>
             </div>
-            <div className="flex justify-between items-center mt-6 pt-4 border-t border-tactical-highlight">
+            <div className="flex justify-between items-center mt-6 pt-4 border-t border-white/10">
                 <p className="text-[10px] text-gray-600 uppercase font-mono tracking-widest">
-                    Build: {new Date().toISOString().split('T')[0]} (v1.1)
+                    Build: {new Date().toLocaleDateString('en-GB', { timeZone: 'Asia/Kuala_Lumpur' })}
                 </p>
                 <button
                     onClick={() => window.location.reload()}
-                    className="text-[10px] text-radio-amber hover:text-white uppercase font-bold tracking-wider"
+                    className="text-[10px] text-radio-amber hover:text-white uppercase font-bold tracking-wider font-orbitron border border-radio-amber/30 px-2 py-1 rounded hover:bg-radio-amber/10 transition-colors"
                 >
                     Check for Updates
                 </button>

@@ -58,7 +58,7 @@ export default function TacticalLogger({ logs, setLogs, stationSettings }) {
     }, []);
 
     const formatTime = (date) => {
-        return date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
+        return date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Kuala_Lumpur' });
     };
 
     const handleChange = (e) => {
@@ -70,11 +70,16 @@ export default function TacticalLogger({ logs, setLogs, stationSettings }) {
         e.preventDefault();
         if (!entry.callsign) return;
 
+        // Auto-append power status
+        const powerTag = stationSettings.power === 'BATTERY' ? '[BATT]' : '[MAINS]';
+        const finalRemarks = entry.remarks ? `${entry.remarks} ${powerTag}` : powerTag;
+
         const newLog = {
             id: Date.now(),
             date: new Date().toISOString().split('T')[0],
             operator: stationSettings.callsign || 'MYSTATION',
             ...entry,
+            remarks: finalRemarks,
             time: entry.time || formatTime(new Date()) // Ensure time is set
         };
 
@@ -109,7 +114,7 @@ export default function TacticalLogger({ logs, setLogs, stationSettings }) {
                 <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
 
                     <div className="md:col-span-2">
-                        <label className="text-xs uppercase text-gray-400 font-bold block mb-1">Time</label>
+                        <label className="text-xs uppercase text-gray-400 font-bold block mb-1 font-orbitron tracking-wider">Time</label>
                         <div className="relative">
                             <Clock className="w-4 h-4 absolute left-2 top-3 text-gray-500" />
                             <input
@@ -123,7 +128,7 @@ export default function TacticalLogger({ logs, setLogs, stationSettings }) {
                     </div>
 
                     <div className="md:col-span-3">
-                        <label className="text-xs uppercase text-radio-green font-bold block mb-1">Callsign</label>
+                        <label className="text-xs uppercase text-radio-green font-bold block mb-1 font-orbitron tracking-wider text-glow">Callsign</label>
                         <input
                             ref={callsignInputRef}
                             type="text"
@@ -131,13 +136,13 @@ export default function TacticalLogger({ logs, setLogs, stationSettings }) {
                             value={entry.callsign}
                             onChange={handleChange}
                             placeholder="Target Call"
-                            className="input-tactical text-xl font-bold uppercase tracking-wider bg-slate-800 border-radio-green focus:ring-radio-green"
+                            className="input-tactical text-xl font-bold uppercase tracking-wider border-radio-green/50 focus:ring-radio-green focus:border-radio-green bg-radio-green/10 text-white placeholder:text-gray-500"
                             autoComplete="off"
                         />
                     </div>
 
                     <div className="md:col-span-2">
-                        <label className="text-xs uppercase text-gray-400 font-bold block mb-1">Freq (MHz)</label>
+                        <label className="text-xs uppercase text-gray-400 font-bold block mb-1 font-orbitron tracking-wider">Freq (MHz)</label>
                         <input
                             type="text"
                             name="freq"
@@ -154,7 +159,24 @@ export default function TacticalLogger({ logs, setLogs, stationSettings }) {
                     </div>
 
                     <div className="md:col-span-1">
-                        <label className="text-xs uppercase text-gray-400 font-bold block mb-1">RST S</label>
+                        <label className="text-xs uppercase text-gray-400 font-bold block mb-1 font-orbitron tracking-wider">Mode</label>
+                        <select
+                            name="mode"
+                            value={entry.mode}
+                            onChange={handleChange}
+                            className="input-tactical"
+                        >
+                            <option value="FM">FM</option>
+                            <option value="AM">AM</option>
+                            <option value="USB">USB</option>
+                            <option value="LSB">LSB</option>
+                            <option value="CW">CW</option>
+                            <option value="DIG">DIG</option>
+                        </select>
+                    </div>
+
+                    <div className="md:col-span-1">
+                        <label className="text-xs uppercase text-gray-400 font-bold block mb-1 font-orbitron tracking-wider">RST S</label>
                         <input
                             type="text"
                             name="rstSent"
@@ -165,7 +187,7 @@ export default function TacticalLogger({ logs, setLogs, stationSettings }) {
                     </div>
 
                     <div className="md:col-span-1">
-                        <label className="text-xs uppercase text-gray-400 font-bold block mb-1">RST R</label>
+                        <label className="text-xs uppercase text-gray-400 font-bold block mb-1 font-orbitron tracking-wider">RST R</label>
                         <input
                             type="text"
                             name="rstRcvd"
@@ -177,7 +199,7 @@ export default function TacticalLogger({ logs, setLogs, stationSettings }) {
 
                     <div className="md:col-span-3 flex gap-2">
                         <div className="flex-grow">
-                            <label className="text-xs uppercase text-gray-400 font-bold block mb-1">Remarks</label>
+                            <label className="text-xs uppercase text-gray-400 font-bold block mb-1 font-orbitron tracking-wider">Remarks</label>
                             <input
                                 type="text"
                                 name="remarks"
@@ -187,7 +209,7 @@ export default function TacticalLogger({ logs, setLogs, stationSettings }) {
                                 className="input-tactical"
                             />
                         </div>
-                        <button type="submit" className="bg-radio-green hover:bg-green-600 text-black font-bold px-4 py-2 rounded h-[42px] mt-auto flex items-center shadow-[0_0_10px_rgba(34,197,94,0.3)]">
+                        <button type="submit" className="bg-radio-green/90 hover:bg-radio-green text-black font-bold px-4 py-2 rounded h-[42px] mt-auto flex items-center shadow-[0_0_15px_rgba(34,197,94,0.4)] transition-all">
                             <Send className="w-5 h-5" />
                         </button>
                     </div>
@@ -195,15 +217,15 @@ export default function TacticalLogger({ logs, setLogs, stationSettings }) {
             </div>
 
             {/* Log Table */}
-            <div className="overflow-x-auto rounded-lg border border-tactical-highlight">
-                <div className="flex justify-between items-center bg-tactical-surface p-2 border-b border-tactical-highlight">
-                    <h3 className="text-sm font-bold uppercase text-gray-400 pl-2">Recent Contacts</h3>
-                    <button onClick={exportToCSV} className="text-xs bg-tactical-highlight hover:bg-slate-600 text-white px-3 py-1 rounded flex items-center gap-1 transition-colors">
+            <div className="overflow-x-auto rounded-lg border border-white/10 shadow-lg">
+                <div className="flex justify-between items-center bg-tactical-surface/50 backdrop-blur p-2 border-b border-white/5">
+                    <h3 className="text-sm font-bold uppercase text-gray-400 pl-2 font-orbitron tracking-wider">Recent Contacts</h3>
+                    <button onClick={exportToCSV} className="text-xs bg-white/5 hover:bg-white/10 text-radio-cyan border border-white/10 px-3 py-1 rounded flex items-center gap-1 transition-colors uppercase font-bold tracking-wider">
                         <Download className="w-3 h-3" /> Export CSV
                     </button>
                 </div>
                 <table className="w-full text-left text-sm">
-                    <thead className="bg-tactical-surface text-gray-400 uppercase text-xs font-bold">
+                    <thead className="bg-black/40 text-gray-400 uppercase text-xs font-bold font-orbitron">
                         <tr>
                             <th className="p-3">Time</th>
                             <th className="p-3">Callsign</th>
@@ -214,24 +236,24 @@ export default function TacticalLogger({ logs, setLogs, stationSettings }) {
                             <th className="p-3 text-right">Action</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-tactical-highlight bg-slate-900/50">
+                    <tbody className="divide-y divide-white/5 bg-black/20 backdrop-blur-sm">
                         {logs.length === 0 ? (
                             <tr>
-                                <td colSpan="7" className="p-8 text-center text-gray-500 italic">No contacts logged yet. Start calling CQ!</td>
+                                <td colSpan="7" className="p-8 text-center text-gray-500 italic font-mono">No contacts logged yet. Start calling CQ!</td>
                             </tr>
                         ) : (
                             logs.map(log => (
-                                <tr key={log.id} className="hover:bg-tactical-surface/50 transition-colors">
+                                <tr key={log.id} className="hover:bg-white/5 transition-colors group">
                                     <td className="p-3 font-mono text-radio-amber">{log.time}</td>
-                                    <td className="p-3 font-bold text-white tracking-wide">{log.callsign}</td>
-                                    <td className="p-3 text-gray-300">{log.freq}</td>
-                                    <td className="p-3 text-xs">{log.mode}</td>
-                                    <td className="p-3 font-mono">{log.rstSent} / {log.rstRcvd}</td>
-                                    <td className="p-3 text-gray-400">{log.remarks}</td>
+                                    <td className="p-3 font-bold text-white tracking-wide font-mono group-hover:text-radio-cyan transition-colors">{log.callsign}</td>
+                                    <td className="p-3 text-gray-400 font-mono">{log.freq}</td>
+                                    <td className="p-3 text-xs text-gray-500 font-mono">{log.mode}</td>
+                                    <td className="p-3 font-mono text-gray-300">{log.rstSent} / {log.rstRcvd}</td>
+                                    <td className="p-3 text-gray-300">{log.remarks}</td>
                                     <td className="p-3 text-right">
                                         <button
                                             onClick={() => deleteLog(log.id)}
-                                            className="text-gray-600 hover:text-radio-red transition-colors"
+                                            className="text-gray-600 hover:text-radio-red transition-colors p-1"
                                         >
                                             <Trash2 className="w-4 h-4" />
                                         </button>

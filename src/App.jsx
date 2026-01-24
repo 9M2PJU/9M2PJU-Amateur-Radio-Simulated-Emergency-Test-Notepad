@@ -3,10 +3,10 @@ import { useLocalStorage } from './utils/useLocalStorage';
 import StationSettings from './components/StationSettings';
 import TacticalLogger from './components/TacticalLogger';
 import ICS213Form from './components/ICS213Form';
-import { Radio } from 'lucide-react';
+import { Radio, List, Settings, FileText } from 'lucide-react';
 
 function App() {
-  const [stationSettings, setStationSettings] = useState({
+  const [stationSettings, setStationSettings] = useLocalStorage('stationSettings', {
     callsign: '',
     grid: '',
     power: 'BATTERY'
@@ -15,30 +15,35 @@ function App() {
   const [logs, setLogs] = useLocalStorage('stationLogs', []);
   const [activeTab, setActiveTab] = useState('ics213'); // 'ics213', 'logger', 'settings'
 
-  return (
-    <div className="flex flex-col h-[100dvh] bg-tactical-bg text-gray-100 font-sans selection:bg-radio-green selection:text-black overflow-hidden">
+  const handleAddToLog = (logEntry) => {
+    setLogs(prev => [logEntry, ...prev]);
+  };
 
-      {/* Desktop/Tablet Header - Hidden on small mobile if we want a cleaner look, or kept simplified */}
-      <header className="flex-none bg-tactical-surface border-b border-tactical-highlight p-4 shadow-md z-10">
-        <div className="max-w-5xl mx-auto flex items-center justify-between">
+  return (
+    <div className="flex flex-col h-[100dvh] text-gray-100 font-inter overflow-hidden bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2672&auto=format&fit=crop')" }}>
+      {/* Dark overlay to ensure text readability over background image */}
+      <div className="absolute inset-0 bg-tactical-bg/90 z-0"></div>
+
+      {/* Desktop/Tablet Header */}
+      <header className="flex-none bg-tactical-surface/50 backdrop-blur-md border-b border-radio-cyan/20 p-4 shadow-[0_4px_20px_-5px_rgba(6,182,212,0.1)] z-10 sticky top-0">
+        <div className="max-w-5xl mx-auto flex items-center justify-between relative z-10">
           <div className="flex items-center gap-3">
-            <div className="bg-radio-green p-2 rounded text-black shadow-[0_0_15px_rgba(34,197,94,0.4)]">
-              <Radio className="w-6 h-6 sm:w-8 sm:h-8" />
+            <div className="bg-radio-cyan/10 p-2 rounded-lg border border-radio-cyan/30 shadow-[0_0_10px_rgba(6,182,212,0.2)]">
+              <Radio className="w-6 h-6 text-radio-cyan animate-pulse-slow" />
             </div>
             <div>
-              <h1 className="text-xl sm:text-2xl font-black tracking-widest uppercase leading-none">MySET <span className="text-radio-green">Notepad</span></h1>
-              <p className="text-[0.6rem] sm:text-xs text-gray-400 tracking-wider">Simulated Emergency Test Tool</p>
+              <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent uppercase tracking-widest text-glow font-orbitron">MySET Notepad</h1>
+              <div className="text-[10px] text-radio-cyan/80 tracking-[0.2em] font-mono">DIGITAL AMATEUR RADIO EMERGENCY SUITE</div>
             </div>
           </div>
 
-          {/* Desktop Nav - Visible hidden on mobile */}
-          <div className="hidden md:flex gap-1 bg-slate-900/50 p-1 rounded-lg border border-gray-800">
+          <div className="hidden md:flex gap-2 bg-black/20 p-1.5 rounded-lg border border-white/5 backdrop-blur-sm">
             {['ics213', 'logger', 'settings'].map(tab => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-4 py-2 text-sm font-bold uppercase rounded transition-all ${activeTab === tab
-                  ? 'bg-radio-green text-black shadow-sm'
+                className={`px-5 py-2 text-sm font-bold uppercase rounded-md transition-all font-orbitron tracking-wider ${activeTab === tab
+                  ? 'bg-radio-cyan/20 text-radio-cyan shadow-[0_0_10px_rgba(6,182,212,0.2)] border border-radio-cyan/50'
                   : 'text-gray-400 hover:text-white hover:bg-white/5'
                   }`}
               >
@@ -50,15 +55,15 @@ function App() {
           </div>
 
           <div className="text-right hidden sm:block">
-            <div className="text-sm font-mono text-radio-amber">{stationSettings.callsign || 'NO CALLSIGN'}</div>
-            <div className="text-xs text-gray-500">{stationSettings.grid}</div>
+            <div className="text-sm font-mono text-radio-amber uppercase text-glow-amber">{stationSettings.callsign || 'NO CALLSIGN'}</div>
+            <div className="text-xs text-gray-500 font-mono tracking-widest">{stationSettings.grid}</div>
           </div>
         </div>
       </header>
 
       {/* Scrollable Content Area */}
-      <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 pb-24 md:pb-4 scroll-smooth">
-        <div className="max-w-5xl mx-auto animate-in fade-in slide-in-from-bottom-2 duration-300">
+      <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 pb-24 md:pb-4 scroll-smooth z-10 relative">
+        <div className="max-w-5xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
           {activeTab === 'settings' && (
             <StationSettings settings={stationSettings} updateSettings={setStationSettings} />
           )}
@@ -70,50 +75,30 @@ function App() {
           {activeTab === 'ics213' && (
             <ICS213Form
               stationSettings={stationSettings}
-              onAddToLog={(logEntry) => setLogs(prev => [logEntry, ...prev])}
+              onAddToLog={handleAddToLog}
             />
           )}
         </div>
 
-        <footer className="py-8 text-center text-[10px] uppercase tracking-widest text-gray-600">
-          <p>Made for 🇲🇾 by <a href="https://hamradio.my" target="_blank" rel="noopener noreferrer" className="font-bold text-radio-amber hover:text-white transition-colors">9M2PJU</a></p>
+        <footer className="py-8 text-center text-[10px] uppercase tracking-[0.3em] text-gray-600 font-orbitron opacity-50 hover:opacity-100 transition-opacity">
+          <p>MADE FOR 🇲🇾 BY <a href="https://hamradio.my" target="_blank" rel="noopener noreferrer" className="text-radio-cyan hover:text-white transition-colors border-b border-radio-cyan/30 hover:border-white">9M2PJU</a></p>
         </footer>
       </main>
 
-      {/* Mobile Bottom Navigation - Hidden on Desktop */}
-      <nav className="md:hidden flex-none bg-tactical-surface border-t border-tactical-highlight pb-safe fixed bottom-0 w-full z-20">
+      {/* Mobile Bottom Navigation */}
+      <nav className="md:hidden flex-none bg-tactical-surface/80 backdrop-blur-xl border-t border-radio-cyan/20 pb-safe fixed bottom-0 w-full z-20 shadow-[0_-5px_20px_-5px_rgba(6,182,212,0.1)]">
         <div className="flex justify-around items-center h-16">
-          <button
-            onClick={() => setActiveTab('ics213')}
-            className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${activeTab === 'ics213' ? 'text-radio-green' : 'text-gray-500'}`}
-          >
-            <div className={`p-1 rounded-full ${activeTab === 'ics213' ? 'bg-radio-green/10' : ''}`}>
-              {/* FileText Icon */}
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-            </div>
-            <span className="text-[10px] font-bold uppercase tracking-wider">ICS-213</span>
+          <button onClick={() => setActiveTab('ics213')} className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-all ${activeTab === 'ics213' ? 'text-radio-cyan drop-shadow-[0_0_5px_rgba(6,182,212,0.5)]' : 'text-gray-500'}`}>
+            <FileText className="w-5 h-5" />
+            <span className="text-[10px] font-bold tracking-wider font-orbitron">ICS-213</span>
           </button>
-
-          <button
-            onClick={() => setActiveTab('logger')}
-            className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${activeTab === 'logger' ? 'text-radio-green' : 'text-gray-500'}`}
-          >
-            <div className={`p-1 rounded-full ${activeTab === 'logger' ? 'bg-radio-green/10' : ''}`}>
-              {/* List/Logger Icon */}
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
-            </div>
-            <span className="text-[10px] font-bold uppercase tracking-wider">Log</span>
+          <button onClick={() => setActiveTab('logger')} className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-all ${activeTab === 'logger' ? 'text-radio-green drop-shadow-[0_0_5px_rgba(34,197,94,0.5)]' : 'text-gray-500'}`}>
+            <List className="w-5 h-5" />
+            <span className="text-[10px] font-bold tracking-wider font-orbitron">LOGS</span>
           </button>
-
-          <button
-            onClick={() => setActiveTab('settings')}
-            className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${activeTab === 'settings' ? 'text-radio-green' : 'text-gray-500'}`}
-          >
-            <div className={`p-1 rounded-full ${activeTab === 'settings' ? 'bg-radio-green/10' : ''}`}>
-              {/* Settings Icon */}
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-            </div>
-            <span className="text-[10px] font-bold uppercase tracking-wider">Station</span>
+          <button onClick={() => setActiveTab('settings')} className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-all ${activeTab === 'settings' ? 'text-radio-amber drop-shadow-[0_0_5px_rgba(245,158,11,0.5)]' : 'text-gray-500'}`}>
+            <Settings className="w-5 h-5" />
+            <span className="text-[10px] font-bold tracking-wider font-orbitron">CFG</span>
           </button>
         </div>
       </nav>

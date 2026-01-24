@@ -6,13 +6,24 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        orbitron: ['Orbitron', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
+        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", 'monospace'],
+      },
       colors: {
-        'tactical-bg': '#0f172a', // Slate 900
-        'tactical-surface': '#1e293b', // Slate 800
-        'tactical-highlight': '#334155', // Slate 700
-        'radio-green': '#22c55e', // Green 500
+        'tactical-bg': '#050b14', // Deeper black/blue
+        'tactical-surface': '#0f172a', // Slate 900
+        'tactical-highlight': '#1e293b', // Slate 800
+        'radio-cyan': '#06b6d4', // Cyan 500 - Primary Neon
+        'radio-green': '#10b981', // Emerald 500
         'radio-amber': '#f59e0b', // Amber 500
         'radio-red': '#ef4444', // Red 500
+        'neon-blue': '#3b82f6', // Blue 500
+      },
+      animation: {
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'spin-slow': 'spin 3s linear infinite',
       },
     },
   },
