@@ -1,85 +1,84 @@
 <div align="center">
 
-# 📡 MySET Digital Notepad
+# 🌊 MySET Digital Notepad
 ### DIGITAL AMATEUR RADIO EMERGENCY SUITE
+Powered by **9M2PJU**
 
-[![Web App](https://img.shields.io/badge/Status-Online-green)](https://setpad.hamradio.my)
-[![Version](https://img.shields.io/badge/version-1.2.0-blue)](https://github.com/9M2PJU/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/releases)
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
+[![Web App](https://img.shields.io/badge/Status-Online-brightgreen?style=for-the-badge&logo=vercel)](https://setpad.hamradio.my)
+[![Version](https://img.shields.io/badge/version-1.2.0-cyan?style=for-the-badge&logo=github)](https://github.com/9M2PJU/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/releases)
+[![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](https://github.com/9M2PJU/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/blob/main/LICENSE)
 
-<p align="center">
-  <img src="https://images.unsplash.com/photo-1626266061368-46a8383a8080?q=80&w=2670&auto=format&fit=crop" width="600" alt="Tactical Radio Setup">
-</p>
+<br />
 
-*A lightweight, offline-capable digital logging assistant for Malaysian Amateur Radio operators during emergency communication exercises.*
+> **A mission-critical logging companion for the Malaysian Amateur Radio Simulated Emergency Test.**  
+> *Built for speed, durability, and offline field operations.*
 
-[**🚀 Launch App**](https://setpad.hamradio.my) · [Report Bug](https://github.com/9M2PJU/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/issues) · [Request Feature](https://github.com/9M2PJU/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/issues)
+[**🚀 Launch Mission Control**](https://setpad.hamradio.my)
 
 </div>
 
----
+<p align="center">
+  <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2672&auto=format&fit=crop" width="100%" alt="Tactical Radio Background" style="border-radius: 10px; border: 1px solid #06b6d4;">
+</p>
 
-## ⚡ Key Features
+## 💎 The Edge
+| Feature | Description | Identity |
+| :--- | :--- | :--- |
+| **Tactical Logger** | Rapid contact entry with keyboard-first workflow. | ⚡ Speed |
+| **ICS-213 Engine** | Formal message generation with print-ready output. | 📄 Compliance |
+| **MYT Lock** | Explicit Malaysia Standard Time enforcement. | 🕒 Legal |
+| **Power Guard** | Automatic power source (BATT/MAINS) tracking. | 🔋 Compliance |
+| **Orbitron UI** | High-contrast neon aesthetics for low-light ops. | 🌙 Night Mode |
 
-- **📝 Tactical Logger**: Rapidly log contacts (Callsign, Freq, RST, Mode, Remarks).
-- **🕒 MYT Enforcement**: All timestamps legally bound to **Malaysia Standard Time**.
-- **🔋 Power Status**: Auto-logs `[MAINS]` or `[BATT]` status for simple compliance reporting.
-- **📄 ICS-213 Generator**: Create, **Print**, and Copy standard emergency messages.
-- **💾 Auto-Save**: Session data persists via LocalStorage (privacy-first, no cloud).
-- **📊 CSV Export**: One-click export for post-event submission.
-- **🌙 Orbitron Theme**: Futuristic, high-contrast neon aesthetics for night operations.
+## 🛠️ Field Operations Guide
 
-## 🛠️ Usage
+### 1. Deployment phase
+Connect your callsign and grid square in the **Station Settings**. This identity is stamped on every log and message generated during your session.
 
-1. **Station Setup**: Enter your **Callsign** and **Grid Square** at the top. (These reset when you close the tab for privacy).
-2. **Logging**: Use the **Tactical Logger** tab for quick QSOs.
-    - Hit `Enter` to save a log.
-    - Click `Export CSV` to save your work.
-3. **Messages**: Use the **ICS-213** tab to draft formal traffic.
-    - Use `Copy Text` to paste into WhatsApp or digital modes (JS8Call/Fldigi).
+### 2. Live Logger
+Switch to **Logger** for the heat of the action. Valid frequencies and modes are pre-selectable. Hit `Send` or `Enter` to commit a contact to your local encrypted storage.
 
-## 🚀 Development
+### 3. Traffic Handling
+Draft formal Radiograms in the **ICS-213** tab. Use **Copy Text** for digital modes (JS8Call / Fldigi) or **Print** for physical handovers.
 
-This project is built with [React](https://reactjs.org/), [Vite](https://vitejs.dev/), and [Tailwind CSS](https://tailwindcss.com/).
+### 4. Post-Mission Report
+When the exercise concludes, one-click **Export CSV** generates a compliant report for your SET coordinator.
 
-### Prerequisites
-- Node.js (v18+)
-- npm
+## 📦 Technical Specs
 
-### Quick Start
+```mermaid
+graph TD
+    A[React 18] --> B[Vite]
+    B --> C[Tailwind CSS]
+    C --> D[Lucide Icons]
+    A --> E[LocalStorage Persistence]
+```
+
+- **Framework**: React + Vite (Ultrafast HMR)
+- **Styling**: Tailwind CSS + Orbitron Design System
+- **Persistence**: 100% Client-side (No backend, Maximum Privacy)
+- **Timezone**: `Asia/Kuala_Lumpur` (MYT)
+
+## 🏗️ Local Lab Setup
+
 ```bash
-# Clone the repository
+# Clone the tactical core
 git clone https://github.com/9M2PJU/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad.git
 
-# Install dependencies
+# Install vital components
 npm install
 
-# Start the dev server
+# Ignite dev server
 npm run dev
 ```
 
-### Deployment
-This repo is configured with **GitHub Actions** to automatically deploy to GitHub Pages.
-1. Push to `main`.
-2. The action builds the `dist` folder and pushes it to `gh-pages`.
-3. Ensure your Repo Settings > Pages is set to build from the `gh-pages` branch.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
+## 📜 License
+Mission authorized under the **MIT License**.
 
 ---
 
 <div align="center">
-   <small>MADE FOR 🇲🇾 BY <a href="https://hamradio.my">9M2PJU</a></small>
+   <img src="https://raw.githubusercontent.com/9M2PJU/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/main/public/favicon.svg" width="32" alt="Logo">
+   <br />
+   <small>MADE WITH PRIDE FOR 🇲🇾 BY <a href="https://hamradio.my">9M2PJU</a></small>
 </div>
