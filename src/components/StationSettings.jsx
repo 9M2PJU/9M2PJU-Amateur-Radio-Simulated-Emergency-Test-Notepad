@@ -64,6 +64,17 @@ export default function StationSettings({ settings, updateSettings }) {
                     </div>
                 </div>
             </div>
+            <div className="flex justify-between items-center mt-6 pt-4 border-t border-tactical-highlight">
+                <p className="text-[10px] text-gray-600 uppercase font-mono tracking-widest">
+                    Build: {new Date().toISOString().split('T')[0]} (v1.1)
+                </p>
+                <button
+                    onClick={() => window.location.reload()}
+                    className="text-[10px] text-radio-amber hover:text-white uppercase font-bold tracking-wider"
+                >
+                    Check for Updates
+                </button>
+            </div>
         </div>
     );
 }
