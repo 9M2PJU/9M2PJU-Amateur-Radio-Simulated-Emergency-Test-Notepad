@@ -13,7 +13,7 @@ function App() {
   });
 
   const [logs, setLogs] = useLocalStorage('stationLogs', []);
-  const [activeTab, setActiveTab] = useState('logger'); // 'logger', 'ics213', 'settings'
+  const [activeTab, setActiveTab] = useState('ics213'); // 'ics213', 'logger', 'settings'
 
   return (
     <div className="flex flex-col h-[100dvh] bg-tactical-bg text-gray-100 font-sans selection:bg-radio-green selection:text-black overflow-hidden">
@@ -33,7 +33,7 @@ function App() {
 
           {/* Desktop Nav - Visible hidden on mobile */}
           <div className="hidden md:flex gap-1 bg-slate-900/50 p-1 rounded-lg border border-gray-800">
-            {['logger', 'ics213', 'settings'].map(tab => (
+            {['ics213', 'logger', 'settings'].map(tab => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -81,17 +81,6 @@ function App() {
       <nav className="md:hidden flex-none bg-tactical-surface border-t border-tactical-highlight pb-safe fixed bottom-0 w-full z-20">
         <div className="flex justify-around items-center h-16">
           <button
-            onClick={() => setActiveTab('logger')}
-            className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${activeTab === 'logger' ? 'text-radio-green' : 'text-gray-500'}`}
-          >
-            <div className={`p-1 rounded-full ${activeTab === 'logger' ? 'bg-radio-green/10' : ''}`}>
-              {/* List/Logger Icon */}
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
-            </div>
-            <span className="text-[10px] font-bold uppercase tracking-wider">Log</span>
-          </button>
-
-          <button
             onClick={() => setActiveTab('ics213')}
             className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${activeTab === 'ics213' ? 'text-radio-green' : 'text-gray-500'}`}
           >
@@ -100,6 +89,17 @@ function App() {
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
             </div>
             <span className="text-[10px] font-bold uppercase tracking-wider">ICS-213</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('logger')}
+            className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${activeTab === 'logger' ? 'text-radio-green' : 'text-gray-500'}`}
+          >
+            <div className={`p-1 rounded-full ${activeTab === 'logger' ? 'bg-radio-green/10' : ''}`}>
+              {/* List/Logger Icon */}
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            </div>
+            <span className="text-[10px] font-bold uppercase tracking-wider">Log</span>
           </button>
 
           <button

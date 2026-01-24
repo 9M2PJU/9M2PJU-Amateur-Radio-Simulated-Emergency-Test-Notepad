@@ -1,4 +1,6 @@
+```
 import React, { useState } from 'react';
+import { useLocalStorage } from '../utils/useLocalStorage';
 import { FileText, Copy, Download, Trash } from 'lucide-react';
 
 export default function ICS213Form({ stationSettings }) {
@@ -16,7 +18,7 @@ export default function ICS213Form({ stationSettings }) {
         approvedPos: ''
     });
 
-    const [savedMessages, setSavedMessages] = useState([]);
+    const [savedMessages, setSavedMessages] = useLocalStorage('ics213_outbox', []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -25,19 +27,19 @@ export default function ICS213Form({ stationSettings }) {
 
     const generateText = () => {
         return `
-ICS-213 MESSAGE
+ICS - 213 MESSAGE
 ---------------
-Incident: ${form.incident}
-To: ${form.toName} (${form.toPos})
-From: ${form.fromName} (${form.fromPos})
-Subject: ${form.subject}
-Date/Time: ${form.date} ${form.time}
+    Incident: ${ form.incident }
+To: ${ form.toName } (${ form.toPos })
+From: ${ form.fromName } (${ form.fromPos })
+Subject: ${ form.subject }
+Date / Time: ${ form.date } ${ form.time }
 
 Message:
-${form.message}
+${ form.message }
 
-Approved By: ${form.approvedName} (${form.approvedPos})
-    `.trim();
+Approved By: ${ form.approvedName } (${ form.approvedPos })
+`.trim();
     };
 
     const copyToClipboard = () => {
