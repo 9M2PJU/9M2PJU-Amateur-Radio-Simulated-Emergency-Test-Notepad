@@ -235,8 +235,8 @@ export default function TacticalLogger({ logs, setLogs, stationSettings }) {
                 <table className="w-full text-left text-sm">
                     <thead className="bg-black/40 text-gray-400 uppercase text-xs font-bold font-orbitron">
                         <tr>
-                            <th className="p-3">Date</th>
-                            <th className="p-3">Time</th>
+                            <th className="p-3 w-24">Date</th>
+                            <th className="p-3 w-20">Time</th>
                             <th className="p-3">Callsign</th>
                             <th className="p-3">Freq</th>
                             <th className="p-3">Mode</th>
@@ -253,8 +253,8 @@ export default function TacticalLogger({ logs, setLogs, stationSettings }) {
                         ) : (
                             logs.map(log => (
                                 <tr key={log.id} className="hover:bg-white/5 transition-colors group">
-                                    <td className="p-3 font-mono text-gray-500 text-xs">{log.date || '---'}</td>
-                                    <td className="p-3 font-mono text-radio-amber">{log.time}</td>
+                                    <td className="p-3 font-mono text-gray-400 text-[10px] whitespace-nowrap">{log.date || '---'}</td>
+                                    <td className="p-3 font-mono text-radio-amber whitespace-nowrap font-bold">{log.time}</td>
                                     <td className="p-3 font-bold text-white tracking-wide font-mono group-hover:text-radio-cyan transition-colors">{log.callsign}</td>
                                     <td className="p-3 text-gray-400 font-mono">{log.freq}</td>
                                     <td className="p-3 text-xs text-gray-500 font-mono">{log.mode}</td>
