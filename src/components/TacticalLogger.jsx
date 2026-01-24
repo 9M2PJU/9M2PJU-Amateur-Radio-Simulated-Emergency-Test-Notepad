@@ -227,6 +227,7 @@ export default function TacticalLogger({ logs, setLogs, stationSettings }) {
                 <table className="w-full text-left text-sm">
                     <thead className="bg-black/40 text-gray-400 uppercase text-xs font-bold font-orbitron">
                         <tr>
+                            <th className="p-3">Date</th>
                             <th className="p-3">Time</th>
                             <th className="p-3">Callsign</th>
                             <th className="p-3">Freq</th>
@@ -239,11 +240,12 @@ export default function TacticalLogger({ logs, setLogs, stationSettings }) {
                     <tbody className="divide-y divide-white/5 bg-black/20 backdrop-blur-sm">
                         {logs.length === 0 ? (
                             <tr>
-                                <td colSpan="7" className="p-8 text-center text-gray-500 italic font-mono">No contacts logged yet. Start calling CQ!</td>
+                                <td colSpan="8" className="p-8 text-center text-gray-500 italic font-mono">No contacts logged yet. Start calling CQ!</td>
                             </tr>
                         ) : (
                             logs.map(log => (
                                 <tr key={log.id} className="hover:bg-white/5 transition-colors group">
+                                    <td className="p-3 font-mono text-gray-500 text-xs">{log.date}</td>
                                     <td className="p-3 font-mono text-radio-amber">{log.time}</td>
                                     <td className="p-3 font-bold text-white tracking-wide font-mono group-hover:text-radio-cyan transition-colors">{log.callsign}</td>
                                     <td className="p-3 text-gray-400 font-mono">{log.freq}</td>

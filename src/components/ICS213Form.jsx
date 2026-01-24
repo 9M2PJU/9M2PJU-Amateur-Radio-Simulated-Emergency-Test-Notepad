@@ -15,7 +15,9 @@ export default function ICS213Form({ stationSettings, onAddToLog }) {
         time: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kuala_Lumpur' }),
         message: '',
         approvedName: '',
-        approvedPos: ''
+        approvedPos: '',
+        txFreq: '145.500',
+        txMode: 'FM'
     });
 
     const [savedMessages, setSavedMessages] = useLocalStorage('ics213_outbox', []);
@@ -59,8 +61,8 @@ Approved By: ${form.approvedName} (${form.approvedPos})
                 date: form.date,
                 time: form.time,
                 callsign: form.toName || 'STATION', // Use To Name as callsign if available
-                freq: 'MSG', // Indicate it's a message
-                mode: 'ICS213',
+                freq: form.txFreq || 'MSG', // Use entered freq or default
+                mode: form.txMode || 'ICS213',
                 rstSent: '59',
                 rstRcvd: '59',
                 remarks: `[${form.priority}] ${form.subject} ${stationSettings.power === 'BATTERY' ? '[BATT]' : '[MAINS]'}`,
@@ -273,7 +275,25 @@ Approved By: ${data.approvedName} (${data.approvedPos})
                         </div>
                     </div>
 
-                    <div className="flex gap-2 pt-4">
+                    <div className="grid grid-cols-2 gap-4 pb-4 border-b border-gray-700 mb-4">
+                        <div>
+                            <label className="text-xs uppercase text-radio-green font-bold block mb-1 font-orbitron tracking-wider">Tx Freq (MHz)</label>
+                            <input name="txFreq" value={form.txFreq} onChange={handleChange} className="input-tactical" placeholder="145.500" />
+                        </div>
+                        <div>
+                            <label className="text-xs uppercase text-radio-green font-bold block mb-1 font-orbitron tracking-wider">Tx Mode</label>
+                            <select name="txMode" value={form.txMode} onChange={handleChange} className="input-tactical">
+                                <option value="FM">FM</option>
+                                <option value="AM">AM</option>
+                                <option value="USB">USB</option>
+                                <option value="LSB">LSB</option>
+                                <option value="CW">CW</option>
+                                <option value="DIG">DIG</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className="flex gap-2 pt-2">
                         <button onClick={saveMessage} className="flex-1 btn-tactical border-radio-green/50 text-radio-green hover:bg-radio-green hover:text-black">
                             Save to Outbox
                         </button>

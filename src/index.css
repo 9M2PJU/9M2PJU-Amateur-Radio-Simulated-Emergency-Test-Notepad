@@ -3,13 +3,20 @@
 @tailwind utilities;
 
 @layer base {
+
+  html,
   body {
-    @apply bg-tactical-bg text-gray-200 font-inter antialiased selection:bg-radio-cyan selection:text-black overflow-x-hidden;
+    @apply h-full overflow-hidden;
+  }
+
+  body {
+    @apply bg-tactical-bg text-gray-200 font-inter antialiased selection:bg-radio-cyan selection:text-black;
     background-image:
       radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
       radial-gradient(circle at 100% 0%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
   }
 
+  /* ... existing headers ... */
   h1,
   h2,
   h3,
@@ -20,6 +27,7 @@
   }
 }
 
+/* ... components ... */
 @layer components {
 
   /* Glassmorphism Panel */
@@ -62,12 +70,12 @@
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #050b14;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
