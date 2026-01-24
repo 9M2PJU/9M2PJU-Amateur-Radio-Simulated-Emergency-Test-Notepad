@@ -20,4 +20,16 @@
   .panel-tactical {
     @apply bg-tactical-surface border border-tactical-highlight rounded-lg p-4 shadow-lg backdrop-blur-sm bg-opacity-90;
   }
+
+  .bg-tactical-highlight {
+    @apply bg-slate-700;
+  }
+
+  .bg-radio-green {
+    @apply bg-green-500;
+  }
+
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }
