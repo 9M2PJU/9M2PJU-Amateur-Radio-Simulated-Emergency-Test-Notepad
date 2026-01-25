@@ -245,26 +245,26 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                         <input name="placeOfOrigin" value={form.placeOfOrigin} onChange={handleChange} className={inputStyle} />
                     </div>
                     <div className="col-span-1 grid grid-rows-2 divide-y divide-radio-cyan/30 relative group">
-                        <button
-                            onClick={() => {
-                                const newMode = !useUTC;
-                                setUseUTC(newMode);
-                                const now = new Date();
-                                const timeStr = newMode
-                                    ? now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' }).replace(':', '') + 'Z'
-                                    : now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kuala_Lumpur' }).replace(':', '') + 'L';
-                                setForm(prev => ({ ...prev, filingTime: timeStr }));
-                            }}
-                            className="absolute -right-6 top-1/2 -translate-y-1/2 bg-radio-cyan/20 hover:bg-radio-cyan/40 text-[8px] text-radio-cyan border border-radio-cyan/50 rounded px-1 transition-colors z-10"
-                            title="Toggle UTC/Local Time"
-                        >
-                            {useUTC ? 'UTC' : 'LOC'}
-                        </button>
-                        <div className="flex flex-col p-0.5">
-                            <label className="text-[8px] font-bold uppercase text-radio-amber/70 font-orbitron">FILING TIME</label>
-                            <input name="filingTime" value={form.filingTime} onChange={handleChange} className="w-full text-xs font-mono text-center outline-none bg-transparent text-radio-cyan" />
+                        <div className="flex flex-col p-1 h-full items-center justify-between">
+                            <label className="text-[8px] font-bold uppercase text-radio-amber/70 font-orbitron mb-1">FILING TIME</label>
+                            <input name="filingTime" value={form.filingTime} onChange={handleChange} className="w-full text-xs font-mono text-center outline-none bg-transparent text-radio-cyan mb-1" />
+                            <button
+                                onClick={() => {
+                                    const newMode = !useUTC;
+                                    setUseUTC(newMode);
+                                    const now = new Date();
+                                    const timeStr = newMode
+                                        ? now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' }).replace(':', '') + 'Z'
+                                        : now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kuala_Lumpur' }).replace(':', '') + 'L';
+                                    setForm(prev => ({ ...prev, filingTime: timeStr }));
+                                }}
+                                className="text-[7px] text-radio-cyan/70 hover:text-radio-cyan border border-radio-cyan/30 hover:border-radio-cyan rounded px-2 py-0.5 transition-colors uppercase font-bold tracking-widest"
+                                title="Toggle UTC/Local Time"
+                            >
+                                {useUTC ? 'UTC' : 'LOCAL'}
+                            </button>
                         </div>
-                        <div className="flex flex-col p-0.5">
+                        <div className="flex flex-col p-0.5 relative">
                             <label className="text-[8px] font-bold uppercase text-radio-amber/70 font-orbitron">FILING DATE</label>
                             <input name="filingDate" value={form.filingDate} onChange={handleChange} className="w-full text-xs font-mono text-center outline-none bg-transparent text-radio-cyan" />
                         </div>

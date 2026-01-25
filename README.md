@@ -25,7 +25,7 @@ Powered by **9M2PJU**
 | Feature | Description | Identity |
 | :--- | :--- | :--- |
 | **Tactical Logger** | Rapid contact entry with keyboard-first workflow. | ⚡ Speed |
-| **Radiogram Engine** | Formal IARU message generation with print-ready output. | 📄 Compliance |
+| **Radiogram Engine** | Formal IARU message generation (UTC/Local) with print-ready output. | 📄 Compliance |
 | **MYT Lock** | Explicit Malaysia Standard Time enforcement. | 🕒 Legal |
 | **Power Guard** | Automatic power source (BATT/MAINS) tracking. | 🔋 Compliance |
 | **Orbitron UI** | High-contrast neon aesthetics for low-light ops. | 🌙 Night Mode |
