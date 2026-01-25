@@ -116,10 +116,10 @@ SIG: ${data.from}
         printWindow.document.close();
     };
 
-    // Styling helpers to match the classic form look
-    const labelStyle = "text-[10px] font-bold text-black uppercase block text-center bg-transparent";
-    const inputStyle = "w-full bg-white/50 border-none text-black font-mono font-bold text-center focus:ring-1 focus:ring-blue-500 rounded-sm";
-    const sectionBorder = "border border-black";
+    // Styling helpers to match the classic form look but in TACTICAL DARK MODE
+    const labelStyle = "text-[10px] font-bold text-radio-amber uppercase block text-center bg-transparent tracking-wider font-orbitron";
+    const inputStyle = "w-full bg-black/30 border-none text-radio-cyan font-mono font-bold text-center focus:ring-1 focus:ring-radio-cyan rounded-sm placeholder-gray-700";
+    const sectionBorder = "border-radio-cyan/30";
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative">
@@ -140,7 +140,7 @@ SIG: ${data.from}
                         </div>
 
                         <div className="p-4 overflow-y-auto flex-1 font-mono text-sm">
-                            <div className="bg-orange-100 p-4 rounded text-black whitespace-pre-wrap border-2 border-black">
+                            <div className="bg-black p-4 rounded text-radio-amber whitespace-pre-wrap border border-radio-amber/30 shadow-[0_0_15px_rgba(245,158,11,0.1)]">
                                 {generateText(viewMsg)}
                             </div>
                         </div>
@@ -173,15 +173,15 @@ SIG: ${data.from}
             )}
 
             {/* The IARU FORM */}
-            <div className="bg-white text-black font-sans shadow-2xl relative overflow-hidden">
+            <div className="bg-tactical-surface text-gray-100 font-sans shadow-[0_0_30px_rgba(6,182,212,0.1)] relative overflow-hidden border border-radio-cyan/20 rounded-lg">
                 {/* Header Strip */}
-                <div className="bg-orange-200 border-2 border-black p-1 flex justify-center items-center relative">
-                    <h2 className="text-2xl font-bold italic tracking-wider text-black">IARU MESSAGE</h2>
-                    <span className="absolute right-2 text-xs italic">International</span>
+                <div className="bg-radio-amber/10 border-b-2 border-radio-amber/50 p-2 flex justify-center items-center relative">
+                    <h2 className="text-2xl font-bold italic tracking-[0.2em] text-radio-amber font-orbitron drop-shadow-[0_0_5px_rgba(245,158,11,0.5)]">IARU MESSAGE</h2>
+                    <span className="absolute right-2 text-[10px] italic text-radio-amber/70 font-mono tracking-widest">INTERNATIONAL</span>
                 </div>
 
                 {/* Header Grid */}
-                <div className="grid grid-cols-7 border-x-2 border-b-2 border-black text-center divide-x-2 divide-black">
+                <div className={`grid grid-cols-7 border-b border-radio-cyan/30 text-center divide-x divide-radio-cyan/30`}>
                     <div className="col-span-1 p-1">
                         <label className={labelStyle}>NUMBER</label>
                         <input name="number" value={form.number} onChange={handleChange} className={inputStyle} />
@@ -192,7 +192,7 @@ SIG: ${data.from}
                             name="precedence"
                             value={form.precedence}
                             onChange={handleChange}
-                            className={`${inputStyle} appearance-none bg-green-100`}
+                            className={`${inputStyle} appearance-none bg-black/30 text-radio-cyan`}
                         >
                             <option value="R">ROUTINE</option>
                             <option value="P">PRIORITY</option>
@@ -206,116 +206,116 @@ SIG: ${data.from}
                     </div>
                     <div className="col-span-1 p-1">
                         <label className={labelStyle}>WORD COUNT</label>
-                        <input name="check" value={form.check} readOnly className={`${inputStyle} bg-gray-100 cursor-not-allowed`} />
+                        <input name="check" value={form.check} readOnly className={`${inputStyle} bg-white/5 text-gray-400 cursor-not-allowed`} />
                     </div>
                     <div className="col-span-2 p-1">
                         <label className={labelStyle}>PLACE OF ORIGIN</label>
                         <input name="placeOfOrigin" value={form.placeOfOrigin} onChange={handleChange} className={inputStyle} />
                     </div>
-                    <div className="col-span-1 grid grid-rows-2 divide-y divide-black">
+                    <div className="col-span-1 grid grid-rows-2 divide-y divide-radio-cyan/30">
                         <div className="flex flex-col p-0.5">
-                            <label className="text-[8px] font-bold uppercase">FILING TIME</label>
-                            <input name="filingTime" value={form.filingTime} onChange={handleChange} className="w-full text-xs font-mono text-center outline-none bg-transparent" />
+                            <label className="text-[8px] font-bold uppercase text-radio-amber/70 font-orbitron">FILING TIME</label>
+                            <input name="filingTime" value={form.filingTime} onChange={handleChange} className="w-full text-xs font-mono text-center outline-none bg-transparent text-radio-cyan" />
                         </div>
                         <div className="flex flex-col p-0.5">
-                            <label className="text-[8px] font-bold uppercase">FILING DATE</label>
-                            <input name="filingDate" value={form.filingDate} onChange={handleChange} className="w-full text-xs font-mono text-center outline-none bg-transparent" />
+                            <label className="text-[8px] font-bold uppercase text-radio-amber/70 font-orbitron">FILING DATE</label>
+                            <input name="filingDate" value={form.filingDate} onChange={handleChange} className="w-full text-xs font-mono text-center outline-none bg-transparent text-radio-cyan" />
                         </div>
                     </div>
                 </div>
 
                 {/* TO Section */}
-                <div className="relative border-x-2 border-b-2 border-black p-2 bg-white">
-                    <label className="text-xs font-bold uppercase absolute top-1 left-2">TO:</label>
+                <div className={`relative border-b border-radio-cyan/30 p-2 bg-black/10`}>
+                    <label className="text-xs font-bold uppercase absolute top-1 left-2 text-radio-amber font-orbitron">TO:</label>
                     <textarea
                         name="to"
                         value={form.to}
                         onChange={handleChange}
-                        className="w-full mt-4 h-24 p-2 bg-blue-50/50 border border-blue-200 rounded resize-none font-mono text-lg uppercase"
+                        className="w-full mt-4 h-24 p-2 bg-black/30 border border-radio-cyan/20 rounded resize-none font-mono text-lg uppercase text-white focus:border-radio-cyan/50 focus:ring-1 focus:ring-radio-cyan/50 outline-none"
                     />
                 </div>
 
                 {/* Special Instructions */}
-                <div className="border-x-2 border-b-2 border-black bg-gray-300 p-1 flex items-center">
-                    <label className="text-xs font-bold italic mr-2 whitespace-nowrap">Special Delivery Instructions</label>
+                <div className={`border-b border-radio-cyan/30 bg-tactical-highlight p-1 flex items-center`}>
+                    <label className="text-[10px] font-bold italic mr-2 whitespace-nowrap text-gray-400 font-orbitron">SPECIAL DELIVERY INSTRUCTIONS</label>
                     <input
                         name="specialInstructions"
                         value={form.specialInstructions}
                         onChange={handleChange}
                         placeholder="OPTIONAL INFORMATION"
-                        className="w-full bg-white border border-blue-300 rounded px-2 py-0.5 text-sm uppercase"
+                        className="w-full bg-black/20 border border-gray-700 rounded px-2 py-0.5 text-sm uppercase text-gray-300 placeholder-gray-600 focus:border-radio-cyan/50 outline-none"
                     />
                 </div>
 
                 {/* Message Body */}
-                <div className="relative border-x-2 border-b-2 border-black p-2 bg-green-50">
+                <div className={`relative border-b border-radio-cyan/30 p-2 bg-black/20`}>
                     <textarea
                         name="message"
                         value={form.message}
                         onChange={handleChange}
                         rows={8}
-                        className="w-full p-2 bg-white border border-gray-300 rounded resize-none font-mono text-lg uppercase leading-relaxed"
+                        className="w-full p-2 bg-black/30 border border-radio-cyan/20 rounded resize-none font-mono text-lg uppercase leading-relaxed text-radio-green focus:border-radio-green/50 focus:ring-1 focus:ring-radio-green/50 outline-none shadow-inner"
                     />
                 </div>
 
                 {/* From / Signature */}
-                <div className="border-x-2 border-b-2 border-black p-2 flex items-center bg-white">
-                    <label className="text-xs font-bold uppercase mr-2">FROM:</label>
+                <div className={`border-b border-radio-cyan/30 p-2 flex items-center bg-black/10`}>
+                    <label className="text-xs font-bold uppercase mr-2 text-radio-amber font-orbitron">FROM:</label>
                     <input
                         name="from"
                         value={form.from}
                         onChange={handleChange}
-                        className="flex-1 bg-blue-50 border border-blue-200 rounded px-2 py-1 uppercase font-bold"
+                        className="flex-1 bg-black/30 border border-radio-cyan/20 rounded px-2 py-1 uppercase font-bold text-radio-cyan font-mono focus:border-radio-cyan/50 outline-none"
                     />
                 </div>
 
                 {/* Operator Use */}
-                <div className="border-x-2 border-b-2 border-black p-1">
-                    <label className="text-xs font-bold block mb-1">Radio operator use:</label>
-                    <div className="grid grid-cols-2 gap-0 border border-black">
-                        <div className="grid grid-cols-3 divide-x divide-black border-r border-black">
-                            <div className="col-span-1 p-1 text-center">
-                                <label className="text-[8px] block text-gray-500">RECEIVED FROM</label>
-                                <input name="recvdFrom" value={form.recvdFrom} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-blue-50 rounded" />
+                <div className="p-1">
+                    <label className="text-[10px] font-bold block mb-1 text-gray-500 font-orbitron tracking-wider">RADIO OPERATOR USE:</label>
+                    <div className={`grid grid-cols-2 gap-0 border border-radio-cyan/30 rounded overflow-hidden`}>
+                        <div className={`grid grid-cols-3 divide-x divide-radio-cyan/30 border-r border-radio-cyan/30`}>
+                            <div className="col-span-1 p-1 text-center bg-black/20">
+                                <label className="text-[8px] block text-gray-500 font-bold">RECVD FROM</label>
+                                <input name="recvdFrom" value={form.recvdFrom} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
                             </div>
-                            <div className="col-span-1 p-1 text-center">
-                                <label className="text-[8px] block text-gray-500">DATE</label>
-                                <input name="recvdDate" value={form.recvdDate} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-blue-50 rounded" />
+                            <div className="col-span-1 p-1 text-center bg-black/20">
+                                <label className="text-[8px] block text-gray-500 font-bold">DATE</label>
+                                <input name="recvdDate" value={form.recvdDate} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
                             </div>
-                            <div className="col-span-1 p-1 text-center">
-                                <label className="text-[8px] block text-gray-500">TIME</label>
-                                <input name="recvdTime" value={form.recvdTime} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-blue-50 rounded" />
+                            <div className="col-span-1 p-1 text-center bg-black/20">
+                                <label className="text-[8px] block text-gray-500 font-bold">TIME</label>
+                                <input name="recvdTime" value={form.recvdTime} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
                             </div>
                         </div>
-                        <div className="grid grid-cols-3 divide-x divide-black">
-                            <div className="col-span-1 p-1 text-center">
-                                <label className="text-[8px] block text-gray-500">SENT TO</label>
-                                <input name="sentTo" value={form.sentTo} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-blue-50 rounded" />
+                        <div className="grid grid-cols-3 divide-x divide-radio-cyan/30">
+                            <div className="col-span-1 p-1 text-center bg-black/20">
+                                <label className="text-[8px] block text-gray-500 font-bold">SENT TO</label>
+                                <input name="sentTo" value={form.sentTo} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
                             </div>
-                            <div className="col-span-1 p-1 text-center">
-                                <label className="text-[8px] block text-gray-500">DATE</label>
-                                <input name="sentDate" value={form.sentDate} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-blue-50 rounded" />
+                            <div className="col-span-1 p-1 text-center bg-black/20">
+                                <label className="text-[8px] block text-gray-500 font-bold">DATE</label>
+                                <input name="sentDate" value={form.sentDate} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
                             </div>
-                            <div className="col-span-1 p-1 text-center">
-                                <label className="text-[8px] block text-gray-500">TIME</label>
-                                <input name="sentTime" value={form.sentTime} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-blue-50 rounded" />
+                            <div className="col-span-1 p-1 text-center bg-black/20">
+                                <label className="text-[8px] block text-gray-500 font-bold">TIME</label>
+                                <input name="sentTime" value={form.sentTime} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Footer Controls */}
-                <div className="p-4 bg-white border-x-2 border-b-2 border-black flex justify-between items-center">
+                <div className={`p-4 bg-black/20 border-t border-radio-cyan/30 flex justify-between items-center`}>
                     <div className="flex gap-2">
-                        <button onClick={saveMessage} className="bg-green-700 hover:bg-green-800 text-white font-bold py-1 px-4 rounded shadow">
-                            Submit
+                        <button onClick={saveMessage} className="bg-radio-green hover:bg-emerald-600 text-black font-bold py-1 px-4 rounded shadow-[0_0_10px_rgba(16,185,129,0.4)] font-orbitron tracking-wider transition-all">
+                            SUBMIT
                         </button>
-                        <button onClick={() => setForm({ ...form, message: '', to: '', from: '' })} className="bg-blue-100 hover:bg-blue-200 text-blue-800 font-bold py-1 px-4 rounded border border-blue-300 shadow-sm">
-                            Reset Form
+                        <button onClick={() => setForm({ ...form, message: '', to: '', from: '' })} className="bg-transparent hover:bg-white/5 text-radio-cyan font-bold py-1 px-4 rounded border border-radio-cyan/50 font-orbitron tracking-wider transition-all">
+                            RESET
                         </button>
                     </div>
-                    <div className="text-[10px] text-red-800 italic">
-                        Express Ver 43.2 (Original credits to OE3VRW) - Remade by 9M2PJU
+                    <div className="text-[10px] text-gray-600 italic font-mono">
+                        System Ready
                     </div>
                 </div>
             </div>
