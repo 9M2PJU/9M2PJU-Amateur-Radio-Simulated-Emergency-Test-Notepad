@@ -25,7 +25,7 @@ Powered by **9M2PJU**
 | Feature | Description | Identity |
 | :--- | :--- | :--- |
 | **Tactical Logger** | Rapid contact entry with keyboard-first workflow. | ⚡ Speed |
-| **ICS-213 Engine** | Formal message generation with print-ready output. | 📄 Compliance |
+| **Radiogram Engine** | Formal IARU message generation with print-ready output. | 📄 Compliance |
 | **MYT Lock** | Explicit Malaysia Standard Time enforcement. | 🕒 Legal |
 | **Power Guard** | Automatic power source (BATT/MAINS) tracking. | 🔋 Compliance |
 | **Orbitron UI** | High-contrast neon aesthetics for low-light ops. | 🌙 Night Mode |
@@ -39,7 +39,7 @@ Connect your callsign and grid square in the **Station Settings**. This identity
 Switch to **Logger** for the heat of the action. Valid frequencies and modes are pre-selectable. Hit `Send` or `Enter` to commit a contact to your local encrypted storage.
 
 ### 3. Traffic Handling
-Draft formal Radiograms in the **ICS-213** tab. Use **Copy Text** for digital modes (JS8Call / Fldigi) or **Print** for physical handovers.
+Draft formal IARU Radiograms in the **Radiogram** tab. Use **Copy Text** for digital modes (JS8Call / Fldigi) or **Print** for physical handovers.
 
 ### 4. Post-Mission Report
 When the exercise concludes, one-click **Export CSV** generates a compliant report for your SET coordinator.
