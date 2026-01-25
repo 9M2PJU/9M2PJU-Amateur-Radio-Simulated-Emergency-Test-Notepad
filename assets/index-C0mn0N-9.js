@@ -36,7 +36,7 @@ DATE: ${U.recvdDate} TIME: ${U.recvdTime}
 SENT
 TO: ${U.sentTo}  
 DATE: ${U.sentDate} TIME: ${U.sentTime}
-Sent free by Amateur Radio Operator: ${z.callsign||"9M2PJU"}
+Sent by Amateur Radio Operator: ${z.callsign||"9M2PJU"}
 `.trim(),$=U=>{switch(U){case"E":return"[Emergency]";case"P":return"[Priority]";case"R":return"[Routine]";default:return`[${U}]`}},j=()=>{const U={...E,id:Date.now()};ll([U,...w]),H&&H({id:Date.now(),date:new Date().toISOString().split("T")[0],time:new Date().toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}),callsign:data.to?data.to.split(`
 `)[0]:"STATION",freq:"MSG",mode:"RADIOGRAM",rstSent:"59",rstRcvd:"59",remarks:`NR ${E.number} ${E.precedence} TO ${E.to?.substring(0,10)}...`,operator:z.callsign||"OP"}),alert("Message saved to Outbox and added to Tactical Logger.")},[Q,fl]=Ll.useState(null),sl=U=>{window.confirm("Are you sure you want to delete this message?")&&(ll(ul=>ul.filter(Al=>Al.id!==U)),Q&&Q.id===U&&fl(null))},Tl=U=>{const ul=window.open("","_blank"),Al=N(U);ul.document.write(`
             <html>
