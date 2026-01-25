@@ -3,6 +3,7 @@ import { useLocalStorage } from '../utils/useLocalStorage';
 import { FileText, Copy, Trash, Printer } from 'lucide-react';
 
 export default function IARUMessageForm({ stationSettings, onAddToLog }) {
+    const [useUTC, setUseUTC] = useState(true);
     const [form, setForm] = useState({
         number: '1',
         precedence: 'R', // R, P, O, Z (Routine, Priority, Immediate, Flash) - keeping simplified for now
@@ -243,7 +244,22 @@ Sent free by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                         <label className={labelStyle}>PLACE OF ORIGIN</label>
                         <input name="placeOfOrigin" value={form.placeOfOrigin} onChange={handleChange} className={inputStyle} />
                     </div>
-                    <div className="col-span-1 grid grid-rows-2 divide-y divide-radio-cyan/30">
+                    <div className="col-span-1 grid grid-rows-2 divide-y divide-radio-cyan/30 relative group">
+                        <button
+                            onClick={() => {
+                                const newMode = !useUTC;
+                                setUseUTC(newMode);
+                                const now = new Date();
+                                const timeStr = newMode
+                                    ? now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' }).replace(':', '') + 'Z'
+                                    : now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kuala_Lumpur' }).replace(':', '') + 'L';
+                                setForm(prev => ({ ...prev, filingTime: timeStr }));
+                            }}
+                            className="absolute -right-6 top-1/2 -translate-y-1/2 bg-radio-cyan/20 hover:bg-radio-cyan/40 text-[8px] text-radio-cyan border border-radio-cyan/50 rounded px-1 transition-colors z-10"
+                            title="Toggle UTC/Local Time"
+                        >
+                            {useUTC ? 'UTC' : 'LOC'}
+                        </button>
                         <div className="flex flex-col p-0.5">
                             <label className="text-[8px] font-bold uppercase text-radio-amber/70 font-orbitron">FILING TIME</label>
                             <input name="filingTime" value={form.filingTime} onChange={handleChange} className="w-full text-xs font-mono text-center outline-none bg-transparent text-radio-cyan" />
