@@ -150,7 +150,7 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
     };
 
     // Styling helpers to match the classic form look but in TACTICAL DARK MODE
-    const labelStyle = "text-[10px] font-bold text-radio-amber uppercase block text-center bg-transparent tracking-wider font-orbitron";
+    const labelStyle = "text-[9px] font-bold text-radio-amber uppercase block text-center bg-transparent tracking-wide font-orbitron";
     const inputStyle = "w-full bg-black/30 border-none text-radio-cyan font-mono font-bold text-center focus:ring-1 focus:ring-radio-cyan rounded-sm placeholder-gray-700";
     const sectionBorder = "border-radio-cyan/30";
 
