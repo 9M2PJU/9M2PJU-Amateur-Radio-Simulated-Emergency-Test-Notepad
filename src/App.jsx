@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useLocalStorage } from './utils/useLocalStorage';
 import StationSettings from './components/StationSettings';
 import TacticalLogger from './components/TacticalLogger';
-import ICS213Form from './components/ICS213Form';
+import IARUMessageForm from './components/IARUMessageForm';
 import { Radio, List, Settings, FileText } from 'lucide-react';
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
   });
 
   const [logs, setLogs] = useLocalStorage('stationLogs', []);
-  const [activeTab, setActiveTab] = useState('ics213'); // 'ics213', 'logger', 'settings'
+  const [activeTab, setActiveTab] = useState('iaru'); // 'iaru', 'logger', 'settings'
 
   const handleAddToLog = (logEntry) => {
     setLogs(prev => [logEntry, ...prev]);
@@ -38,7 +38,7 @@ function App() {
           </div>
 
           <div className="hidden md:flex gap-2 bg-black/20 p-1.5 rounded-lg border border-white/5 backdrop-blur-sm">
-            {['ics213', 'logger', 'settings'].map(tab => (
+            {['iaru', 'logger', 'settings'].map(tab => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -48,7 +48,7 @@ function App() {
                   }`}
               >
                 {tab === 'logger' && 'Logger'}
-                {tab === 'ics213' && 'ICS-213'}
+                {tab === 'iaru' && 'IARU MSG'}
                 {tab === 'settings' && 'Settings'}
               </button>
             ))}
@@ -72,8 +72,8 @@ function App() {
             <TacticalLogger logs={logs} setLogs={setLogs} stationSettings={stationSettings} />
           )}
 
-          {activeTab === 'ics213' && (
-            <ICS213Form
+          {activeTab === 'iaru' && (
+            <IARUMessageForm
               stationSettings={stationSettings}
               onAddToLog={handleAddToLog}
             />
@@ -88,9 +88,9 @@ function App() {
       {/* Mobile Bottom Navigation */}
       <nav className="md:hidden flex-none bg-tactical-surface/80 backdrop-blur-xl border-t border-radio-cyan/20 pb-safe fixed bottom-0 w-full z-20 shadow-[0_-5px_20px_-5px_rgba(6,182,212,0.1)]">
         <div className="flex justify-around items-center h-16">
-          <button onClick={() => setActiveTab('ics213')} className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-all ${activeTab === 'ics213' ? 'text-radio-cyan drop-shadow-[0_0_5px_rgba(6,182,212,0.5)]' : 'text-gray-500'}`}>
+          <button onClick={() => setActiveTab('iaru')} className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-all ${activeTab === 'iaru' ? 'text-radio-cyan drop-shadow-[0_0_5px_rgba(6,182,212,0.5)]' : 'text-gray-500'}`}>
             <FileText className="w-5 h-5" />
-            <span className="text-[10px] font-bold tracking-wider font-orbitron">ICS-213</span>
+            <span className="text-[10px] font-bold tracking-wider font-orbitron">RADIOGRAM</span>
           </button>
           <button onClick={() => setActiveTab('logger')} className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-all ${activeTab === 'logger' ? 'text-radio-green drop-shadow-[0_0_5px_rgba(34,197,94,0.5)]' : 'text-gray-500'}`}>
             <List className="w-5 h-5" />
