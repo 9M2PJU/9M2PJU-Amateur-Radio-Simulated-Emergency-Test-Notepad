@@ -72,7 +72,7 @@ DATE: ${data.recvdDate} TIME: ${data.recvdTime}
 SENT
 TO: ${data.sentTo}  
 DATE: ${data.sentDate} TIME: ${data.sentTime}
-Sent free by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
+Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
 `.trim();
     };
 
