@@ -43,13 +43,45 @@ export default function IARUMessageForm({ stationSettings, onAddToLog }) {
 
     const generateText = (data = form) => {
         return `
-NR ${data.number} ${data.precedence} ${data.stationOfOrigin} ${data.check} ${data.placeOfOrigin} ${data.filingTime} ${data.filingDate}
-TO: ${data.to}
+IARU Message
 
+Priority: ${getPriorityLabel(data.precedence)}
+Message # ${data.number}
+Station of Origin: ${data.stationOfOrigin}
+Word Count: ${data.check}
+Place of Origin: ${data.placeOfOrigin}
+Date ${data.filingDate} and Time: ${data.filingTime}
+
+Special Delivery Instructions:
+${data.specialInstructions}
+
+DELIVER TO:
+${data.to}
+
+MESSAGE:
 ${data.message}
 
-SIG: ${data.from}
+From: ${data.from}
+For radio operator use only:
+
+RECEIVED
+FROM: ${data.recvdFrom}  
+DATE: ${data.recvdDate} TIME: ${data.recvdTime}
+
+SENT
+TO: ${data.sentTo}  
+DATE: ${data.sentDate} TIME: ${data.sentTime}
+Sent free by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
 `.trim();
+    };
+
+    const getPriorityLabel = (code) => {
+        switch (code) {
+            case 'E': return '[Emergency]';
+            case 'P': return '[Priority]';
+            case 'R': return '[Routine]';
+            default: return `[${code}]`;
+        }
     };
 
     const saveMessage = () => {
@@ -196,8 +228,7 @@ SIG: ${data.from}
                         >
                             <option value="R">ROUTINE</option>
                             <option value="P">PRIORITY</option>
-                            <option value="O">IMMEDIATE</option>
-                            <option value="Z">FLASH</option>
+                            <option value="E">EMERGENCY</option>
                         </select>
                     </div>
                     <div className="col-span-1 p-1">

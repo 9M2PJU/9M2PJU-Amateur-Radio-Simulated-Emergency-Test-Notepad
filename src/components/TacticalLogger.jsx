@@ -121,7 +121,7 @@ export default function TacticalLogger({ logs, setLogs, stationSettings }) {
                         />
                     </div>
 
-                    <div className="md:col-span-1">
+                    <div className="md:col-span-2">
                         <label className="text-xs uppercase text-gray-400 font-bold block mb-1 font-orbitron tracking-wider">Time</label>
                         <div className="relative">
                             <Clock className="w-4 h-4 absolute left-2 top-3 text-gray-500" />
