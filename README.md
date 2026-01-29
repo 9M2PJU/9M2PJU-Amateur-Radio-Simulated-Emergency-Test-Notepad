@@ -59,19 +59,6 @@ graph TD
 - **Persistence**: 100% Client-side (No backend, Maximum Privacy)
 - **Timezone**: `Asia/Kuala_Lumpur` (MYT)
 
-## 🏗️ Local Lab Setup
-
-```bash
-# Clone the tactical core
-git clone https://github.com/9M2PJU/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad.git
-
-# Install vital components
-npm install
-
-# Ignite dev server
-npm run dev
-```
-
 ## 📜 License
 Mission authorized under the **MIT License**.
 
