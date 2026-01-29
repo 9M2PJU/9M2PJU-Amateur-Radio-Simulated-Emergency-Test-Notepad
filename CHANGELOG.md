@@ -2,6 +2,11 @@
 
 All notable changes to the **9M2PJU SET Pad (DARES)** will be documented in this file.
 
+## [1.3.2] - 2026-01-30
+### 🎨 Theme Fixes (Mission Critical)
+- **High-Contrast Desert Mode**: Complete redesign of the light theme to resolve invisible text issues.
+- **Dynamic Text Variables**: Integrated `--color-text` tokens across all components for perfect visibility in field ops.
+
 ## [1.3.1] - 2026-01-30
 
 ### 🎨 Theme Refinement

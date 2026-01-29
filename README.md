@@ -3,7 +3,7 @@
 Powered by **9M2PJU**
 
 [![Web App](https://img.shields.io/badge/Status-Online-brightgreen?style=for-the-badge&logo=vercel)](https://setpad.hamradio.my)
-[![Version](https://img.shields.io/badge/version-1.3.1-cyan?style=for-the-badge&logo=github)](https://github.com/9M2PJU/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/releases)
+[![Version](https://img.shields.io/badge/version-1.3.2-cyan?style=for-the-badge&logo=github)](https://github.com/9M2PJU/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/releases)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](https://github.com/9M2PJU/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/blob/main/LICENSE)
 
 <br />

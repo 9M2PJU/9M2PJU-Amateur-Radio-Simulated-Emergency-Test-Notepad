@@ -8,31 +8,30 @@
   --color-surface: #2b2f1b;
   --color-highlight: #3f4228;
   --color-cyan: #a3b86c;
-  /* Khaki Green */
   --color-green: #4d7c0f;
   --color-amber: #d97706;
   --color-red: #b91c1c;
   --color-blue: #60a5fa;
+  --color-text: #e5e7eb;
+  /* gray-200 */
+  --color-text-dim: #9ca3af;
+  /* gray-400 */
 }
 
 .light-mode {
-  /* Light Mode (Desert Tactical) */
-  --color-bg: #f4efe1;
-  /* Light Khaki */
-  --color-surface: #e5dec9;
-  /* Khaki Surface */
-  --color-highlight: #c5bc9e;
-  /* Dark Khaki Border */
-  --color-cyan: #2d3436;
-  /* Obsidian (Primary Text/Buttons) */
+  /* Light Mode (Desert Tactical) - High Contrast Redesign */
+  --color-bg: #fdfbf7;
+  --color-surface: #f1ede1;
+  --color-highlight: #e0d8c3;
+  --color-cyan: #0f172a;
   --color-green: #1b5e20;
-  /* Deep Forest Olive */
-  --color-amber: #634b35;
-  /* Coyote Brown (Replaces vibrant orange) */
-  --color-red: #b71c1c;
-  /* Tactical Red */
-  --color-blue: #0d47a1;
-  /* Tactical Blue */
+  --color-amber: #78350f;
+  --color-red: #991b1b;
+  --color-blue: #1e3a8a;
+  --color-text: #111827;
+  /* gray-900 */
+  --color-text-dim: #4b5563;
+  /* gray-600 */
 }
 
 @layer base {
@@ -43,10 +42,11 @@
   }
 
   body {
-    @apply bg-tactical-bg text-gray-200 font-inter antialiased selection:bg-radio-cyan selection:text-black;
+    @apply bg-tactical-bg font-inter antialiased selection:bg-radio-cyan selection:text-black;
+    color: var(--color-text);
     background-image:
-      radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 100% 0%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+      radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 100% 0%, rgba(59, 130, 246, 0.03) 0%, transparent 50%);
   }
 
   /* ... existing headers ... */
@@ -65,7 +65,8 @@
 
   /* Glassmorphism Panel */
   .panel-tactical {
-    @apply bg-black/60 backdrop-blur-md border border-white/10 rounded-xl p-4 shadow-xl ring-1 ring-white/5 relative overflow-hidden;
+    @apply backdrop-blur-md border border-white/10 rounded-xl p-4 shadow-xl ring-1 ring-white/5 relative overflow-hidden;
+    background-color: color-mix(in srgb, var(--color-surface), transparent 40%);
   }
 
   .panel-tactical::before {
@@ -75,7 +76,9 @@
 
   /* Inputs */
   .input-tactical {
-    @apply w-full bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-radio-cyan focus:border-opacity-50 focus:ring-1 focus:ring-radio-cyan focus:ring-opacity-50 transition-all font-mono tracking-wide placeholder:text-gray-600;
+    @apply w-full border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:border-radio-cyan focus:border-opacity-50 focus:ring-1 focus:ring-radio-cyan focus:ring-opacity-50 transition-all font-mono tracking-wide placeholder:text-gray-600;
+    background-color: color-mix(in srgb, var(--color-bg), transparent 60%);
+    color: var(--color-text);
   }
 
   /* Buttons */
