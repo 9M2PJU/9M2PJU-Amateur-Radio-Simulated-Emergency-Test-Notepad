@@ -93,7 +93,7 @@ function App() {
         <nav className="flex-1 p-4 space-y-2">
           {[
             { id: 'iaru', icon: FileText, label: 'IARU Radiogram' },
-            { id: 'logger', icon: List, label: 'Tactical logger' },
+            { id: 'logger', icon: List, label: 'LOGGER' },
             { id: 'morse', icon: AudioWaveform, label: 'Morse Code (CW)' },
             { id: 'cipher', icon: Lock, label: 'Cipher Converter' },
             { id: 'settings', icon: Settings, label: 'Station Config' }
@@ -179,7 +179,7 @@ function App() {
           <div className="flex justify-around items-center h-16 px-4">
             {[
               { id: 'iaru', icon: FileText, label: 'MSG' },
-              { id: 'logger', icon: List, label: 'LOG' },
+              { id: 'logger', icon: List, label: 'LOGGER' },
               { id: 'morse', icon: AudioWaveform, label: 'CW' },
               { id: 'cipher', icon: Lock, label: 'CIPHER' },
               { id: 'settings', icon: Settings, label: 'CFG' }
