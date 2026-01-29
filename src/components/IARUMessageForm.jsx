@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocalStorage } from '../utils/useLocalStorage';
-import { FileText, Copy, Trash, Printer, FileDown } from 'lucide-react';
+import { FileText, Copy, Trash, Printer, FileDown, Mail } from 'lucide-react';
 import { jsPDF } from "jspdf";
 
 export default function IARUMessageForm({ stationSettings, onAddToLog }) {
@@ -278,19 +278,13 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                             </button>
                             <button
                                 onClick={() => {
-                                    if (navigator.share) {
-                                        navigator.share({
-                                            title: `IARU Message ${viewMsg.number}`,
-                                            text: generateText(viewMsg),
-                                        }).catch(() => setShowShareModal(true));
-                                    } else {
-                                        setShowShareModal(true);
-                                    }
+                                    const subject = encodeURIComponent(`IARU RADIOGRAM NR ${viewMsg.number}`);
+                                    const body = encodeURIComponent(generateText(viewMsg));
+                                    window.location.href = `mailto:?subject=${subject}&body=${body}`;
                                 }}
                                 className="flex-1 bg-radio-green/10 border border-radio-green/50 text-radio-green hover:bg-radio-green/20 font-bold py-2 rounded transition-colors flex items-center justify-center gap-2 text-xs md:text-sm"
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-share-2"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" x2="15.42" y1="13.51" y2="17.49" /><line x1="15.41" x2="8.59" y1="6.51" y2="10.49" /></svg>
-                                Share
+                                <Mail className="w-4 h-4" /> Email
                             </button>
                             <button
                                 onClick={() => {

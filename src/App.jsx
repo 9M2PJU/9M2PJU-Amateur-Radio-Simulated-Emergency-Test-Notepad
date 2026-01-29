@@ -70,8 +70,8 @@ function App() {
       <aside className="hidden lg:flex flex-col w-72 bg-tactical-surface/40 backdrop-blur-2xl border-r border-white/5 z-20 relative overflow-hidden">
         <div className="p-6 border-b border-white/5 space-y-4">
           <div className="flex items-center gap-3">
-            <div className="bg-radio-cyan/10 p-2 rounded-lg border border-radio-cyan/30 shadow-[0_0_15px_rgba(6,182,212,0.2)]">
-              <Radio className="w-6 h-6 text-radio-cyan" />
+            <div className="p-1 rounded-lg border border-radio-cyan/30 shadow-[0_0_15px_rgba(6,182,212,0.2)] bg-black/20">
+              <img src="dares-logo.png" alt="DARES Logo" className="w-10 h-10 object-contain" />
             </div>
             <div>
               <h1 className="text-lg font-bold font-orbitron tracking-tighter text-glow">9M2PJU SET Pad</h1>
@@ -126,7 +126,7 @@ function App() {
         <header className="lg:hidden flex-none bg-tactical-surface/50 backdrop-blur-md border-b border-white/5 p-4 z-20">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Radio className="w-5 h-5 text-radio-cyan animate-pulse-slow" />
+              <img src="dares-logo.png" alt="DARES" className="w-6 h-6 object-contain" />
               <div className="flex flex-col">
                 <h1 className="text-sm font-bold font-orbitron tracking-widest text-glow leading-none">9M2PJU</h1>
                 <span className="text-[8px] tracking-[0.2em] font-mono text-radio-cyan/80">SET PAD</span>
