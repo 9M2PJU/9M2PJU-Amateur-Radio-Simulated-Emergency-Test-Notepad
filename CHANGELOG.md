@@ -1,45 +1,35 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+All notable changes to the **9M2PJU SET Pad (DARES)** will be documented in this file.
 
-## [1.3.0] - 2026-01-25
-### Added
-- **IARU Radiogram Form**: Completely replaced ICS-213 with the standard IARU Message Form (Radiogram).
-- **Tactical Dark Theme**: Updated the message form to match the app's dark "Tactical" aesthetic (Slate/Cyan/Amber).
-- **Timezone Toggle**: Added support for toggling between UTC (Z) and Local (L) time in the message form.
-- **Precedence**: Added "EMERGENCY" option to message precedence.
+## [1.3.0] - 2026-01-30
 
-### Changed
-- **Form Layout**: Redesigned inputs to match the physical IARU radiogram paper layout.
-- **Message Format**: updated `generateText` to produce a verbose, operator-friendly text format.
-- **Footer Text**: Changed "Sent free by..." to "Sent by...".
-- **Documentation**: Updated README to reflect the shift from ICS-213 to Radiograms.
+### 📡 Signal & Crypto Refinement
+- **Morse Code (CW)**: Separated into a dedicated standalone tool with high-performance audio engine and visual character tracking.
+- **Cipher Suite (CIPHER)**: New dedicated menu featuring:
+    - **Caesar Cipher**: Shift-based encryption.
+    - **Atbash Cipher**: Mirror substitution.
+    - **Simple Substitution**: Keyword-based mixed alphabet.
+    - **Playfair Cipher**: Bigram-based key matrix encryption.
+    - **Columnar Transposition**: Key-shuffled grid transposition.
+- **Interactive Controls**: Added adaptive key/keyword inputs and toggles for encryption/decryption modes.
 
-### Fixed
-- **Logger UI**: Fixed an issue where the Time input was truncated in the Tactical Logger.
+### 📧 Messaging Enhancements
+- **Direct Email Integration**: Replaced general Web Share in the Outbox Message Viewer with a direct **Email** button.
+- **Auto-Formatting**: Automatically populates email subject and body with formal IARU Radiogram data.
+- **Outbox UI**: Streamlined saved message previews and viewer modal.
 
-## [1.2.0] - 2026-01-24
-### Added
-- **Orbitron Theme**: Complete UI overhaul with futuristic neon aesthetics and glassmorphism.
-- **Station Persistence**: Call sign, grid, and power settings now persist between sessions using LocalStorage.
-- **Tactical Logger Upgrades**:
-    - Added "Mode" selector (FM, AM, USB, LSB, CW, DIG).
-    - Auto-appends Power Status (`[MAINS]` or `[BATT]`) to remarks.
-    - Enforced Malaysia Standard Time (MYT) for all logging timestamps.
-- **ICS-213 Enhancements**:
-    - Added "Print" button for printer-friendly message formatting.
-    - Added "Priority" dropdown (ROUTINE, PRIORITY, EMERGENCY) with visual indicators.
-    - Auto-fills "From" fields based on Station Settings.
-- **Footer**: Updated branding to "MADE FOR 🇲🇾 BY 9M2PJU".
+### 🎨 UI & Branding (DARES)
+- **Official Identity**: Integrated the **DARES Shield Logo** (PNG) across all platforms.
+- **Desktop Sidebar**: Repositioned logo above the title with enlarged, transparent presentation for a premium look.
+- **Typography**: Consistent use of the **Orbitron** font for tactical mission aesthetics.
+- **Branding**: Unified the suite under the official **Digital Amateur Radio Emergency Suite (DARES)** title.
+- **LOGGER**: Renamed "Tactical logger" to **LOGGER** for faster navigation.
 
-### Changed
-- **App Subtitle**: Renamed to "DIGITAL AMATEUR RADIO EMERGENCY SUITE".
-- **Typography**: Switched to 'Orbitron' for headers/data and 'Inter' for body text.
-- **Responsiveness**: Improved mobile layout for bottom navigation and forms.
+### 🛠️ Technical Fixes
+- **Build Optimization**: Resolved Tailwind CSS opacity variable issues in `index.css`.
+- **Base Integration**: Optimized GitHub Pages deployment pathing for nested folder structures.
+- **Persistence**: Enhanced LocalStorage handling for station settings and outbox messages.
 
-## [1.0.0] - 2026-01-20
-### Initial Release
-- Basic Tactical Logger with CSV Export.
-- Standard ICS-213 Message Form.
-- LocalStorage based data persistence.
-- Offline-capable PWA foundation.
+---
+73 de 9M2PJU
