@@ -148,8 +148,8 @@ function App() {
         </header>
 
         {/* Dynamic Viewport */}
-        <main className="flex-1 overflow-y-auto p-4 md:p-8 scroll-smooth pb-24 lg:pb-8">
-          <div className="max-w-screen-2xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <main className="flex-1 overflow-y-auto p-4 md:p-6 scroll-smooth pb-24 lg:pb-8 flex flex-col">
+          <div className="max-w-screen-2xl mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700 w-full flex-1 flex flex-col xl:scale-[0.90] xl:origin-top">
             {activeTab === 'settings' && (
               <StationSettings settings={stationSettings} updateSettings={setStationSettings} />
             )}

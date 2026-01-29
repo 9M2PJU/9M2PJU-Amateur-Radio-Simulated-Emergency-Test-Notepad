@@ -12,7 +12,7 @@ export default function IARUMessageForm({ stationSettings, onAddToLog }) {
         stationOfOrigin: stationSettings.callsign || '',
         check: '0',
         placeOfOrigin: stationSettings.grid || '',
-        filingTime: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' }).replace(':', '') + 'Z',
+        filingTime: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'UTC' }).replace(/:/g, '') + 'Z',
         filingDate: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase(),
         to: '',
         specialInstructions: '',
@@ -320,8 +320,8 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                                     setUseUTC(newMode);
                                     const now = new Date();
                                     const timeStr = newMode
-                                        ? now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' }).replace(':', '') + 'Z'
-                                        : now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kuala_Lumpur' }).replace(':', '') + 'L';
+                                        ? now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'UTC' }).replace(/:/g, '') + 'Z'
+                                        : now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Kuala_Lumpur' }).replace(/:/g, '') + 'L';
                                     setForm(prev => ({ ...prev, filingTime: timeStr }));
                                 }}
                                 className="text-[7px] text-radio-cyan/70 hover:text-radio-cyan border border-radio-cyan/30 hover:border-radio-cyan rounded px-2 py-0.5 transition-colors uppercase font-bold tracking-widest"
@@ -338,13 +338,13 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                 </div>
 
                 {/* TO Section */}
-                <div className={`relative border-b border-radio-cyan/30 p-2 bg-black/10`}>
-                    <label className="text-xs font-bold uppercase absolute top-1 left-2 text-radio-amber font-orbitron">TO:</label>
+                <div className={`relative border-b border-radio-cyan/30 p-1 bg-black/10`}>
+                    <label className="text-[10px] font-bold uppercase absolute top-1 left-2 text-radio-amber font-orbitron">TO:</label>
                     <textarea
                         name="to"
                         value={form.to}
                         onChange={handleChange}
-                        className="w-full mt-4 h-24 p-2 bg-black/30 border border-radio-cyan/20 rounded resize-none font-mono text-lg uppercase text-white focus:border-radio-cyan/50 focus:ring-1 focus:ring-radio-cyan/50 outline-none"
+                        className="w-full mt-4 h-16 p-1 bg-black/30 border border-radio-cyan/20 rounded resize-none font-mono text-base uppercase text-white focus:border-radio-cyan/50 focus:ring-1 focus:ring-radio-cyan/50 outline-none leading-tight"
                     />
                 </div>
 
@@ -361,13 +361,13 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                 </div>
 
                 {/* Message Body */}
-                <div className={`relative border-b border-radio-cyan/30 p-2 bg-black/20`}>
+                <div className={`relative border-b border-radio-cyan/30 p-1 bg-black/20`}>
                     <textarea
                         name="message"
                         value={form.message}
                         onChange={handleChange}
-                        rows={8}
-                        className="w-full p-2 bg-black/30 border border-radio-cyan/20 rounded resize-none font-mono text-lg uppercase leading-relaxed text-radio-green focus:border-radio-green/50 focus:ring-1 focus:ring-radio-green/50 outline-none shadow-inner"
+                        rows={6}
+                        className="w-full p-2 bg-black/30 border border-radio-cyan/20 rounded resize-none font-mono text-base uppercase leading-snug text-radio-green focus:border-radio-green/50 focus:ring-1 focus:ring-radio-green/50 outline-none shadow-inner"
                     />
                 </div>
 

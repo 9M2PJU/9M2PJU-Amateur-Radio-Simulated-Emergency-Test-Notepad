@@ -35,10 +35,10 @@ export default function TimeWidget({ className = "", compact = false }) {
     }
 
     return (
-        <div className={`panel-tactical p-3 bg-black/40 border-radio-cyan/20 ${className}`}>
+        <div className={`panel-tactical p-3 bg-black/40 border-radio-cyan/20 scale-95 ${className}`}>
             <div className="flex items-center gap-2 mb-2 border-b border-white/5 pb-1">
                 <Clock className="w-3 h-3 text-gray-400" />
-                <span className="text-[10px] uppercase font-bold text-gray-500 font-orbitron tracking-widest">Timing</span>
+                <span className="text-[10px] uppercase font-bold text-gray-500 font-orbitron tracking-widest">TIME</span>
             </div>
             <div className="space-y-1">
                 <div className="flex justify-between items-end">
