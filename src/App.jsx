@@ -159,7 +159,7 @@ function App() {
             )}
 
             <footer className="py-12 text-center text-[10px] uppercase tracking-[0.4em] text-gray-700 font-orbitron">
-              <p>PRECISION AMATEUR RADIO TOOLS // <a href="https://hamradio.my" target="_blank" rel="noopener noreferrer" className="text-radio-cyan hover:text-white transition-colors border-b border-radio-cyan/30">9M2PJU</a></p>
+              <p>DIGITAL AMATEUR RADIO TACTICAL SUITE (DARES) // <a href="https://hamradio.my" target="_blank" rel="noopener noreferrer" className="text-radio-cyan hover:text-white transition-colors border-b border-radio-cyan/30">9M2PJU</a></p>
             </footer>
           </div>
         </main>
