@@ -2,6 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Default Dark Mode (Jungle Tactical) */
+  --color-bg: #1a1c10;
+  --color-surface: #2b2f1b;
+  --color-highlight: #3f4228;
+  --color-cyan: #a3b86c;
+  /* Khaki Green */
+  --color-green: #4d7c0f;
+  --color-amber: #d97706;
+  --color-red: #b91c1c;
+  --color-blue: #60a5fa;
+}
+
+.light-mode {
+  /* Light Mode (Desert Tactical) */
+  --color-bg: #d0c0a5;
+  /* Desert Sand */
+  --color-surface: #e6dccf;
+  /* Lighter Sand */
+  --color-highlight: #bfa88f;
+  /* Darker Sand Border */
+  --color-cyan: #5d4037;
+  /* Dark Brown Text */
+  --color-green: #33691e;
+  /* Darker Olive */
+  --color-amber: #e65100;
+  /* Deep Orange */
+  --color-red: #d32f2f;
+  /* Standard Red */
+  --color-blue: #1976d2;
+  /* Darker Blue */
+}
+
 @layer base {
 
   html,

@@ -12,14 +12,14 @@ export default {
         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", 'monospace'],
       },
       colors: {
-        'tactical-bg': '#1a1c10', // Deep Olive/Black
-        'tactical-surface': '#2b2f1b', // Dark Camo Green
-        'tactical-highlight': '#3f4228', // Lighter Camo Green
-        'radio-cyan': '#a3b86c', // Light Khaki/Green - replacing Cyan
-        'radio-green': '#4d7c0f', // Military Green
-        'radio-amber': '#d97706', // Amber (kept for warning/accent)
-        'radio-red': '#b91c1c', // Deep Red
-        'neon-blue': '#60a5fa', // Muted Blue
+        'tactical-bg': 'var(--color-bg)',
+        'tactical-surface': 'var(--color-surface)',
+        'tactical-highlight': 'var(--color-highlight)',
+        'radio-cyan': 'var(--color-cyan)',
+        'radio-green': 'var(--color-green)',
+        'radio-amber': 'var(--color-amber)',
+        'radio-red': 'var(--color-red)',
+        'neon-blue': 'var(--color-blue)',
       },
       animation: {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',

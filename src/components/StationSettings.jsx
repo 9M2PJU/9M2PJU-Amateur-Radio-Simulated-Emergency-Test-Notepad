@@ -1,7 +1,7 @@
 import React from 'react';
 import { Settings, Battery, Zap, MapPin } from 'lucide-react';
 
-export default function StationSettings({ settings, updateSettings }) {
+export default function StationSettings({ settings, updateSettings, toggleTheme, currentTheme }) {
     const handleChange = (e) => {
         const { name, value } = e.target;
         updateSettings({ ...settings, [name]: value.toUpperCase() });
@@ -9,9 +9,17 @@ export default function StationSettings({ settings, updateSettings }) {
 
     return (
         <div className="panel-tactical mb-6 border-l-4 border-l-radio-amber">
-            <div className="flex items-center gap-2 mb-4 text-radio-amber">
-                <Settings className="w-6 h-6 animate-spin-slow" />
-                <h2 className="text-xl font-bold uppercase tracking-wider font-orbitron text-glow-amber">Station Configuration</h2>
+            <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2 text-radio-amber">
+                    <Settings className="w-6 h-6 animate-spin-slow" />
+                    <h2 className="text-xl font-bold uppercase tracking-wider font-orbitron text-glow-amber">Station Configuration</h2>
+                </div>
+                <button
+                    onClick={toggleTheme}
+                    className="flex items-center gap-2 px-3 py-1.5 rounded border border-radio-cyan/50 text-radio-cyan hover:bg-radio-cyan/20 transition-all font-orbitron text-xs font-bold uppercase"
+                >
+                    {currentTheme === 'dark' ? '☀ DESERT MODE' : '☾ JUNGLE MODE'}
+                </button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -68,12 +76,6 @@ export default function StationSettings({ settings, updateSettings }) {
                 <p className="text-[10px] text-gray-600 uppercase font-mono tracking-widest">
                     Build: {new Date().toLocaleDateString('en-GB', { timeZone: 'Asia/Kuala_Lumpur' })}
                 </p>
-                <button
-                    onClick={() => window.location.reload()}
-                    className="text-[10px] text-radio-amber hover:text-white uppercase font-bold tracking-wider font-orbitron border border-radio-amber/30 px-2 py-1 rounded hover:bg-radio-amber/10 transition-colors"
-                >
-                    Check for Updates
-                </button>
             </div>
         </div>
     );
