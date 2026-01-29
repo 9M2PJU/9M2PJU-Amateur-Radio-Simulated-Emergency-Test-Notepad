@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocalStorage } from './utils/useLocalStorage';
 import StationSettings from './components/StationSettings';
 import TacticalLogger from './components/TacticalLogger';
 import IARUMessageForm from './components/IARUMessageForm';
+import TimeWidget from './components/TimeWidget';
 import { Radio, List, Settings, FileText } from 'lucide-react';
 
 function App() {
@@ -14,94 +15,182 @@ function App() {
 
   const [logs, setLogs] = useLocalStorage('stationLogs', []);
   const [activeTab, setActiveTab] = useState('iaru'); // 'iaru', 'logger', 'settings'
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [showInstallModal, setShowInstallModal] = useState(false);
+
+  useEffect(() => {
+    const handler = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+
+      const lastPrompt = localStorage.getItem('lastInstallPrompt');
+      const now = Date.now();
+      const oneDay = 24 * 60 * 60 * 1000;
+
+      if (!lastPrompt || (now - parseInt(lastPrompt)) > oneDay) {
+        setShowInstallModal(true);
+      }
+    };
+
+    window.addEventListener('beforeinstallprompt', handler);
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  const handleInstall = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      setDeferredPrompt(null);
+    }
+    setShowInstallModal(false);
+    localStorage.setItem('lastInstallPrompt', Date.now().toString());
+  };
 
   const handleAddToLog = (logEntry) => {
     setLogs(prev => [logEntry, ...prev]);
   };
 
   return (
-    <div className="flex flex-col h-[100dvh] text-gray-100 font-inter overflow-hidden bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2672&auto=format&fit=crop')" }}>
-      {/* Dark overlay to ensure text readability over background image */}
-      <div className="absolute inset-0 bg-tactical-bg/90 z-0"></div>
+    <div className="flex flex-col lg:flex-row h-[100dvh] text-gray-100 font-inter overflow-hidden bg-cover bg-center selection:bg-radio-cyan selection:text-black"
+      style={{ backgroundImage: "url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2672&auto=format&fit=crop')" }}>
 
-      {/* Desktop/Tablet Header */}
-      <header className="flex-none bg-tactical-surface/50 backdrop-blur-md border-b border-radio-cyan/20 p-4 shadow-[0_4px_20px_-5px_rgba(6,182,212,0.1)] z-10 sticky top-0">
-        <div className="max-w-5xl mx-auto flex items-center justify-between relative z-10">
+      <div className="scanline"></div>
+
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-tactical-bg/95 z-0"></div>
+
+      {/* PWA Install Modal */}
+      {showInstallModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+          <div className="panel-tactical max-w-sm w-full text-center space-y-4 border-radio-cyan animate-in zoom-in-95 duration-300">
+            <Radio className="w-12 h-12 text-radio-cyan mx-auto animate-pulse" />
+            <h3 className="text-xl font-bold font-orbitron text-glow">COMMUNICATION LINK</h3>
+            <p className="text-sm text-gray-400 font-mono">Install MySET Digital Notepad for offline tactical access and native performance.</p>
+            <div className="flex gap-3 pt-2">
+              <button onClick={handleInstall} className="btn-tactical flex-1 py-3 text-sm">INSTALL SYSTEM</button>
+              <button onClick={() => { setShowInstallModal(false); localStorage.setItem('lastInstallPrompt', Date.now().toString()); }}
+                className="flex-1 bg-white/5 hover:bg-white/10 text-gray-400 py-3 rounded-md text-xs font-bold uppercase tracking-widest transition-all">DISMISS</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Sidebar for Desktop (xl+) */}
+      <aside className="hidden lg:flex flex-col w-72 bg-tactical-surface/40 backdrop-blur-2xl border-r border-white/5 z-20 relative overflow-hidden">
+        <div className="p-6 border-b border-white/5 space-y-4">
           <div className="flex items-center gap-3">
-            <div className="bg-radio-cyan/10 p-2 rounded-lg border border-radio-cyan/30 shadow-[0_0_10px_rgba(6,182,212,0.2)]">
-              <Radio className="w-6 h-6 text-radio-cyan animate-pulse-slow" />
+            <div className="bg-radio-cyan/10 p-2 rounded-lg border border-radio-cyan/30 shadow-[0_0_15px_rgba(6,182,212,0.2)]">
+              <Radio className="w-6 h-6 text-radio-cyan" />
             </div>
             <div>
-              <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent uppercase tracking-widest text-glow font-orbitron">MySET Notepad</h1>
-              <div className="text-[10px] text-radio-cyan/80 tracking-[0.2em] font-mono">DIGITAL AMATEUR RADIO EMERGENCY SUITE</div>
+              <h1 className="text-lg font-bold font-orbitron tracking-tighter text-glow">9M2PJU SET Pad</h1>
+              <div className="text-[8px] text-radio-cyan/60 tracking-[0.3em] font-mono leading-tight uppercase">Simulated Emergency Test Notepad</div>
             </div>
           </div>
 
-          <div className="hidden md:flex gap-2 bg-black/20 p-1.5 rounded-lg border border-white/5 backdrop-blur-sm">
-            {['iaru', 'logger', 'settings'].map(tab => (
+
+          <div className="panel-tactical p-3 bg-black/40 border-radio-amber/20 scale-95">
+            <div className="text-[10px] text-radio-amber font-orbitron uppercase tracking-widest mb-1">Station Status</div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm font-mono font-bold">{stationSettings.callsign || '9M2XXX'}</span>
+              <span className="text-[10px] font-mono p-1 rounded bg-radio-amber/10 text-radio-amber border border-radio-amber/30">{stationSettings.power}</span>
+            </div>
+            <div className="text-[9px] text-gray-500 font-mono mt-1 opacity-60">{stationSettings.grid || 'NO GRID'}</div>
+          </div>
+
+          <TimeWidget className="mx-4" />
+        </div>
+
+        <nav className="flex-1 p-4 space-y-2">
+          {[
+            { id: 'iaru', icon: FileText, label: 'IARU Radiogram' },
+            { id: 'logger', icon: List, label: 'Tactical logger' },
+            { id: 'settings', icon: Settings, label: 'Station Config' }
+          ].map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`w-full flex items-center gap-4 px-4 py-3 rounded-lg transition-all font-orbitron text-xs uppercase tracking-widest ${activeTab === tab.id
+                ? 'bg-radio-cyan/20 text-radio-cyan border border-radio-cyan/50 shadow-[0_0_15px_rgba(6,182,212,0.1)]'
+                : 'text-gray-500 hover:text-white hover:bg-white/5'
+                }`}
+            >
+              <tab.icon className={`w-4 h-4 ${activeTab === tab.id ? 'text-radio-cyan' : ''}`} />
+              {tab.label}
+            </button>
+          ))}
+        </nav>
+
+        <div className="p-6 border-t border-white/5 text-[9px] text-gray-600 font-mono space-y-1">
+          <p>SYSTEM v1.2.0-STABLE</p>
+          <p>© 2026 9M2PJU PROJECT</p>
+        </div>
+      </aside>
+
+      {/* Main Content Pane */}
+      <div className="flex-1 flex flex-col relative z-10 overflow-hidden">
+        {/* Mobile/Tablet Header */}
+        <header className="lg:hidden flex-none bg-tactical-surface/50 backdrop-blur-md border-b border-white/5 p-4 z-20">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Radio className="w-5 h-5 text-radio-cyan animate-pulse-slow" />
+              <div className="flex flex-col">
+                <h1 className="text-sm font-bold font-orbitron tracking-widest text-glow leading-none">9M2PJU</h1>
+                <span className="text-[8px] tracking-[0.2em] font-mono text-radio-cyan/80">SET PAD</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <TimeWidget compact={true} />
+              <div className="text-xs font-mono text-radio-amber font-bold border-l border-white/10 pl-3">{stationSettings.callsign || 'NOCAL'}</div>
+            </div>
+          </div>
+        </header>
+
+        {/* Dynamic Viewport */}
+        <main className="flex-1 overflow-y-auto p-4 md:p-8 scroll-smooth pb-24 lg:pb-8">
+          <div className="max-w-screen-2xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            {activeTab === 'settings' && (
+              <StationSettings settings={stationSettings} updateSettings={setStationSettings} />
+            )}
+
+            {activeTab === 'logger' && (
+              <TacticalLogger logs={logs} setLogs={setLogs} stationSettings={stationSettings} />
+            )}
+
+            {activeTab === 'iaru' && (
+              <IARUMessageForm
+                stationSettings={stationSettings}
+                onAddToLog={handleAddToLog}
+              />
+            )}
+
+            <footer className="py-12 text-center text-[10px] uppercase tracking-[0.4em] text-gray-700 font-orbitron">
+              <p>PRECISION AMATEUR RADIO TOOLS // <a href="https://hamradio.my" target="_blank" rel="noopener noreferrer" className="text-radio-cyan hover:text-white transition-colors border-b border-radio-cyan/30">9M2PJU</a></p>
+            </footer>
+          </div>
+        </main>
+
+        {/* Mobile Bottom Navigation */}
+        <nav className="lg:hidden flex-none bg-tactical-surface/80 backdrop-blur-3xl border-t border-white/5 pb-safe fixed bottom-0 w-full z-30">
+          <div className="flex justify-around items-center h-16 px-4">
+            {[
+              { id: 'iaru', icon: FileText, label: 'MSG' },
+              { id: 'logger', icon: List, label: 'LOG' },
+              { id: 'settings', icon: Settings, label: 'CFG' }
+            ].map(tab => (
               <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-5 py-2 text-sm font-bold uppercase rounded-md transition-all font-orbitron tracking-wider ${activeTab === tab
-                  ? 'bg-radio-cyan/20 text-radio-cyan shadow-[0_0_10px_rgba(6,182,212,0.2)] border border-radio-cyan/50'
-                  : 'text-gray-400 hover:text-white hover:bg-white/5'
-                  }`}
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-all ${activeTab === tab.id ? 'text-radio-cyan scale-110 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]' : 'text-gray-500'}`}
               >
-                {tab === 'logger' && 'Logger'}
-                {tab === 'iaru' && 'IARU MSG'}
-                {tab === 'settings' && 'Settings'}
+                <tab.icon className="w-5 h-5" />
+                <span className="text-[10px] font-bold tracking-tighter font-orbitron uppercase">{tab.label}</span>
               </button>
             ))}
           </div>
-
-          <div className="text-right hidden sm:block">
-            <div className="text-sm font-mono text-radio-amber uppercase text-glow-amber">{stationSettings.callsign || 'NO CALLSIGN'}</div>
-            <div className="text-xs text-gray-500 font-mono tracking-widest">{stationSettings.grid}</div>
-          </div>
-        </div>
-      </header>
-
-      {/* Scrollable Content Area */}
-      <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 pb-24 md:pb-4 scroll-smooth z-10 relative">
-        <div className="max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
-          {activeTab === 'settings' && (
-            <StationSettings settings={stationSettings} updateSettings={setStationSettings} />
-          )}
-
-          {activeTab === 'logger' && (
-            <TacticalLogger logs={logs} setLogs={setLogs} stationSettings={stationSettings} />
-          )}
-
-          {activeTab === 'iaru' && (
-            <IARUMessageForm
-              stationSettings={stationSettings}
-              onAddToLog={handleAddToLog}
-            />
-          )}
-        </div>
-
-        <footer className="py-8 text-center text-[10px] uppercase tracking-[0.3em] text-gray-600 font-orbitron opacity-50 hover:opacity-100 transition-opacity">
-          <p>MADE FOR 🇲🇾 BY <a href="https://hamradio.my" target="_blank" rel="noopener noreferrer" className="text-radio-cyan hover:text-white transition-colors border-b border-radio-cyan/30 hover:border-white">9M2PJU</a></p>
-        </footer>
-      </main>
-
-      {/* Mobile Bottom Navigation */}
-      <nav className="md:hidden flex-none bg-tactical-surface/80 backdrop-blur-xl border-t border-radio-cyan/20 pb-safe fixed bottom-0 w-full z-20 shadow-[0_-5px_20px_-5px_rgba(6,182,212,0.1)]">
-        <div className="flex justify-around items-center h-16">
-          <button onClick={() => setActiveTab('iaru')} className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-all ${activeTab === 'iaru' ? 'text-radio-cyan drop-shadow-[0_0_5px_rgba(6,182,212,0.5)]' : 'text-gray-500'}`}>
-            <FileText className="w-5 h-5" />
-            <span className="text-[10px] font-bold tracking-wider font-orbitron">RADIOGRAM</span>
-          </button>
-          <button onClick={() => setActiveTab('logger')} className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-all ${activeTab === 'logger' ? 'text-radio-green drop-shadow-[0_0_5px_rgba(34,197,94,0.5)]' : 'text-gray-500'}`}>
-            <List className="w-5 h-5" />
-            <span className="text-[10px] font-bold tracking-wider font-orbitron">LOGS</span>
-          </button>
-          <button onClick={() => setActiveTab('settings')} className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-all ${activeTab === 'settings' ? 'text-radio-amber drop-shadow-[0_0_5px_rgba(245,158,11,0.5)]' : 'text-gray-500'}`}>
-            <Settings className="w-5 h-5" />
-            <span className="text-[10px] font-bold tracking-wider font-orbitron">CFG</span>
-          </button>
-        </div>
-      </nav>
+        </nav>
+      </div>
     </div>
   );
 }

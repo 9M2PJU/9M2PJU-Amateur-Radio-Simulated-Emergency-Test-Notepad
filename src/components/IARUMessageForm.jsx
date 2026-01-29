@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useLocalStorage } from '../utils/useLocalStorage';
-import { FileText, Copy, Trash, Printer } from 'lucide-react';
+import { FileText, Copy, Trash, Printer, FileDown } from 'lucide-react';
+import { jsPDF } from "jspdf";
 
 export default function IARUMessageForm({ stationSettings, onAddToLog }) {
+    // ... (rest of state definitions same as before)
     const [useUTC, setUseUTC] = useState(true);
     const [form, setForm] = useState({
         number: '1',
@@ -10,8 +12,8 @@ export default function IARUMessageForm({ stationSettings, onAddToLog }) {
         stationOfOrigin: stationSettings.callsign || '',
         check: '0',
         placeOfOrigin: stationSettings.grid || '',
-        filingTime: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kuala_Lumpur' }).replace(':', '') + 'Z', // default to Z logic later (manual for now)
-        filingDate: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }).toUpperCase(),
+        filingTime: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' }).replace(':', '') + 'Z',
+        filingDate: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase(),
         to: '',
         specialInstructions: '',
         message: '',
@@ -95,7 +97,7 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                 id: Date.now(),
                 date: new Date().toISOString().split('T')[0],
                 time: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }),
-                callsign: data.to ? data.to.split('\n')[0] : 'STATION',
+                callsign: form.to ? form.to.split('\n')[0] : 'STATION',
                 freq: 'MSG',
                 mode: 'RADIOGRAM',
                 rstSent: '59',
@@ -139,7 +141,7 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                 <body>
                     <h1>IARU RADIOGRAM</h1>
                     <pre>${text}</pre>
-                    <div class="footer">Printed from MySET Notepad on ${new Date().toLocaleString()}</div>
+                    <div class="footer">Printed from 9M2PJU SET Pad on ${new Date().toLocaleString()}</div>
                     <script>
                         window.onload = function() { window.print(); window.close(); }
                     </script>
@@ -147,6 +149,64 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
             </html>
         `);
         printWindow.document.close();
+    };
+
+    const handleExportPDF = async (msg) => {
+        const doc = new jsPDF();
+
+        const loadImage = (src) => new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = reject;
+            img.src = src;
+        });
+
+        try {
+            // Header
+            try {
+                const logo = await loadImage('favicon.png');
+                doc.addImage(logo, 'PNG', 15, 10, 15, 15);
+            } catch (e) {
+                console.warn("Could not load logo for PDF");
+            }
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(22);
+            doc.setTextColor(6, 182, 212); // Brand Cyan
+            doc.text("9M2PJU SET Pad", 35, 20);
+
+            doc.setFontSize(10);
+            doc.setTextColor(100);
+            doc.text("SIMULATED EMERGENCY TEST NOTEPAD", 35, 26);
+
+            doc.setDrawColor(200);
+            doc.setLineWidth(0.5);
+            doc.line(15, 32, 195, 32);
+
+            // Message Content
+            doc.setFont("courier", "bold");
+            doc.setFontSize(16);
+            doc.setTextColor(0);
+            const contentStartY = 45;
+            doc.text("IARU RADIOGRAM", 20, contentStartY);
+
+            const lines = doc.splitTextToSize(generateText(msg), 170);
+            doc.setFont("courier", "normal");
+            doc.setFontSize(11);
+            doc.text(lines, 20, contentStartY + 10);
+
+            // Footer
+            const pageHeight = doc.internal.pageSize.height;
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(9);
+            doc.setTextColor(128);
+            doc.text("9M2PJU SET Pad // Made for Malaysia by 9M2PJU", 105, pageHeight - 10, { align: "center" });
+
+            doc.save(`IARU_MSG_${msg.number}_${msg.filingDate}.pdf`);
+        } catch (error) {
+            console.error("PDF Generation Error", error);
+            alert("Failed to generate PDF");
+        }
     };
 
     // Styling helpers to match the classic form look but in TACTICAL DARK MODE
@@ -178,25 +238,31 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                             </div>
                         </div>
 
-                        <div className="p-4 border-t border-gray-700 bg-slate-900/50 rounded-b-lg flex gap-3">
+                        <div className="p-4 border-t border-gray-700 bg-slate-900/50 rounded-b-lg flex gap-3 flex-wrap">
                             <button
                                 onClick={() => handlePrint(viewMsg)}
-                                className="flex-1 bg-tactical-surface border border-tactical-highlight text-white hover:bg-slate-700 font-bold py-2 rounded transition-colors flex items-center justify-center gap-2"
+                                className="flex-1 bg-tactical-surface border border-tactical-highlight text-white hover:bg-slate-700 font-bold py-2 rounded transition-colors flex items-center justify-center gap-2 text-xs md:text-sm"
                             >
                                 <Printer className="w-4 h-4" /> Print
+                            </button>
+                            <button
+                                onClick={() => handleExportPDF(viewMsg)}
+                                className="flex-1 bg-radio-cyan/10 border border-radio-cyan/50 text-radio-cyan hover:bg-radio-cyan/20 font-bold py-2 rounded transition-colors flex items-center justify-center gap-2 text-xs md:text-sm"
+                            >
+                                <FileDown className="w-4 h-4" /> PDF
                             </button>
                             <button
                                 onClick={() => {
                                     navigator.clipboard.writeText(generateText(viewMsg));
                                     alert('Copied to clipboard!');
                                 }}
-                                className="flex-1 bg-tactical-highlight text-white font-bold py-2 rounded hover:bg-slate-600 transition-colors flex items-center justify-center gap-2"
+                                className="flex-1 bg-tactical-highlight text-white font-bold py-2 rounded hover:bg-slate-600 transition-colors flex items-center justify-center gap-2 text-xs md:text-sm"
                             >
-                                <Copy className="w-4 h-4" /> Copy Text
+                                <Copy className="w-4 h-4" /> Copy
                             </button>
                             <button
                                 onClick={() => deleteMessage(viewMsg.id)}
-                                className="px-4 bg-red-900/50 text-red-200 font-bold py-2 rounded hover:bg-red-900 transition-colors border border-red-900 flex items-center justify-center gap-2"
+                                className="px-4 bg-red-900/50 text-red-200 font-bold py-2 rounded hover:bg-red-900 transition-colors border border-red-900 flex items-center justify-center gap-2 text-xs md:text-sm"
                             >
                                 <Trash className="w-4 h-4" /> Delete
                             </button>
