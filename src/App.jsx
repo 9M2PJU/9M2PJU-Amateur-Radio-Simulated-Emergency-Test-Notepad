@@ -4,9 +4,10 @@ import StationSettings from './components/StationSettings';
 import TacticalLogger from './components/TacticalLogger';
 import IARUMessageForm from './components/IARUMessageForm';
 import MorseConverter from './components/MorseConverter';
+import CipherConverter from './components/CipherConverter';
 import TimeWidget from './components/TimeWidget';
 import CursorTrail from './components/CursorTrail';
-import { Radio, List, Settings, FileText, AudioWaveform } from 'lucide-react';
+import { Radio, List, Settings, FileText, AudioWaveform, Lock } from 'lucide-react';
 
 function App() {
   const [theme, setTheme] = useLocalStorage('theme', 'dark'); // 'dark' or 'light'
@@ -95,7 +96,8 @@ function App() {
           {[
             { id: 'iaru', icon: FileText, label: 'IARU Radiogram' },
             { id: 'logger', icon: List, label: 'Tactical logger' },
-            { id: 'morse', icon: AudioWaveform, label: 'CW / CRYPTO' },
+            { id: 'morse', icon: AudioWaveform, label: 'Morse Code (CW)' },
+            { id: 'cipher', icon: Lock, label: 'Cipher Converter' },
             { id: 'settings', icon: Settings, label: 'Station Config' }
           ].map(tab => (
             <button
@@ -157,6 +159,10 @@ function App() {
               <MorseConverter />
             )}
 
+            {activeTab === 'cipher' && (
+              <CipherConverter />
+            )}
+
             {activeTab === 'iaru' && (
               <IARUMessageForm
                 stationSettings={stationSettings}
@@ -176,7 +182,8 @@ function App() {
             {[
               { id: 'iaru', icon: FileText, label: 'MSG' },
               { id: 'logger', icon: List, label: 'LOG' },
-              { id: 'morse', icon: AudioWaveform, label: 'CW / CRYPTO' },
+              { id: 'morse', icon: AudioWaveform, label: 'CW' },
+              { id: 'cipher', icon: Lock, label: 'CIPHER' },
               { id: 'settings', icon: Settings, label: 'CFG' }
             ].map(tab => (
               <button
