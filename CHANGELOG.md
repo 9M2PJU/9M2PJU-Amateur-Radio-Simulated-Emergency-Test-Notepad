@@ -2,6 +2,11 @@
 
 All notable changes to the **9M2PJU SET Pad (DARES)** will be documented in this file.
 
+## [1.3.1] - 2026-01-30
+
+### 🎨 Theme Refinement
+- **Desert Mode (Light)**: Replaced vibrant orange text with high-contrast **Coyote Brown** and **Obsidian** for professional tactical visibility in bright field environments.
+
 ## [1.3.0] - 2026-01-30
 
 ### 📡 Signal & Crypto Refinement
