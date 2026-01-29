@@ -17,22 +17,22 @@
 
 .light-mode {
   /* Light Mode (Desert Tactical) */
-  --color-bg: #d0c0a5;
-  /* Desert Sand */
-  --color-surface: #e6dccf;
-  /* Lighter Sand */
-  --color-highlight: #bfa88f;
-  /* Darker Sand Border */
-  --color-cyan: #5d4037;
-  /* Dark Brown Text */
-  --color-green: #33691e;
-  /* Darker Olive */
-  --color-amber: #e65100;
-  /* Deep Orange */
-  --color-red: #d32f2f;
-  /* Standard Red */
-  --color-blue: #1976d2;
-  /* Darker Blue */
+  --color-bg: #f4efe1;
+  /* Light Khaki */
+  --color-surface: #e5dec9;
+  /* Khaki Surface */
+  --color-highlight: #c5bc9e;
+  /* Dark Khaki Border */
+  --color-cyan: #2d3436;
+  /* Obsidian (Primary Text/Buttons) */
+  --color-green: #1b5e20;
+  /* Deep Forest Olive */
+  --color-amber: #634b35;
+  /* Coyote Brown (Replaces vibrant orange) */
+  --color-red: #b71c1c;
+  /* Tactical Red */
+  --color-blue: #0d47a1;
+  /* Tactical Blue */
 }
 
 @layer base {
