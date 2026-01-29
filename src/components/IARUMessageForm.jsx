@@ -6,13 +6,15 @@ import { jsPDF } from "jspdf";
 export default function IARUMessageForm({ stationSettings, onAddToLog }) {
     // ... (rest of state definitions same as before)
     const [useUTC, setUseUTC] = useState(true);
+    const [isAutoTime, setIsAutoTime] = useState(true);
+
     const [form, setForm] = useState({
         number: '1',
         precedence: 'R', // R, P, O, Z (Routine, Priority, Immediate, Flash) - keeping simplified for now
         stationOfOrigin: stationSettings.callsign || '',
         check: '0',
         placeOfOrigin: stationSettings.grid || '',
-        filingTime: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'UTC' }).replace(/:/g, '') + 'Z',
+        filingTime: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' }).replace(/:/g, '') + 'Z',
         filingDate: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase(),
         to: '',
         specialInstructions: '',
@@ -29,6 +31,28 @@ export default function IARUMessageForm({ stationSettings, onAddToLog }) {
 
     const [savedMessages, setSavedMessages] = useLocalStorage('iaru_outbox', []);
 
+    // Realtime Filing Time Sync (hh:mm only)
+    useEffect(() => {
+        if (!isAutoTime) return;
+
+        const updateTime = () => {
+            const now = new Date();
+            const timeStr = useUTC
+                ? now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' }).replace(/:/g, '') + 'Z'
+                : now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kuala_Lumpur' }).replace(/:/g, '') + 'L';
+
+            setForm(prev => {
+                if (prev.filingTime === timeStr) return prev;
+                return { ...prev, filingTime: timeStr };
+            });
+        };
+
+        const timer = setInterval(updateTime, 1000);
+        updateTime();
+
+        return () => clearInterval(timer);
+    }, [isAutoTime, useUTC]);
+
     // Auto update word count
     useEffect(() => {
         if (form.message) {
@@ -41,6 +65,7 @@ export default function IARUMessageForm({ stationSettings, onAddToLog }) {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        if (name === 'filingTime') setIsAutoTime(false);
         setForm(prev => ({ ...prev, [name]: value.toUpperCase() }));
     };
 
@@ -215,7 +240,7 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
     const sectionBorder = "border-radio-cyan/30";
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative">
+        <div className="flex flex-col lg:flex-row gap-6 relative h-full min-h-0">
 
             {/* Message Viewer Modal */}
             {viewMsg && (
@@ -252,6 +277,28 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                                 <FileDown className="w-4 h-4" /> PDF
                             </button>
                             <button
+                                onClick={async () => {
+                                    if (navigator.share) {
+                                        try {
+                                            await navigator.share({
+                                                title: `IARU Message ${viewMsg.number}`,
+                                                text: generateText(viewMsg),
+                                            });
+                                        } catch (err) {
+                                            if (err.name !== 'AbortError') console.error('Share failed:', err);
+                                        }
+                                    } else {
+                                        // Fallback to clipboard if share not supported
+                                        navigator.clipboard.writeText(generateText(viewMsg));
+                                        alert('Sharing not supported. Copied to clipboard instead!');
+                                    }
+                                }}
+                                className="flex-1 bg-radio-green/10 border border-radio-green/50 text-radio-green hover:bg-radio-green/20 font-bold py-2 rounded transition-colors flex items-center justify-center gap-2 text-xs md:text-sm"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-share-2"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" x2="15.42" y1="13.51" y2="17.49" /><line x1="15.41" x2="8.59" y1="6.51" y2="10.49" /></svg>
+                                Share
+                            </button>
+                            <button
                                 onClick={() => {
                                     navigator.clipboard.writeText(generateText(viewMsg));
                                     alert('Copied to clipboard!');
@@ -272,155 +319,157 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
             )}
 
             {/* The IARU FORM */}
-            <div className="bg-tactical-surface text-gray-100 font-sans shadow-[0_0_30px_rgba(6,182,212,0.1)] relative overflow-hidden border border-radio-cyan/20 rounded-lg">
-                {/* Header Strip */}
-                <div className="bg-radio-amber/10 border-b-2 border-radio-amber/50 p-2 flex justify-center items-center relative">
-                    <h2 className="text-2xl font-bold italic tracking-[0.2em] text-radio-amber font-orbitron drop-shadow-[0_0_5px_rgba(245,158,11,0.5)]">IARU MESSAGE</h2>
-                    <span className="absolute right-2 text-[10px] italic text-radio-amber/70 font-mono tracking-widest">INTERNATIONAL</span>
-                </div>
+            <div className="flex-1 flex flex-col min-h-0 bg-tactical-surface text-gray-100 font-sans shadow-[0_0_30px_rgba(163,184,108,0.1)] relative overflow-hidden border border-radio-cyan/20 rounded-lg">
+                <div className="overflow-y-auto custom-scrollbar flex-1 flex flex-col">
+                    {/* Header Strip */}
+                    <div className="flex-none bg-radio-amber/10 border-b-2 border-radio-amber/50 p-2 flex justify-center items-center relative">
+                        <h2 className="text-2xl font-bold italic tracking-[0.2em] text-radio-amber font-orbitron drop-shadow-[0_0_5px_rgba(245,158,11,0.5)]">IARU MESSAGE</h2>
+                        <span className="absolute right-2 text-[10px] italic text-radio-amber/70 font-mono tracking-widest">INTERNATIONAL</span>
+                    </div>
 
-                {/* Header Grid */}
-                <div className={`grid grid-cols-7 border-b border-radio-cyan/30 text-center divide-x divide-radio-cyan/30`}>
-                    <div className="col-span-1 p-1">
-                        <label className={labelStyle}>NUMBER</label>
-                        <input name="number" value={form.number} onChange={handleChange} className={inputStyle} />
-                    </div>
-                    <div className="col-span-1 p-1">
-                        <label className={labelStyle}>PRECEDENCE</label>
-                        <select
-                            name="precedence"
-                            value={form.precedence}
-                            onChange={handleChange}
-                            className={`${inputStyle} appearance-none bg-black/30 text-radio-cyan`}
-                        >
-                            <option value="R">ROUTINE</option>
-                            <option value="P">PRIORITY</option>
-                            <option value="E">EMERGENCY</option>
-                        </select>
-                    </div>
-                    <div className="col-span-1 p-1">
-                        <label className={labelStyle}>STATION OF ORIGIN</label>
-                        <input name="stationOfOrigin" value={form.stationOfOrigin} onChange={handleChange} className={inputStyle} />
-                    </div>
-                    <div className="col-span-1 p-1">
-                        <label className={labelStyle}>WORD COUNT</label>
-                        <input name="check" value={form.check} readOnly className={`${inputStyle} bg-white/5 text-gray-400 cursor-not-allowed`} />
-                    </div>
-                    <div className="col-span-2 p-1">
-                        <label className={labelStyle}>PLACE OF ORIGIN</label>
-                        <input name="placeOfOrigin" value={form.placeOfOrigin} onChange={handleChange} className={inputStyle} />
-                    </div>
-                    <div className="col-span-1 grid grid-rows-2 divide-y divide-radio-cyan/30 relative group">
-                        <div className="flex flex-col p-1 h-full items-center justify-between">
-                            <label className="text-[8px] font-bold uppercase text-radio-amber/70 font-orbitron mb-1">FILING TIME</label>
-                            <input name="filingTime" value={form.filingTime} onChange={handleChange} className="w-full text-xs font-mono text-center outline-none bg-transparent text-radio-cyan mb-1" />
-                            <button
-                                onClick={() => {
-                                    const newMode = !useUTC;
-                                    setUseUTC(newMode);
-                                    const now = new Date();
-                                    const timeStr = newMode
-                                        ? now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'UTC' }).replace(/:/g, '') + 'Z'
-                                        : now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Kuala_Lumpur' }).replace(/:/g, '') + 'L';
-                                    setForm(prev => ({ ...prev, filingTime: timeStr }));
-                                }}
-                                className="text-[7px] text-radio-cyan/70 hover:text-radio-cyan border border-radio-cyan/30 hover:border-radio-cyan rounded px-2 py-0.5 transition-colors uppercase font-bold tracking-widest"
-                                title="Toggle UTC/Local Time"
+                    {/* Header Grid */}
+                    <div className={`flex-none grid grid-cols-7 border-b border-radio-cyan/30 text-center divide-x divide-radio-cyan/30`}>
+                        <div className="col-span-1 p-1">
+                            <label className={labelStyle}>NUMBER</label>
+                            <input name="number" value={form.number} onChange={handleChange} className={inputStyle} />
+                        </div>
+                        <div className="col-span-1 p-1">
+                            <label className={labelStyle}>PRECEDENCE</label>
+                            <select
+                                name="precedence"
+                                value={form.precedence}
+                                onChange={handleChange}
+                                className={`${inputStyle} appearance-none bg-black/30 text-radio-cyan`}
                             >
-                                {useUTC ? 'UTC' : 'LOCAL'}
-                            </button>
+                                <option value="R">ROUTINE</option>
+                                <option value="P">PRIORITY</option>
+                                <option value="E">EMERGENCY</option>
+                            </select>
                         </div>
-                        <div className="flex flex-col p-0.5 relative">
-                            <label className="text-[8px] font-bold uppercase text-radio-amber/70 font-orbitron">FILING DATE</label>
-                            <input name="filingDate" value={form.filingDate} onChange={handleChange} className="w-full text-xs font-mono text-center outline-none bg-transparent text-radio-cyan" />
+                        <div className="col-span-1 p-1">
+                            <label className={labelStyle}>STATION OF ORIGIN</label>
+                            <input name="stationOfOrigin" value={form.stationOfOrigin} onChange={handleChange} className={inputStyle} />
+                        </div>
+                        <div className="col-span-1 p-1">
+                            <label className={labelStyle}>WORD COUNT</label>
+                            <input name="check" value={form.check} readOnly className={`${inputStyle} bg-white/5 text-gray-400 cursor-not-allowed`} />
+                        </div>
+                        <div className="col-span-2 p-1">
+                            <label className={labelStyle}>PLACE OF ORIGIN</label>
+                            <input name="placeOfOrigin" value={form.placeOfOrigin} onChange={handleChange} className={inputStyle} />
+                        </div>
+                        <div className="col-span-1 grid grid-rows-2 divide-y divide-radio-cyan/30 relative group">
+                            <div className="flex flex-col p-1 h-full items-center justify-between">
+                                <label className="text-[8px] font-bold uppercase text-radio-amber/70 font-orbitron mb-1">FILING TIME</label>
+                                <input name="filingTime" value={form.filingTime} onChange={handleChange} className="w-full text-xs font-mono text-center outline-none bg-transparent text-radio-cyan mb-1" />
+                                <button
+                                    onClick={() => {
+                                        const newMode = !useUTC;
+                                        setUseUTC(newMode);
+                                        setIsAutoTime(true); // Re-enable auto time when switching zones
+                                        const now = new Date();
+                                        const timeStr = newMode
+                                            ? now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' }).replace(/:/g, '') + 'Z'
+                                            : now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kuala_Lumpur' }).replace(/:/g, '') + 'L';
+                                        setForm(prev => ({ ...prev, filingTime: timeStr }));
+                                    }}
+                                    className="text-[7px] text-radio-cyan/70 hover:text-radio-cyan border border-radio-cyan/30 hover:border-radio-cyan rounded px-2 py-0.5 transition-colors uppercase font-bold tracking-widest"
+                                    title="Toggle UTC/Local Time"
+                                >
+                                    {useUTC ? 'UTC' : 'LOCAL'}
+                                </button>
+                            </div>
+                            <div className="flex flex-col p-0.5 relative">
+                                <label className="text-[8px] font-bold uppercase text-radio-amber/70 font-orbitron">FILING DATE</label>
+                                <input name="filingDate" value={form.filingDate} onChange={handleChange} className="w-full text-xs font-mono text-center outline-none bg-transparent text-radio-cyan" />
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                {/* TO Section */}
-                <div className={`relative border-b border-radio-cyan/30 p-1 bg-black/10`}>
-                    <label className="text-[10px] font-bold uppercase absolute top-1 left-2 text-radio-amber font-orbitron">TO:</label>
-                    <textarea
-                        name="to"
-                        value={form.to}
-                        onChange={handleChange}
-                        className="w-full mt-4 h-16 p-1 bg-black/30 border border-radio-cyan/20 rounded resize-none font-mono text-base uppercase text-white focus:border-radio-cyan/50 focus:ring-1 focus:ring-radio-cyan/50 outline-none leading-tight"
-                    />
-                </div>
+                    {/* TO Section */}
+                    <div className={`flex-none relative border-b border-radio-cyan/30 p-1 bg-black/10`}>
+                        <label className="text-[10px] font-bold uppercase absolute top-1 left-2 text-radio-amber font-orbitron">TO:</label>
+                        <textarea
+                            name="to"
+                            value={form.to}
+                            onChange={handleChange}
+                            className="w-full mt-4 h-16 p-1 bg-black/30 border border-radio-cyan/20 rounded resize-none font-mono text-base uppercase text-white focus:border-radio-cyan/50 focus:ring-1 focus:ring-radio-cyan/50 outline-none leading-tight"
+                        />
+                    </div>
 
-                {/* Special Instructions */}
-                <div className={`border-b border-radio-cyan/30 bg-tactical-highlight p-1 flex items-center`}>
-                    <label className="text-[10px] font-bold italic mr-2 whitespace-nowrap text-gray-400 font-orbitron">SPECIAL DELIVERY INSTRUCTIONS</label>
-                    <input
-                        name="specialInstructions"
-                        value={form.specialInstructions}
-                        onChange={handleChange}
-                        placeholder="OPTIONAL INFORMATION"
-                        className="w-full bg-black/20 border border-gray-700 rounded px-2 py-0.5 text-sm uppercase text-gray-300 placeholder-gray-600 focus:border-radio-cyan/50 outline-none"
-                    />
-                </div>
+                    {/* Special Instructions */}
+                    <div className={`flex-none border-b border-radio-cyan/30 bg-tactical-highlight p-1 flex items-center`}>
+                        <label className="text-[10px] font-bold italic mr-2 whitespace-nowrap text-gray-400 font-orbitron">SPECIAL DELIVERY INSTRUCTIONS</label>
+                        <input
+                            name="specialInstructions"
+                            value={form.specialInstructions}
+                            onChange={handleChange}
+                            placeholder="OPTIONAL INFORMATION"
+                            className="w-full bg-black/20 border border-gray-700 rounded px-2 py-0.5 text-sm uppercase text-gray-300 placeholder-gray-600 focus:border-radio-cyan/50 outline-none"
+                        />
+                    </div>
 
-                {/* Message Body */}
-                <div className={`relative border-b border-radio-cyan/30 p-1 bg-black/20`}>
-                    <textarea
-                        name="message"
-                        value={form.message}
-                        onChange={handleChange}
-                        rows={6}
-                        className="w-full p-2 bg-black/30 border border-radio-cyan/20 rounded resize-none font-mono text-base uppercase leading-snug text-radio-green focus:border-radio-green/50 focus:ring-1 focus:ring-radio-green/50 outline-none shadow-inner"
-                    />
-                </div>
+                    {/* Message Body - FLEX GROW */}
+                    <div className={`flex-1 relative border-b border-radio-cyan/30 p-1 bg-black/20 flex flex-col`}>
+                        <textarea
+                            name="message"
+                            value={form.message}
+                            onChange={handleChange}
+                            className="w-full flex-1 p-2 bg-black/30 border border-radio-cyan/20 rounded resize-none font-mono text-base uppercase leading-snug text-radio-green focus:border-radio-green/50 focus:ring-1 focus:ring-radio-green/50 outline-none shadow-inner"
+                        />
+                    </div>
 
-                {/* From / Signature */}
-                <div className={`border-b border-radio-cyan/30 p-2 flex items-center bg-black/10`}>
-                    <label className="text-xs font-bold uppercase mr-2 text-radio-amber font-orbitron">FROM:</label>
-                    <input
-                        name="from"
-                        value={form.from}
-                        onChange={handleChange}
-                        className="flex-1 bg-black/30 border border-radio-cyan/20 rounded px-2 py-1 uppercase font-bold text-radio-cyan font-mono focus:border-radio-cyan/50 outline-none"
-                    />
-                </div>
+                    {/* From / Signature */}
+                    <div className={`flex-none border-b border-radio-cyan/30 p-2 flex items-center bg-black/10`}>
+                        <label className="text-xs font-bold uppercase mr-2 text-radio-amber font-orbitron">FROM:</label>
+                        <input
+                            name="from"
+                            value={form.from}
+                            onChange={handleChange}
+                            className="flex-1 bg-black/30 border border-radio-cyan/20 rounded px-2 py-1 uppercase font-bold text-radio-cyan font-mono focus:border-radio-cyan/50 outline-none"
+                        />
+                    </div>
 
-                {/* Operator Use */}
-                <div className="p-1">
-                    <label className="text-[10px] font-bold block mb-1 text-gray-500 font-orbitron tracking-wider">RADIO OPERATOR USE:</label>
-                    <div className={`grid grid-cols-2 gap-0 border border-radio-cyan/30 rounded overflow-hidden`}>
-                        <div className={`grid grid-cols-3 divide-x divide-radio-cyan/30 border-r border-radio-cyan/30`}>
-                            <div className="col-span-1 p-1 text-center bg-black/20">
-                                <label className="text-[8px] block text-gray-500 font-bold">RECVD FROM</label>
-                                <input name="recvdFrom" value={form.recvdFrom} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
+                    {/* Operator Use */}
+                    <div className="flex-none p-1">
+                        <label className="text-[10px] font-bold block mb-1 text-gray-500 font-orbitron tracking-wider">RADIO OPERATOR USE:</label>
+                        <div className={`grid grid-cols-2 gap-0 border border-radio-cyan/30 rounded overflow-hidden`}>
+                            <div className={`grid grid-cols-3 divide-x divide-radio-cyan/30 border-r border-radio-cyan/30`}>
+                                <div className="col-span-1 p-1 text-center bg-black/20">
+                                    <label className="text-[8px] block text-gray-500 font-bold">RECVD FROM</label>
+                                    <input name="recvdFrom" value={form.recvdFrom} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
+                                </div>
+                                <div className="col-span-1 p-1 text-center bg-black/20">
+                                    <label className="text-[8px] block text-gray-500 font-bold">DATE</label>
+                                    <input name="recvdDate" value={form.recvdDate} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
+                                </div>
+                                <div className="col-span-1 p-1 text-center bg-black/20">
+                                    <label className="text-[8px] block text-gray-500 font-bold">TIME</label>
+                                    <input name="recvdTime" value={form.recvdTime} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
+                                </div>
                             </div>
-                            <div className="col-span-1 p-1 text-center bg-black/20">
-                                <label className="text-[8px] block text-gray-500 font-bold">DATE</label>
-                                <input name="recvdDate" value={form.recvdDate} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
-                            </div>
-                            <div className="col-span-1 p-1 text-center bg-black/20">
-                                <label className="text-[8px] block text-gray-500 font-bold">TIME</label>
-                                <input name="recvdTime" value={form.recvdTime} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
-                            </div>
-                        </div>
-                        <div className="grid grid-cols-3 divide-x divide-radio-cyan/30">
-                            <div className="col-span-1 p-1 text-center bg-black/20">
-                                <label className="text-[8px] block text-gray-500 font-bold">SENT TO</label>
-                                <input name="sentTo" value={form.sentTo} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
-                            </div>
-                            <div className="col-span-1 p-1 text-center bg-black/20">
-                                <label className="text-[8px] block text-gray-500 font-bold">DATE</label>
-                                <input name="sentDate" value={form.sentDate} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
-                            </div>
-                            <div className="col-span-1 p-1 text-center bg-black/20">
-                                <label className="text-[8px] block text-gray-500 font-bold">TIME</label>
-                                <input name="sentTime" value={form.sentTime} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
+                            <div className="grid grid-cols-3 divide-x divide-radio-cyan/30">
+                                <div className="col-span-1 p-1 text-center bg-black/20">
+                                    <label className="text-[8px] block text-gray-500 font-bold">SENT TO</label>
+                                    <input name="sentTo" value={form.sentTo} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
+                                </div>
+                                <div className="col-span-1 p-1 text-center bg-black/20">
+                                    <label className="text-[8px] block text-gray-500 font-bold">DATE</label>
+                                    <input name="sentDate" value={form.sentDate} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
+                                </div>
+                                <div className="col-span-1 p-1 text-center bg-black/20">
+                                    <label className="text-[8px] block text-gray-500 font-bold">TIME</label>
+                                    <input name="sentTime" value={form.sentTime} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Footer Controls */}
-                <div className={`p-4 bg-black/20 border-t border-radio-cyan/30 flex justify-between items-center`}>
+                <div className={`p-4 bg-black/20 border-t border-radio-cyan/30 flex justify-between items-center bg-tactical-surface`}>
                     <div className="flex gap-2">
-                        <button onClick={saveMessage} className="bg-radio-green hover:bg-emerald-600 text-black font-bold py-1 px-4 rounded shadow-[0_0_10px_rgba(16,185,129,0.4)] font-orbitron tracking-wider transition-all">
+                        <button onClick={saveMessage} className="bg-radio-green hover:bg-emerald-600 text-black font-bold py-1 px-4 rounded shadow-[0_0_10px_rgba(77,124,15,0.4)] font-orbitron tracking-wider transition-all">
                             SUBMIT
                         </button>
                         <button onClick={() => setForm({ ...form, message: '', to: '', from: '' })} className="bg-transparent hover:bg-white/5 text-radio-cyan font-bold py-1 px-4 rounded border border-radio-cyan/50 font-orbitron tracking-wider transition-all">
@@ -433,59 +482,48 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                 </div>
             </div>
 
-            {/* Outbox / Preview */}
-            <div className="space-y-6">
-                <div className="panel-tactical bg-slate-900 border-dashed">
-                    <h3 className="text-sm font-bold uppercase text-gray-500 mb-2">Message Preview (Radiogram Format)</h3>
-                    <pre className="text-xs font-mono text-radio-amber whitespace-pre-wrap bg-black p-4 rounded border border-gray-800 leading-normal">
-                        {generateText()}
-                    </pre>
+            {/* Right Panel (Side Panel) - Maximized Vertical Space */}
+            <div className="hidden lg:flex flex-col gap-6 flex-1 min-h-0">
+                <div className="bg-black/40 border border-white/10 rounded-lg p-4 shadow-lg flex flex-col flex-1 h-full min-h-0">
+                    <h3 className="text-sm font-bold text-gray-400 mb-2 font-orbitron uppercase tracking-widest border-b border-gray-700 pb-2">Message Preview (Radiogram Format)</h3>
+                    <div className="font-mono text-xs text-radio-amber whitespace-pre-wrap overflow-y-auto flex-1 custom-scrollbar leading-relaxed p-2 bg-black/20 rounded border border-white/5">
+                        {generateText(form)}
+                    </div>
                 </div>
 
-                {savedMessages.length > 0 && (
-                    <div className="panel-tactical">
-                        <h3 className="font-bold uppercase text-white mb-4">Outbox ({savedMessages.length})</h3>
-                        <div className="space-y-3">
-                            {savedMessages.map(msg => (
-                                <div key={msg.id} className="bg-slate-900 p-3 rounded border border-gray-700 hover:border-gray-500 transition-colors group">
-                                    <div className="flex justify-between items-start mb-2">
-                                        <div className="flex items-center gap-2">
-                                            <span className={`text-xs font-bold px-1.5 py-0.5 rounded ${msg.precedence === 'O' || msg.precedence === 'Z' ? 'bg-red-900/50 text-red-400 border border-red-900' :
-                                                msg.precedence === 'P' ? 'bg-amber-900/50 text-amber-400 border border-amber-900' :
-                                                    'bg-gray-800 text-gray-400 border border-gray-700'
-                                                }`}>{msg.precedence}</span>
-                                            <span className="text-radio-green font-bold text-sm tracking-tight">NR {msg.number}</span>
-                                        </div>
-                                        <span className="text-xs text-gray-500 font-mono">{msg.filingDate} {msg.filingTime}</span>
+                <div className="panel-tactical p-4 flex flex-col gap-2 shrink-0">
+                    <h4 className="text-[10px] font-bold text-radio-cyan font-orbitron mb-2 uppercase tracking-widest">Saved Outbox ({savedMessages.length})</h4>
+                    <div className="space-y-2 max-h-48 overflow-y-auto custom-scrollbar pr-2">
+                        {savedMessages.length === 0 && <div className="text-xs text-gray-600 italic text-center py-4">No messages in outbox.</div>}
+                        {savedMessages.map(msg => (
+                            <div key={msg.id} className="bg-black/40 border border-white/10 p-2 rounded flex justify-between items-center hover:bg-white/5 transition-colors group cursor-pointer" onClick={() => setViewMsg(msg)}>
+                                <div>
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <span className={`text-[10px] font-bold px-1 rounded border ${msg.precedence === 'E' ? 'border-red-500 text-red-500' : clsPriority(msg.precedence)}`}>{msg.precedence}</span>
+                                        <span className="text-xs font-bold text-radio-cyan">NR {msg.number}</span>
                                     </div>
-
-                                    <div className="font-bold text-sm text-white mb-1 truncate">{msg.message?.substring(0, 50)}...</div>
-                                    <div className="text-xs text-gray-400 mb-3 flex items-center justify-between">
-                                        <span className="truncate max-w-[120px]">To: {msg.to?.split('\n')[0]}</span>
-                                        <span>From: {msg.from}</span>
-                                    </div>
-
-                                    <div className="flex gap-2 pt-2 border-t border-gray-800">
-                                        <button
-                                            onClick={() => setViewMsg(msg)}
-                                            className="flex-1 bg-slate-800 hover:bg-slate-700 text-xs text-white py-1.5 rounded transition-colors flex items-center justify-center gap-1.5"
-                                        >
-                                            <FileText className="w-3 h-3" /> View
-                                        </button>
-                                        <button
-                                            onClick={() => deleteMessage(msg.id)}
-                                            className="px-3 bg-slate-900 hover:bg-red-900/30 text-xs text-gray-400 hover:text-red-400 py-1.5 rounded transition-colors"
-                                            title="Delete Message"
-                                        >
-                                            <Trash className="w-3 h-3" />
-                                        </button>
+                                    <div className="text-[10px] text-gray-400">TO: {msg.to?.split('\n')[0].substring(0, 15)}</div>
+                                </div>
+                                <div className="flex flex-col items-end gap-1">
+                                    <span className="text-[9px] text-gray-600">{msg.filingTime}</span>
+                                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <button onClick={(e) => { e.stopPropagation(); deleteMessage(msg.id); }} className="text-red-500 hover:text-red-400 p-1"><Trash className="w-3 h-3" /></button>
                                     </div>
                                 </div>
-                            ))}
-                        </div>
+                            </div>
+                        ))}
                     </div>
-                )}
+                </div>
             </div>
         </div>
     );
 }
+
+// Helper for priority color 
+const clsPriority = (p) => {
+    if (p === 'P') return 'border-orange-500 text-orange-500';
+    if (p === 'E') return 'border-red-500 text-red-500';
+    return 'border-radio-cyan/50 text-radio-cyan/70';
+};
+
+

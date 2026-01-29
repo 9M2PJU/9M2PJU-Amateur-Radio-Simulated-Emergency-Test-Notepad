@@ -4,6 +4,7 @@ import StationSettings from './components/StationSettings';
 import TacticalLogger from './components/TacticalLogger';
 import IARUMessageForm from './components/IARUMessageForm';
 import TimeWidget from './components/TimeWidget';
+import CursorTrail from './components/CursorTrail';
 import { Radio, List, Settings, FileText } from 'lucide-react';
 
 function App() {
@@ -53,12 +54,10 @@ function App() {
 
   return (
     <div className="flex flex-col lg:flex-row h-[100dvh] text-gray-100 font-inter overflow-hidden bg-cover bg-center selection:bg-radio-cyan selection:text-black"
-      style={{ backgroundImage: "url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2672&auto=format&fit=crop')" }}>
+      style={{ backgroundImage: "url('https://images.unsplash.com/photo-1595878715977-2a8f8d0c0cdd?q=80&w=2670&auto=format&fit=crop')" }}>
 
-      <div className="scanline"></div>
-
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-tactical-bg/95 z-0"></div>
+      {/* Camo Pattern Overlay */}
+      <div className="absolute inset-0 bg-tactical-bg/85 z-0 mix-blend-multiply"></div>
 
       {/* PWA Install Modal */}
       {showInstallModal && (
@@ -90,7 +89,7 @@ function App() {
           </div>
 
 
-          <div className="panel-tactical p-3 bg-black/40 border-radio-amber/20 scale-95">
+          <div className="panel-tactical p-3 bg-black/40 border-radio-amber/20">
             <div className="text-[10px] text-radio-amber font-orbitron uppercase tracking-widest mb-1">Station Status</div>
             <div className="flex justify-between items-center">
               <span className="text-sm font-mono font-bold">{stationSettings.callsign || '9M2XXX'}</span>
@@ -99,7 +98,7 @@ function App() {
             <div className="text-[9px] text-gray-500 font-mono mt-1 opacity-60">{stationSettings.grid || 'NO GRID'}</div>
           </div>
 
-          <TimeWidget className="mx-4" />
+          <TimeWidget />
         </div>
 
         <nav className="flex-1 p-4 space-y-2">
