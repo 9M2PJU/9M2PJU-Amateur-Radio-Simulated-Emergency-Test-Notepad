@@ -3,9 +3,10 @@ import { useLocalStorage } from './utils/useLocalStorage';
 import StationSettings from './components/StationSettings';
 import TacticalLogger from './components/TacticalLogger';
 import IARUMessageForm from './components/IARUMessageForm';
+import MorseConverter from './components/MorseConverter';
 import TimeWidget from './components/TimeWidget';
 import CursorTrail from './components/CursorTrail';
-import { Radio, List, Settings, FileText } from 'lucide-react';
+import { Radio, List, Settings, FileText, AudioWaveform } from 'lucide-react';
 
 function App() {
   const [theme, setTheme] = useLocalStorage('theme', 'dark'); // 'dark' or 'light'
@@ -94,6 +95,7 @@ function App() {
           {[
             { id: 'iaru', icon: FileText, label: 'IARU Radiogram' },
             { id: 'logger', icon: List, label: 'Tactical logger' },
+            { id: 'morse', icon: AudioWaveform, label: 'CW / CRYPTO' },
             { id: 'settings', icon: Settings, label: 'Station Config' }
           ].map(tab => (
             <button
@@ -151,6 +153,10 @@ function App() {
               <TacticalLogger logs={logs} setLogs={setLogs} stationSettings={stationSettings} />
             )}
 
+            {activeTab === 'morse' && (
+              <MorseConverter />
+            )}
+
             {activeTab === 'iaru' && (
               <IARUMessageForm
                 stationSettings={stationSettings}
@@ -159,7 +165,7 @@ function App() {
             )}
 
             <footer className="py-12 text-center text-[10px] uppercase tracking-[0.4em] text-gray-700 font-orbitron">
-              <p>DIGITAL AMATEUR RADIO EMERGENCY SUITE // <a href="https://hamradio.my" target="_blank" rel="noopener noreferrer" className="text-radio-cyan hover:text-white transition-colors border-b border-radio-cyan/30">9M2PJU</a></p>
+              <p>DIGITAL AMATEUR RADIO EMERGENCY SUITE (DARES) // <a href="https://hamradio.my" target="_blank" rel="noopener noreferrer" className="text-radio-cyan hover:text-white transition-colors border-b border-radio-cyan/30">9M2PJU</a></p>
             </footer>
           </div>
         </main>
@@ -170,6 +176,7 @@ function App() {
             {[
               { id: 'iaru', icon: FileText, label: 'MSG' },
               { id: 'logger', icon: List, label: 'LOG' },
+              { id: 'morse', icon: AudioWaveform, label: 'CW / CRYPTO' },
               { id: 'settings', icon: Settings, label: 'CFG' }
             ].map(tab => (
               <button

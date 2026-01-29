@@ -277,20 +277,14 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                                 <FileDown className="w-4 h-4" /> PDF
                             </button>
                             <button
-                                onClick={async () => {
+                                onClick={() => {
                                     if (navigator.share) {
-                                        try {
-                                            await navigator.share({
-                                                title: `IARU Message ${viewMsg.number}`,
-                                                text: generateText(viewMsg),
-                                            });
-                                        } catch (err) {
-                                            if (err.name !== 'AbortError') console.error('Share failed:', err);
-                                        }
+                                        navigator.share({
+                                            title: `IARU Message ${viewMsg.number}`,
+                                            text: generateText(viewMsg),
+                                        }).catch(() => setShowShareModal(true));
                                     } else {
-                                        // Fallback to clipboard if share not supported
-                                        navigator.clipboard.writeText(generateText(viewMsg));
-                                        alert('Sharing not supported. Copied to clipboard instead!');
+                                        setShowShareModal(true);
                                     }
                                 }}
                                 className="flex-1 bg-radio-green/10 border border-radio-green/50 text-radio-green hover:bg-radio-green/20 font-bold py-2 rounded transition-colors flex items-center justify-center gap-2 text-xs md:text-sm"

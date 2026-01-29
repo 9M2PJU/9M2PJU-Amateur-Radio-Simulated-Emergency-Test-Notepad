@@ -65,26 +65,26 @@
 
   /* Glassmorphism Panel */
   .panel-tactical {
-    @apply bg-tactical-surface/60 backdrop-blur-md border border-white/10 rounded-xl p-4 shadow-xl ring-1 ring-white/5 relative overflow-hidden;
+    @apply bg-black/60 backdrop-blur-md border border-white/10 rounded-xl p-4 shadow-xl ring-1 ring-white/5 relative overflow-hidden;
   }
 
   .panel-tactical::before {
     content: '';
-    @apply absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-radio-cyan/50 to-transparent opacity-50;
+    @apply absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-radio-cyan to-transparent opacity-50;
   }
 
   /* Inputs */
   .input-tactical {
-    @apply w-full bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-radio-cyan/50 focus:ring-1 focus:ring-radio-cyan/50 transition-all font-mono tracking-wide placeholder:text-gray-600;
+    @apply w-full bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-radio-cyan focus:border-opacity-50 focus:ring-1 focus:ring-radio-cyan focus:ring-opacity-50 transition-all font-mono tracking-wide placeholder:text-gray-600;
   }
 
   /* Buttons */
   .btn-tactical {
-    @apply bg-radio-cyan/10 text-radio-cyan border border-radio-cyan/30 hover:bg-radio-cyan hover:text-black transition-all font-orbitron font-bold uppercase tracking-wider text-xs py-2 px-4 rounded shadow-[0_0_10px_#06b6d41a] hover:shadow-[0_0_20px_#06b6d466];
+    @apply bg-radio-cyan bg-opacity-10 text-radio-cyan border border-radio-cyan border-opacity-30 hover:bg-radio-cyan hover:bg-opacity-100 hover:text-black transition-all font-orbitron font-bold uppercase tracking-wider text-xs py-2 px-4 rounded shadow-[0_0_10px_#06b6d41a] hover:shadow-[0_0_20px_#06b6d466];
   }
 
   .btn-tactical-danger {
-    @apply bg-radio-red/10 text-radio-red border border-radio-red/30 hover:bg-radio-red hover:text-white transition-all font-orbitron font-bold uppercase tracking-wider text-xs py-2 px-4 rounded shadow-[0_0_10px_#ef44441a] hover:shadow-[0_0_20px_#ef444466];
+    @apply bg-radio-red bg-opacity-10 text-radio-red border border-radio-red border-opacity-30 hover:bg-radio-red hover:bg-opacity-100 hover:text-white transition-all font-orbitron font-bold uppercase tracking-wider text-xs py-2 px-4 rounded shadow-[0_0_10px_#ef44441a] hover:shadow-[0_0_20px_#ef444466];
   }
 
   /* Text Effects */
