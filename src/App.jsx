@@ -69,13 +69,11 @@ function App() {
       {/* Sidebar for Desktop (xl+) */}
       <aside className="hidden lg:flex flex-col w-72 bg-tactical-surface/40 backdrop-blur-2xl border-r border-white/5 z-20 relative overflow-hidden">
         <div className="p-6 border-b border-white/5 space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="p-1 rounded-lg border border-radio-cyan/30 shadow-[0_0_15px_rgba(6,182,212,0.2)] bg-black/20">
-              <img src="dares-logo.png" alt="DARES Logo" className="w-10 h-10 object-contain" />
-            </div>
+          <div className="flex flex-col items-center text-center space-y-4">
+            <img src="dares-logo.png" alt="DARES Logo" className="w-24 h-24 object-contain drop-shadow-[0_0_15px_rgba(6,182,212,0.3)]" />
             <div>
-              <h1 className="text-lg font-bold font-orbitron tracking-tighter text-glow">9M2PJU SET Pad</h1>
-              <div className="text-[8px] text-radio-cyan/60 tracking-[0.2em] font-mono leading-tight uppercase">DIGITAL AMATEUR RADIO EMERGENCY SUITE (DARES)</div>
+              <h1 className="text-xl font-bold font-orbitron tracking-tighter text-glow">9M2PJU SET Pad</h1>
+              <div className="text-[10px] text-radio-cyan/60 tracking-[0.2em] font-mono leading-tight uppercase mt-1">DIGITAL AMATEUR RADIO EMERGENCY SUITE (DARES)</div>
             </div>
           </div>
 

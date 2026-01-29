@@ -36,6 +36,83 @@ const CIPHERS = {
                 return idx !== -1 ? target[idx] : c;
             });
         }
+    },
+    PLAYFAIR: {
+        name: 'PLAYFAIR',
+        process: (text, key = 'KEYWORD', decode = false) => {
+            let alphabet = "ABCDEFGHIKLMNOPQRSTUVWXYZ"; // No 'J'
+            let cleanKey = (key || 'KEYWORD').toUpperCase().replace(/J/g, "I").replace(/[^A-Z]/g, "");
+            let matrixArr = Array.from(new Set(cleanKey + alphabet));
+            let matrix = [];
+            for (let i = 0; i < 5; i++) matrix.push(matrixArr.slice(i * 5, i * 5 + 5));
+
+            let input = text.toUpperCase().replace(/J/g, "I").replace(/[^A-Z]/g, "");
+            if (!decode) {
+                let prepared = "";
+                for (let i = 0; i < input.length; i++) {
+                    prepared += input[i];
+                    if (input[i] === input[i + 1]) prepared += "X";
+                }
+                if (prepared.length % 2 !== 0) prepared += "X";
+                input = prepared;
+            }
+
+            let result = "";
+            for (let i = 0; i < input.length; i += 2) {
+                let a = input[i], b = input[i + 1];
+                let rowA, colA, rowB, colB;
+                for (let r = 0; r < 5; r++) {
+                    for (let c = 0; c < 5; c++) {
+                        if (matrix[r][c] === a) { rowA = r; colA = c; }
+                        if (matrix[r][c] === b) { rowB = r; colB = c; }
+                    }
+                }
+
+                if (rowA === rowB) {
+                    let d = decode ? 4 : 1;
+                    result += matrix[rowA][(colA + d) % 5] + matrix[rowB][(colB + d) % 5];
+                } else if (colA === colB) {
+                    let d = decode ? 4 : 1;
+                    result += matrix[(rowA + d) % 5][colA] + matrix[(rowB + d) % 5][colB];
+                } else {
+                    result += matrix[rowA][colB] + matrix[rowB][colA];
+                }
+            }
+            return result;
+        }
+    },
+    TRANSPOSITION: {
+        name: 'TRANSPOSITION',
+        process: (text, key = 'SECRET', decode = false) => {
+            let cleanKey = (key || 'SECRET').toUpperCase().replace(/[^A-Z]/g, '');
+            if (!cleanKey) return text;
+            let input = text.toUpperCase().replace(/[^A-Z]/g, '');
+            let keyLen = cleanKey.length;
+            let keyOrder = cleanKey.split('').map((char, i) => ({ char, i }))
+                .sort((a, b) => a.char.localeCompare(b.char) || a.i - b.i)
+                .map((obj, i) => ({ ...obj, order: i }));
+
+            if (!decode) {
+                let rows = Math.ceil(input.length / keyLen);
+                let grid = Array.from({ length: rows }, () => Array(keyLen).fill('X'));
+                for (let i = 0; i < input.length; i++) {
+                    grid[Math.floor(i / keyLen)][i % keyLen] = input[i];
+                }
+                let result = "";
+                keyOrder.sort((a, b) => a.order - b.order).forEach(k => {
+                    for (let r = 0; r < rows; r++) result += grid[r][k.i];
+                });
+                return result;
+            } else {
+                let rows = Math.ceil(input.length / keyLen);
+                let grid = Array.from({ length: rows }, () => Array(keyLen).fill(''));
+                let cur = 0;
+                keyOrder.sort((a, b) => a.order - b.order).forEach(k => {
+                    for (let r = 0; r < rows; r++) grid[r][k.i] = input[cur++];
+                });
+                return grid.flat().join('');
+            }
+        }
     }
 };
 
@@ -53,6 +130,8 @@ export default function CipherConverter() {
             if (cipherType === 'CAESAR') setResult(algo.process(text, shift, isDecoding));
             else if (cipherType === 'ATBASH') setResult(algo.process(text));
             else if (cipherType === 'SUBSTITUTION') setResult(algo.process(text, cipherKey, isDecoding));
+            else if (cipherType === 'PLAYFAIR') setResult(algo.process(text, cipherKey, isDecoding));
+            else if (cipherType === 'TRANSPOSITION') setResult(algo.process(text, cipherKey, isDecoding));
         }
     }, [text, cipherType, shift, cipherKey, isDecoding]);
 
@@ -72,7 +151,9 @@ export default function CipherConverter() {
                     >
                         <option value="CAESAR">CAESAR</option>
                         <option value="ATBASH">ATBASH</option>
-                        <option value="SUBSTITUTION">SUBSTITUTION</option>
+                        <option value="SUBSTITUTION">SIMPLE SUBSTITUTION</option>
+                        <option value="PLAYFAIR">PLAYFAIR</option>
+                        <option value="TRANSPOSITION">TRANSPOSITION</option>
                     </select>
 
                     {cipherType === 'CAESAR' && (
@@ -88,7 +169,7 @@ export default function CipherConverter() {
                         </div>
                     )}
 
-                    {cipherType === 'SUBSTITUTION' && (
+                    {(cipherType === 'SUBSTITUTION' || cipherType === 'PLAYFAIR' || cipherType === 'TRANSPOSITION') && (
                         <div className="flex flex-col items-center">
                             <label className="text-[8px] text-radio-amber/50 font-mono text-center">KEYWORD</label>
                             <input
