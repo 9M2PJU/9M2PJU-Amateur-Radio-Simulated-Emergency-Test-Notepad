@@ -74,7 +74,7 @@ function App() {
             </div>
             <div>
               <h1 className="text-lg font-bold font-orbitron tracking-tighter text-glow">9M2PJU SET Pad</h1>
-              <div className="text-[8px] text-radio-cyan/60 tracking-[0.3em] font-mono leading-tight uppercase">DIGITAL AMATEUR RADIO EMERGENCY SUITE</div>
+              <div className="text-[8px] text-radio-cyan/60 tracking-[0.2em] font-mono leading-tight uppercase">DIGITAL AMATEUR RADIO EMERGENCY SUITE (DARES)</div>
             </div>
           </div>
 
