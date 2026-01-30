@@ -174,7 +174,7 @@ export default function Dashboard() {
 
         if (!profile) return;
 
-        const vipEmails = ['9m2pju@hamradio.my', '9w2rut@marts.org.my'];
+        const vipEmails = ['9m2pju@hamradio.my'];
         if (vipEmails.includes(profile.email)) return;
         if (profile.show_donation === false) return;
 
