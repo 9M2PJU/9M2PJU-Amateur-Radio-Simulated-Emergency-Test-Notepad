@@ -2,10 +2,10 @@
 
 All notable changes to the **9M2PJU SET Pad (DARES)** will be documented in this file.
 
-## [5.1.8] - 2026-01-30
-### 📱 Mobile UI Fix (Scroll Restoration)
-- **Architectural Fix**: Restored `overflow-hidden` to outer Dashboard containers. This fixes the issue where scrolling was completely disabled on mobile due to incorrect viewport height calculations.
-- **Stable Scroller**: Re-synchronized the `flex-1` layout with the `overflow-y-auto` main area for a smooth, native scroll feel.
+## [5.1.9] - 2026-01-30
+### 📱 Mobile UI Fix (Stability)
+- **Block Layout Migration**: Switched from `flex flex-col` to a standard `block` layout for mobile components. This ensures maximum compatibility and restores native browser scrolling.
+- **Scroll Buffer**: Enlarged the bottom spacer to `h-80` (320px) to provide massive clearance above the fixed bottom navigation.
 
 ## [5.1.0] - 2026-01-30
 ### 🚀 Features & Enhancements
