@@ -38,9 +38,10 @@ export default function Register() {
 
             <div className="relative z-10 w-full max-w-md panel-tactical p-8 bg-black/60 backdrop-blur-md">
                 <div className="flex flex-col items-center mb-8">
-                    <UserPlus className="w-12 h-12 text-radio-green mb-2" />
+                    <img src="/dares-logo.png" alt="DARES Logo" className="w-24 h-24 object-contain mb-4 drop-shadow-[0_0_15px_rgba(34,197,94,0.5)] animate-pulse-slow" />
                     <h1 className="text-2xl font-bold font-orbitron text-glow tracking-widest text-center">NEW STATION ENTRY</h1>
-                    <span className="text-xs text-radio-green/70 tracking-[0.3em] font-mono">ESTABLISH CREDENTIALS</span>
+                    <span className="text-[10px] text-radio-green/80 tracking-[0.2em] font-mono mt-2 font-bold text-center">DIGITAL AMATEUR RADIO EMERGENCY SUITE (DARES)</span>
+                    <span className="text-xs text-radio-green/70 tracking-[0.3em] font-mono mt-4 border-t border-radio-green/20 pt-2 w-full text-center">ESTABLISH CREDENTIALS</span>
                 </div>
 
                 {error && <div className="bg-red-900/50 border border-red-500 text-red-200 text-xs font-mono p-3 mb-4 rounded">{error}</div>}
