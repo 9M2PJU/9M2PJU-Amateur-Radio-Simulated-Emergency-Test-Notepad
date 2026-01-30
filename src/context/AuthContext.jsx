@@ -38,60 +38,53 @@ export function AuthProvider({ children }) {
     }, []);
 
 
+    const register = async (email, password) => {
+        const { data, error } = await supabase.auth.signUp({ email, password });
+        if (error) throw error;
+        return data;
+    };
 
+    const logout = async () => {
+        const { error } = await supabase.auth.signOut();
+        if (error) throw error;
+    };
 
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) throw error;
-    return data;
-};
+    const impersonate = async (targetUser) => {
+        // Only allow if current real user is super admin
+        if (!profile?.is_super_admin) {
+            throw new Error("Unauthorized");
+        }
 
-const register = async (email, password) => {
-    const { data, error } = await supabase.auth.signUp({ email, password });
-    if (error) throw error;
-    return data;
-};
+        if (targetUser === null) {
+            setImpersonatedUser(null);
+            return;
+        }
 
-const logout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) throw error;
-};
+        // Just sets the context state, requests will use this ID for RLS impersonation context if we were using RLS functions, 
+        // but for now we'll handle it via manual queries or client-side context logic, 
+        // OR we can't truly "impersonate" at RLS level easily without Postgres functions. 
+        // For this app's requirement: "super admin can see any users logger data and outbox".
+        // We will expose the `effectiveUser` to components.
+        setImpersonatedUser(targetUser);
+    };
 
-const impersonate = async (targetUser) => {
-    // Only allow if current real user is super admin
-    if (!profile?.is_super_admin) {
-        throw new Error("Unauthorized");
-    }
+    const effectiveUser = impersonatedUser ? { id: impersonatedUser } : user;
 
-    if (targetUser === null) {
-        setImpersonatedUser(null);
-        return;
-    }
-
-    // Just sets the context state, requests will use this ID for RLS impersonation context if we were using RLS functions, 
-    // but for now we'll handle it via manual queries or client-side context logic, 
-    // OR we can't truly "impersonate" at RLS level easily without Postgres functions. 
-    // For this app's requirement: "super admin can see any users logger data and outbox".
-    // We will expose the `effectiveUser` to components.
-    setImpersonatedUser(targetUser);
-};
-
-const effectiveUser = impersonatedUser ? { id: impersonatedUser } : user;
-
-return (
-    <AuthContext.Provider value={{
-        user,
-        profile,
-        loading,
-        login,
-        register,
-        logout,
-        impersonate,
-        impersonatedUser,
-        effectiveUser // Components should use this to Fetch Data
-    }}>
-        {!loading && children}
-    </AuthContext.Provider>
-);
+    return (
+        <AuthContext.Provider value={{
+            user,
+            profile,
+            loading,
+            login,
+            register,
+            logout,
+            impersonate,
+            impersonatedUser,
+            effectiveUser // Components should use this to Fetch Data
+        }}>
+            {!loading && children}
+        </AuthContext.Provider>
+    );
 }
 
 export const useAuth = () => useContext(AuthContext);
