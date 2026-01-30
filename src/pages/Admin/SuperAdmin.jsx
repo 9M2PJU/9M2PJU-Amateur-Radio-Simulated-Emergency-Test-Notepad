@@ -196,6 +196,7 @@ function SystemConfigPanel() {
             if (error && error.code !== 'PGRST116') throw error; // PGRST116 is 'not found'
 
             setDuration(data?.value?.seconds || 10);
+            console.log("System config fetched:", data);
         } catch (error) {
             console.error("Error fetching system config:", error);
         } finally {
@@ -205,6 +206,7 @@ function SystemConfigPanel() {
 
     const handleSave = async () => {
         setSaving(true);
+        console.log("Saving system config...");
         try {
             const { error } = await supabase
                 .from('system_config')
@@ -216,6 +218,7 @@ function SystemConfigPanel() {
 
             if (error) throw error;
             alert("Configuration saved successfully!");
+            console.log("Configuration saved successfully!");
         } catch (error) {
             console.error("Error saving config:", error);
             alert("Failed to save configuration.");
