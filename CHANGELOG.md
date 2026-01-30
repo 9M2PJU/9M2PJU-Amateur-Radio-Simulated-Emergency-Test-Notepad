@@ -2,12 +2,11 @@
 
 All notable changes to the **9M2PJU SET Pad (DARES)** will be documented in this file.
 
-## [5.1.1] - 2026-01-30
-### 📱 Mobile UI Optimization
-- **Perfect Fit Layout**: Optimized IARU Message Form and Preview for **mobile view** to ensure it fits perfectly without scrolling.
-- **UI Compression**: Reduced global paddings, font sizes, and input heights specifically for mobile viewports.
-- **Dashboard Refinement**: Automatically hides the dashboard footer when the IARU tab is active to maximize tactical workspace.
-- **Fixed Preview**: Implemented a fixed-height scrollable preview section on mobile for consistent navigation.
+## [5.1.2] - 2026-01-30
+### 📱 Mobile UI Refinement (Final)
+- **Full Page Form**: Optimized the IARU Form to occupy the full initial viewport on mobile for a premium feel.
+- **Scrollable Preview**: Re-enabled the Message Preview section below the form on mobile, accessible via scrolling.
+- **Improved Scrolling**: Restored global dashboard scrolling for better navigation on small devices.
 
 ## [5.1.0] - 2026-01-30
 ### 🚀 Features & Enhancements
