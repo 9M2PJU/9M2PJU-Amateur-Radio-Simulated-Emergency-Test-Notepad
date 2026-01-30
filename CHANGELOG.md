@@ -2,10 +2,10 @@
 
 All notable changes to the **9M2PJU SET Pad (DARES)** will be documented in this file.
 
-## [5.1.3] - 2026-01-30
-### 📱 Mobile UI Fix
-- **Navigation Clearance**: Increased bottom padding and margins on mobile to ensure the Message Preview is completely visible and not obscured by the bottom menu.
-- **Safe Area Support**: Added viewport safe area awareness to the dashboard layout.
+## [5.1.4] - 2026-01-30
+### 📱 Mobile UI Fix (v2)
+- **Content Clearance**: Replaced padding-only solution with a physical `h-24` spacer at the bottom of the dashboard scroll area.
+- **Improved Scrolling**: Switched container to `min-h-full` and removed mobile-restricted heights from the IARU form to ensure the Message Preview expands and scrolls naturally above the bottom menu.
 
 ## [5.1.0] - 2026-01-30
 ### 🚀 Features & Enhancements
