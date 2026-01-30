@@ -362,7 +362,7 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
     const sectionBorder = "border-radio-cyan/30";
 
     return (
-        <div className="flex flex-col lg:flex-row gap-6 relative h-full min-h-0">
+        <div className="flex flex-col lg:flex-row gap-4 p-4 relative h-full min-h-0">
 
             {/* Message Viewer Modal */}
             {viewMsg && (
