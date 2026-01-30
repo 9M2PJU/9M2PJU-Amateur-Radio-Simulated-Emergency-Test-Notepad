@@ -193,6 +193,25 @@ export default function Dashboard() {
     };
 
     const [showDonationModal, setShowDonationModal] = useState(false);
+    const [systemConfig, setSystemConfig] = useState({});
+
+    useEffect(() => {
+        const fetchSystemConfig = async () => {
+            try {
+                const { data, error } = await supabase
+                    .from('system_config')
+                    .select('*')
+                    .single(); // Assuming there's only one row for system config
+
+                if (error) throw error;
+                setSystemConfig(data);
+            } catch (error) {
+                console.error('Error fetching system config:', error);
+            }
+        };
+
+        fetchSystemConfig();
+    }, []);
 
     useEffect(() => {
         // PERMISSION CHECK:
@@ -217,24 +236,25 @@ export default function Dashboard() {
         }
 
         // Show donation modal once per session (sessionStorage) or if never dismissed
-        const hasSeenDonation = sessionStorage.getItem('hasSeenDonation');
-        console.log("Donation Check: hasSeenDonation session key:", hasSeenDonation);
+        // Updated to use localStorage timestamp for persistence across sessions
+        const lastDismissed = localStorage.getItem('lastDonationDismissed');
+        const ONE_DAY_MS = 24 * 60 * 60 * 1000; // 24 hours
 
-        if (!hasSeenDonation) {
+        if (!lastDismissed || (Date.now() - parseInt(lastDismissed, 10) > ONE_DAY_MS)) {
             console.log("Donation Check: Showing modal in 2s...");
             // Small delay for better UX
             const timer = setTimeout(() => {
                 setShowDonationModal(true);
-                sessionStorage.setItem('hasSeenDonation', 'true');
             }, 2000);
             return () => clearTimeout(timer);
         } else {
-            console.log("Donation Check: Already seen in this session. Skipping.");
+            console.log("Donation Check: Already seen recently. Skipping.");
         }
     }, [profile]); // Check when profile loads (login)
 
     const handleCloseDonation = () => {
         setShowDonationModal(false);
+        localStorage.setItem('lastDonationDismissed', Date.now().toString());
     };
 
     const handleAddToLog = (msg) => {

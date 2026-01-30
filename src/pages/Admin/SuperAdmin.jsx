@@ -209,55 +209,7 @@ export default function SuperAdmin() {
 }
 
 function SystemConfigPanel() {
-    const [duration, setDuration] = useState('');
-    const [loading, setLoading] = useState(true);
-    const [saving, setSaving] = useState(false);
 
-    useEffect(() => {
-        fetchConfig();
-    }, []);
-
-    const fetchConfig = async () => {
-        try {
-            const { data, error } = await supabase
-                .from('system_config')
-                .select('value')
-                .eq('key', 'donation_popup_duration')
-                .single();
-
-            if (error && error.code !== 'PGRST116') throw error; // PGRST116 is 'not found'
-
-            setDuration(data?.value?.seconds || 10);
-            console.log("System config fetched:", data);
-        } catch (error) {
-            console.error("Error fetching system config:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleSave = async () => {
-        setSaving(true);
-        console.log("Saving system config...");
-        try {
-            const { error } = await supabase
-                .from('system_config')
-                .upsert({
-                    key: 'donation_popup_duration',
-                    value: { seconds: parseInt(duration) },
-                    description: 'Duration in seconds for the donation popup countdown'
-                });
-
-            if (error) throw error;
-            alert("Configuration saved successfully!");
-            console.log("Configuration saved successfully!");
-        } catch (error) {
-            console.error("Error saving config:", error);
-            alert("Failed to save configuration.");
-        } finally {
-            setSaving(false);
-        }
-    };
 
     return (
         <div className="panel-tactical p-0 overflow-hidden h-full">
@@ -266,32 +218,7 @@ function SystemConfigPanel() {
                 <h2 className="font-bold text-radio-amber/90 font-orbitron tracking-wider">SYSTEM CONFIG</h2>
             </div>
             <div className="p-6 space-y-4">
-                <div>
-                    <label className="block text-xs font-mono text-gray-400 mb-2 uppercase tracking-wider">Donation Popup Duration (Seconds)</label>
-                    <div className="flex gap-2">
-                        <input
-                            type="number"
-                            min="1"
-                            max="60"
-                            value={duration}
-                            onChange={(e) => setDuration(e.target.value)}
-                            className="input-tactical flex-1 max-w-[150px] font-mono text-center"
-                            placeholder="10"
-                        />
-                        <button
-                            onClick={handleSave}
-                            disabled={loading || saving}
-                            className="btn-tactical py-2 px-4 flex items-center gap-2 text-xs"
-                        >
-                            {saving ? <Loader className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-                            SAVE
-                        </button>
-                    </div>
-                    <p className="text-[10px] text-gray-500 mt-2 font-mono">
-                        Controls how long the donation popup stays open before auto-closing.
-                        <br />Default: 10 seconds.
-                    </p>
-                </div>
+
             </div>
         </div>
     );
