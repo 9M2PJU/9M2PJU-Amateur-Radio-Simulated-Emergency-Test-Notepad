@@ -2,6 +2,16 @@
 
 All notable changes to the **9M2PJU SET Pad (DARES)** will be documented in this file.
 
+## [5.1.0] - 2026-01-30
+### 🚀 Features & Enhancements
+- **Logger Upgrade**: Added ability to **Edit** existing log entries (date, time, callsign, remarks) directly from the list.
+- **Form Typography**: Significantly increased font sizes for "Operator Use" labels (RECVD, DATE, TIME) for better readability.
+- **RST Display Fix**: Resolved issue where RST columns displayed placeholders (`/`) instead of values.
+
+### 🛡️ Stability
+- **Critical Fix**: Resolved a runtime crash in the Logger module caused by a missing handler function.
+- **Documentation**: Verified Cipher Converter logic for mission readiness.
+
 ## [5.0.1] - 2026-01-30
 ### 🔧 Hotfixes & Enhancements
 - **Admin Stats**: Added "Outbox" message counts to the Super Admin user list for easy monitoring.

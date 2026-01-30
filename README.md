@@ -38,6 +38,7 @@ Draft, Validate, and Transmit formal **IARU Radiograms**.
 ### 3. TACTICAL LOGGING
 The **Logger** is built for high-stress environments.
 - **Keyboard-First**: Keep hands on the keys.
+- **Editable Entries**: Fix mistakes on the fly without deleting and re-logging. 
 - **Night Ops**: High-contrast "Neon" aesthetics ensure visibility in zero-light conditions without compromising night vision.
 - **Live Sync**: Log entries are instantly backed up. Never lose a contact.
 
