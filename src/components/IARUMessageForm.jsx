@@ -124,7 +124,6 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                 date: new Date().toISOString().split('T')[0],
                 time: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }),
                 callsign: form.to ? form.to.split('\n')[0] : 'STATION',
-                callsign: form.to ? form.to.split('\n')[0] : 'STATION',
                 freq: txDetails.freq || '145.500',
                 mode: txDetails.mode || 'FM',
                 rstSent: '59',
@@ -312,13 +311,13 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
             <div className="flex-1 flex flex-col min-h-0 bg-tactical-surface text-gray-100 font-sans shadow-[0_0_30px_rgba(163,184,108,0.1)] relative overflow-hidden border border-radio-cyan/20 rounded-lg">
                 <div className="overflow-y-auto custom-scrollbar flex-1 flex flex-col">
                     {/* Header Strip */}
-                    <div className="flex-none bg-radio-amber/10 border-b-2 border-radio-amber/50 p-2 flex justify-center items-center relative">
-                        <h2 className="text-2xl font-bold italic tracking-[0.2em] text-radio-amber font-orbitron drop-shadow-[0_0_5px_rgba(245,158,11,0.5)]">IARU MESSAGE</h2>
-                        <span className="absolute right-2 text-[10px] italic text-radio-amber/70 font-mono tracking-widest">INTERNATIONAL</span>
+                    <div className="flex-none bg-radio-amber/10 border-b-2 border-radio-amber/50 p-2 flex flex-col sm:flex-row justify-center items-center relative gap-1">
+                        <h2 className="text-xl sm:text-2xl font-bold italic tracking-[0.2em] text-radio-amber font-orbitron drop-shadow-[0_0_5px_rgba(245,158,11,0.5)] text-center">IARU MESSAGE</h2>
+                        <span className="sm:absolute sm:right-2 text-[9px] sm:text-[10px] italic text-radio-amber/70 font-mono tracking-widest bg-radio-amber/5 px-1 rounded">INTERNATIONAL</span>
                     </div>
 
                     {/* Header Grid */}
-                    <div className={`flex-none grid grid-cols-7 border-b border-radio-cyan/30 text-center divide-x divide-radio-cyan/30`}>
+                    <div className={`flex-none grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 border-b border-radio-cyan/30 text-center divide-x divide-y sm:divide-y-0 divide-radio-cyan/30`}>
                         <div className="col-span-1 p-1">
                             <label className={labelStyle}>NUMBER</label>
                             <input name="number" value={form.number} onChange={handleChange} className={inputStyle} />
@@ -344,34 +343,36 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                             <label className={labelStyle}>WORD COUNT</label>
                             <input name="check" value={form.check} readOnly className={`${inputStyle} bg-white/5 text-gray-400 cursor-not-allowed`} />
                         </div>
-                        <div className="col-span-2 p-1">
+                        <div className="col-span-2 sm:col-span-2 md:col-span-2 p-1">
                             <label className={labelStyle}>PLACE OF ORIGIN</label>
                             <input name="placeOfOrigin" value={form.placeOfOrigin} onChange={handleChange} className={inputStyle} />
                         </div>
-                        <div className="col-span-1 grid grid-rows-2 divide-y divide-radio-cyan/30 relative group">
+                        <div className="col-span-2 sm:col-span-2 md:col-span-1 grid grid-cols-2 md:grid-cols-1 md:grid-rows-2 divide-x md:divide-x-0 md:divide-y divide-radio-cyan/30 relative group">
                             <div className="flex flex-col p-1 h-full items-center justify-between">
                                 <label className="text-[8px] font-bold uppercase text-radio-amber/70 font-orbitron mb-1">FILING TIME</label>
-                                <input name="filingTime" value={form.filingTime} onChange={handleChange} className="w-full text-xs font-mono text-center outline-none bg-transparent text-radio-cyan mb-1" />
-                                <button
-                                    onClick={() => {
-                                        const newMode = !useUTC;
-                                        setUseUTC(newMode);
-                                        setIsAutoTime(true); // Re-enable auto time when switching zones
-                                        const now = new Date();
-                                        const timeStr = newMode
-                                            ? now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' }).replace(/:/g, '') + 'Z'
-                                            : now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kuala_Lumpur' }).replace(/:/g, '') + 'L';
-                                        setForm(prev => ({ ...prev, filingTime: timeStr }));
-                                    }}
-                                    className="text-[7px] text-radio-cyan/70 hover:text-radio-cyan border border-radio-cyan/30 hover:border-radio-cyan rounded px-2 py-0.5 transition-colors uppercase font-bold tracking-widest"
-                                    title="Toggle UTC/Local Time"
-                                >
-                                    {useUTC ? 'UTC' : 'LOCAL'}
-                                </button>
+                                <div className="flex items-center gap-1 w-full justify-center">
+                                    <input name="filingTime" value={form.filingTime} onChange={handleChange} className="w-16 text-xs font-mono text-center outline-none bg-transparent text-radio-cyan" />
+                                    <button
+                                        onClick={() => {
+                                            const newMode = !useUTC;
+                                            setUseUTC(newMode);
+                                            setIsAutoTime(true);
+                                            const now = new Date();
+                                            const timeStr = newMode
+                                                ? now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' }).replace(/:/g, '') + 'Z'
+                                                : now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kuala_Lumpur' }).replace(/:/g, '') + 'L';
+                                            setForm(prev => ({ ...prev, filingTime: timeStr }));
+                                        }}
+                                        className="text-[7px] text-radio-cyan/70 hover:text-radio-cyan border border-radio-cyan/30 hover:border-radio-cyan rounded px-1 py-0 transition-colors uppercase font-bold"
+                                        title="Toggle UTC/Local"
+                                    >
+                                        {useUTC ? 'U' : 'L'}
+                                    </button>
+                                </div>
                             </div>
-                            <div className="flex flex-col p-0.5 relative">
-                                <label className="text-[8px] font-bold uppercase text-radio-amber/70 font-orbitron">FILING DATE</label>
-                                <input name="filingDate" value={form.filingDate} onChange={handleChange} className="w-full text-xs font-mono text-center outline-none bg-transparent text-radio-cyan" />
+                            <div className="flex flex-col p-1 h-full items-center justify-between">
+                                <label className="text-[8px] font-bold uppercase text-radio-amber/70 font-orbitron mb-1">FILING DATE</label>
+                                <input name="filingDate" value={form.filingDate} onChange={handleChange} className="w-full text-[10px] md:text-xs font-mono text-center outline-none bg-transparent text-radio-cyan" />
                             </div>
                         </div>
                     </div>
@@ -388,14 +389,14 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                     </div>
 
                     {/* Special Instructions */}
-                    <div className={`flex-none border-b border-radio-cyan/30 bg-tactical-highlight p-1 flex items-center`}>
-                        <label className="text-[10px] font-bold italic mr-2 whitespace-nowrap text-gray-400 font-orbitron">SPECIAL DELIVERY INSTRUCTIONS</label>
+                    <div className={`flex-none border-b border-radio-cyan/30 bg-tactical-highlight p-1 flex flex-col sm:flex-row items-start sm:items-center`}>
+                        <label className="text-[9px] sm:text-[10px] font-bold italic mb-1 sm:mb-0 sm:mr-2 whitespace-nowrap text-gray-400 font-orbitron">SPECIAL DELIVERY INSTRUCTIONS</label>
                         <input
                             name="specialInstructions"
                             value={form.specialInstructions}
                             onChange={handleChange}
                             placeholder="OPTIONAL INFORMATION"
-                            className="w-full bg-black/20 border border-gray-700 rounded px-2 py-0.5 text-sm uppercase text-gray-300 placeholder-gray-600 focus:border-radio-cyan/50 outline-none"
+                            className="w-full bg-black/20 border border-gray-700 rounded px-2 py-1 text-xs sm:text-sm uppercase text-gray-300 placeholder-gray-600 focus:border-radio-cyan/50 outline-none"
                         />
                     </div>
 
@@ -423,33 +424,33 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                     {/* Operator Use */}
                     <div className="flex-none p-1">
                         <label className="text-[10px] font-bold block mb-1 text-gray-500 font-orbitron tracking-wider">RADIO OPERATOR USE:</label>
-                        <div className={`grid grid-cols-2 gap-0 border border-radio-cyan/30 rounded overflow-hidden`}>
-                            <div className={`grid grid-cols-3 divide-x divide-radio-cyan/30 border-r border-radio-cyan/30`}>
+                        <div className={`flex flex-col sm:grid sm:grid-cols-2 gap-0 border border-radio-cyan/30 rounded overflow-hidden`}>
+                            <div className={`grid grid-cols-3 divide-x divide-radio-cyan/30 border-b sm:border-b-0 sm:border-r border-radio-cyan/30`}>
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[8px] block text-gray-500 font-bold">RECVD FROM</label>
-                                    <input name="recvdFrom" value={form.recvdFrom} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
+                                    <label className="text-[7px] md:text-[8px] block text-gray-500 font-bold leading-none mb-1">RECVD FROM</label>
+                                    <input name="recvdFrom" value={form.recvdFrom} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[8px] block text-gray-500 font-bold">DATE</label>
-                                    <input name="recvdDate" value={form.recvdDate} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
+                                    <label className="text-[7px] md:text-[8px] block text-gray-500 font-bold leading-none mb-1">DATE</label>
+                                    <input name="recvdDate" value={form.recvdDate} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[8px] block text-gray-500 font-bold">TIME</label>
-                                    <input name="recvdTime" value={form.recvdTime} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
+                                    <label className="text-[7px] md:text-[8px] block text-gray-500 font-bold leading-none mb-1">TIME</label>
+                                    <input name="recvdTime" value={form.recvdTime} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                             </div>
                             <div className="grid grid-cols-3 divide-x divide-radio-cyan/30">
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[8px] block text-gray-500 font-bold">SENT TO</label>
-                                    <input name="sentTo" value={form.sentTo} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
+                                    <label className="text-[7px] md:text-[8px] block text-gray-500 font-bold leading-none mb-1">SENT TO</label>
+                                    <input name="sentTo" value={form.sentTo} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[8px] block text-gray-500 font-bold">DATE</label>
-                                    <input name="sentDate" value={form.sentDate} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
+                                    <label className="text-[7px] md:text-[8px] block text-gray-500 font-bold leading-none mb-1">DATE</label>
+                                    <input name="sentDate" value={form.sentDate} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[8px] block text-gray-500 font-bold">TIME</label>
-                                    <input name="sentTime" value={form.sentTime} onChange={handleChange} className="w-full text-center font-mono text-xs uppercase bg-transparent text-white outline-none" />
+                                    <label className="text-[7px] md:text-[8px] block text-gray-500 font-bold leading-none mb-1">TIME</label>
+                                    <input name="sentTime" value={form.sentTime} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                             </div>
                         </div>
@@ -477,16 +478,16 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                 </div>
 
                 {/* Footer Controls */}
-                <div className={`p-4 bg-black/20 border-t border-radio-cyan/30 flex justify-between items-center bg-tactical-surface`}>
-                    <div className="flex gap-2">
-                        <button onClick={saveMessage} className="bg-radio-green hover:bg-emerald-600 text-black font-bold py-1 px-4 rounded shadow-[0_0_10px_rgba(77,124,15,0.4)] font-orbitron tracking-wider transition-all">
+                <div className={`p-4 bg-black/20 border-t border-radio-cyan/30 flex flex-col sm:flex-row justify-between items-center bg-tactical-surface gap-3`}>
+                    <div className="flex gap-2 w-full sm:w-auto">
+                        <button onClick={saveMessage} className="flex-1 sm:flex-none bg-radio-green hover:bg-emerald-600 text-black font-bold py-2 px-6 rounded shadow-[0_0_10px_rgba(77,124,15,0.4)] font-orbitron tracking-wider transition-all text-sm">
                             SUBMIT
                         </button>
-                        <button onClick={() => setForm({ ...form, message: '', to: '', from: '' })} className="bg-transparent hover:bg-white/5 text-radio-cyan font-bold py-1 px-4 rounded border border-radio-cyan/50 font-orbitron tracking-wider transition-all">
+                        <button onClick={() => setForm({ ...form, message: '', to: '', from: '' })} className="flex-1 sm:flex-none bg-transparent hover:bg-white/5 text-radio-cyan font-bold py-2 px-6 rounded border border-radio-cyan/50 font-orbitron tracking-wider transition-all text-sm">
                             RESET
                         </button>
                     </div>
-                    <div className="text-[10px] text-gray-600 italic font-mono">
+                    <div className="text-[10px] text-gray-600 italic font-mono self-end sm:self-center">
                         System Ready
                     </div>
                 </div>
