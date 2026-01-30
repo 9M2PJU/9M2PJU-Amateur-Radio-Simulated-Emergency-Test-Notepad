@@ -241,7 +241,7 @@ export default function Dashboard() {
                         <img src="dares-logo.png" alt="DARES Logo" className="w-24 h-24 object-contain drop-shadow-[0_0_15px_rgba(6,182,212,0.3)]" />
                         <div>
                             <h1 className="text-xl font-bold font-orbitron tracking-tighter text-glow">9M2PJU SET Pad</h1>
-                            <div className="text-[10px] text-radio-cyan/60 tracking-[0.2em] font-mono leading-tight uppercase mt-1">DIGITAL AMATEUR RADIO EMERGENCY SUITE (DARES)</div>
+                            <div className="text-[10px] text-green-400 tracking-[0.2em] font-mono leading-tight uppercase mt-1">DIGITAL AMATEUR RADIO EMERGENCY SUITE (DARES)</div>
                         </div>
                     </div>
 
