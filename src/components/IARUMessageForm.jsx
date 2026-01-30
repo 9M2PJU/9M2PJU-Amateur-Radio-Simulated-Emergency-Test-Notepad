@@ -357,7 +357,7 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
 
     // Styling helpers to match the classic form look but in TACTICAL DARK MODE
     const labelStyle = "text-[9px] font-bold text-radio-amber uppercase block text-center bg-transparent tracking-wide font-orbitron";
-    const inputStyle = "w-full bg-black/30 border-none text-radio-cyan font-mono font-bold text-center focus:ring-1 focus:ring-radio-cyan rounded-sm placeholder-gray-700";
+    const inputStyle = "w-full bg-black/30 border-none text-radio-cyan font-mono font-bold text-center focus:ring-1 focus:ring-radio-cyan rounded-sm placeholder-radio-amber/30";
     const sectionBorder = "border-radio-cyan/30";
 
     return (
@@ -367,12 +367,12 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
             {viewMsg && (
                 <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 backdrop-blur-sm" onClick={() => setViewMsg(null)}>
                     <div className="bg-tactical-surface border border-tactical-highlight rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col" onClick={e => e.stopPropagation()}>
-                        <div className="flex items-center justify-between p-4 border-b border-gray-700 bg-slate-900/50 rounded-t-lg">
+                        <div className="flex items-center justify-between p-4 border-b border-radio-amber/20 bg-slate-900/50 rounded-t-lg">
                             <h3 className="font-bold text-white uppercase flex items-center gap-2">
                                 <FileText className="w-5 h-5 text-radio-amber" />
                                 Message Viewer
                             </h3>
-                            <button onClick={() => setViewMsg(null)} className="text-gray-400 hover:text-white transition-colors">
+                            <button onClick={() => setViewMsg(null)} className="text-radio-amber/60 hover:text-white transition-colors">
                                 <span className="sr-only">Close</span>
                                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                             </button>
@@ -428,7 +428,7 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
             )}
 
             {/* The IARU FORM */}
-            <div className="flex-1 flex flex-col min-h-0 bg-tactical-surface text-gray-100 font-sans shadow-[0_0_30px_rgba(163,184,108,0.1)] relative overflow-hidden border border-radio-cyan/20 rounded-lg">
+            <div className="flex-1 flex flex-col min-h-0 bg-tactical-surface text-radio-amber font-sans shadow-[0_0_30px_rgba(163,184,108,0.1)] relative overflow-hidden border border-radio-cyan/20 rounded-lg">
                 <div className="overflow-y-auto custom-scrollbar flex-1 flex flex-col">
                     {/* Header Strip */}
                     <div className="flex-none bg-radio-amber/10 border-b-2 border-radio-amber/50 p-2 flex flex-col sm:flex-row justify-center items-center relative gap-1">

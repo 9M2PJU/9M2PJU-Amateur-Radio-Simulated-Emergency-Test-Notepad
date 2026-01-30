@@ -71,7 +71,7 @@ export default function Login() {
                     </button>
                 </form>
 
-                <div className="mt-6 text-center text-xs font-mono text-gray-500">
+                <div className="mt-6 text-center text-xs font-mono text-radio-amber/60">
                     NEW STATION? <Link to="/register" className="text-radio-cyan hover:text-white underline decoration-1 underline-offset-4">REGISTER SIGNAL</Link>
                 </div>
             </div>

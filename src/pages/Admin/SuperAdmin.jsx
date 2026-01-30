@@ -92,14 +92,14 @@ export default function SuperAdmin() {
     }
 
     return (
-        <div className="h-screen overflow-y-auto bg-tactical-bg text-gray-100 font-inter p-6">
+        <div className="h-screen overflow-y-auto bg-tactical-bg text-radio-amber font-inter p-6">
             <div className="max-w-6xl mx-auto space-y-6">
                 <header className="flex justify-between items-center border-b border-white/10 pb-6">
                     <div className="flex items-center gap-3">
                         <Shield className="w-8 h-8 text-red-500" />
                         <div>
                             <h1 className="text-2xl font-bold font-orbitron tracking-widest text-red-500">SUPER ADMIN CONSOLE</h1>
-                            <p className="text-xs font-mono text-gray-500">Authorized Personnel Only // 9M2PJU Network</p>
+                            <p className="text-xs font-mono text-radio-amber/60">Authorized Personnel Only // 9M2PJU Network</p>
                         </div>
                     </div>
                     <Link to="/" className="btn-tactical py-2 px-4 text-xs">RETURN TO DASHBOARD</Link>
@@ -119,7 +119,7 @@ export default function SuperAdmin() {
 
                 <div className="panel-tactical p-0 overflow-hidden">
                     <div className="p-4 bg-white/5 border-b border-white/5 flex justify-between items-center">
-                        <h2 className="font-bold text-gray-300 font-orbitron tracking-wider">REGISTERED STATIONS</h2>
+                        <h2 className="font-bold text-radio-amber/90 font-orbitron tracking-wider">REGISTERED STATIONS</h2>
                         <span className="text-xs font-mono bg-radio-cyan/20 text-radio-cyan px-2 py-1 rounded">{users.length} TOTAL</span>
                     </div>
 
@@ -128,7 +128,7 @@ export default function SuperAdmin() {
                     ) : (
                         <div className="overflow-x-auto">
                             <table className="w-full text-left font-mono text-sm">
-                                <thead className="bg-black/40 text-gray-500 text-xs uppercase">
+                                <thead className="bg-black/40 text-radio-amber/60 text-xs uppercase">
                                     <tr>
                                         <th className="p-4">Callsign / ID</th>
                                         <th className="p-4">Email</th>
@@ -145,17 +145,17 @@ export default function SuperAdmin() {
                                                 {user.callsign || <span className="opacity-50 text-[10px] italic">Checking Profile... {user.id.substring(0, 8)}</span>}
                                                 {user.is_super_admin && <span className="ml-2 text-[9px] bg-red-500 text-white px-1 rounded">ADMIN</span>}
                                             </td>
-                                            <td className="p-4 text-gray-300">{user.email}</td>
-                                            <td className="p-4 text-gray-400">{user.grid || '-'}</td>
+                                            <td className="p-4 text-radio-amber/90">{user.email}</td>
+                                            <td className="p-4 text-radio-amber/60">{user.grid || '-'}</td>
                                             <td className="p-4 text-center">
-                                                <span className={`px-2 py-1 rounded text-xs font-mono font-bold ${user.messageCount > 0 ? 'bg-radio-green/20 text-radio-green' : 'bg-white/5 text-gray-600'}`}>
+                                                <span className={`px-2 py-1 rounded text-xs font-mono font-bold ${user.messageCount > 0 ? 'bg-radio-green/20 text-radio-green' : 'bg-white/5 text-radio-amber/60'}`}>
                                                     {user.messageCount || 0}
                                                 </span>
                                             </td>
                                             <td className="p-4 text-center">
                                                 <button
                                                     onClick={() => toggleDonation(user.id, user.show_donation !== false)}
-                                                    className={`hover:text-white transition-colors ${user.show_donation !== false ? 'text-green-400' : 'text-gray-600'}`}
+                                                    className={`hover:text-white transition-colors ${user.show_donation !== false ? 'text-green-400' : 'text-radio-amber/60'}`}
                                                     title={user.show_donation !== false ? "Donation Popup ON" : "Donation Popup OFF"}
                                                 >
                                                     {user.show_donation !== false ?

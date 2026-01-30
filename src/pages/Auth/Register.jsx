@@ -89,7 +89,7 @@ export default function Register() {
                     </button>
                 </form>
 
-                <div className="mt-6 text-center text-xs font-mono text-gray-500">
+                <div className="mt-6 text-center text-xs font-mono text-radio-amber/60">
                     ALREADY ESTABLISHED? <Link to="/login" className="text-radio-green hover:text-white underline decoration-1 underline-offset-4">LOGIN HERE</Link>
                 </div>
             </div>

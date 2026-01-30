@@ -199,7 +199,7 @@ export default function Dashboard() {
     };
 
     return (
-        <div className={`flex flex-col lg:flex-row h-[100dvh] text-gray-100 font-inter overflow-hidden bg-cover bg-center selection:bg-radio-cyan selection:text-black ${theme === 'light' ? 'light-mode text-slate-900' : ''}`}
+        <div className={`flex flex-col lg:flex-row h-[100dvh] text-radio-amber font-inter overflow-hidden bg-cover bg-center selection:bg-radio-cyan selection:text-black ${theme === 'light' ? 'light-mode text-slate-900' : ''}`}
             style={{ backgroundImage: theme === 'light' ? "none" : "url('https://images.unsplash.com/photo-1595878715977-2a8f8d0c0cdd?q=80&w=2670&auto=format&fit=crop')" }}>
 
             {/* Camo Pattern Overlay for Dark Mode */}
@@ -221,11 +221,11 @@ export default function Dashboard() {
                     <div className="panel-tactical max-w-sm w-full text-center space-y-4 border-radio-cyan animate-in zoom-in-95 duration-300">
                         <Radio className="w-12 h-12 text-radio-cyan mx-auto animate-pulse" />
                         <h3 className="text-xl font-bold font-orbitron text-glow">COMMUNICATION LINK</h3>
-                        <p className="text-sm text-gray-400 font-mono">Install MySET Digital Notepad for offline tactical access and native performance.</p>
+                        <p className="text-sm text-radio-amber/60 font-mono">Install MySET Digital Notepad for offline tactical access and native performance.</p>
                         <div className="flex gap-3 pt-2">
                             <button onClick={handleInstall} className="btn-tactical flex-1 py-3 text-sm">INSTALL SYSTEM</button>
                             <button onClick={() => { setShowInstallModal(false); localStorage.setItem('lastInstallPrompt', Date.now().toString()); }}
-                                className="flex-1 bg-white/5 hover:bg-white/10 text-gray-400 py-3 rounded-md text-xs font-bold uppercase tracking-widest transition-all">DISMISS</button>
+                                className="flex-1 bg-white/5 hover:bg-white/10 text-radio-amber/60 py-3 rounded-md text-xs font-bold uppercase tracking-widest transition-all">DISMISS</button>
                         </div>
                     </div>
                 </div>
@@ -252,7 +252,7 @@ export default function Dashboard() {
                             <span className="text-sm font-mono font-bold">{profile?.callsign || stationSettings.callsign || '9M2XXX'}</span>
                             <span className="text-[10px] font-mono p-1 rounded bg-radio-amber/10 text-radio-amber border border-radio-amber/30">{stationSettings.power}</span>
                         </div>
-                        <div className="text-[9px] text-gray-500 font-mono mt-1 opacity-60">{profile?.grid || stationSettings.grid || 'NO GRID'}</div>
+                        <div className="text-[9px] text-radio-amber/50 font-mono mt-1 opacity-60">{profile?.grid || stationSettings.grid || 'NO GRID'}</div>
                     </div>
 
                     <TimeWidget />
@@ -271,7 +271,7 @@ export default function Dashboard() {
                             onClick={() => setActiveTab(tab.id)}
                             className={`w-full flex items-center gap-4 px-4 py-3 rounded-lg transition-all font-orbitron text-xs uppercase tracking-widest ${activeTab === tab.id
                                 ? 'bg-radio-cyan/20 text-radio-cyan border border-radio-cyan/50 shadow-[0_0_15px_rgba(6,182,212,0.1)]'
-                                : 'text-gray-500 hover:text-white hover:bg-white/5'
+                                : 'text-radio-amber/60 hover:text-white hover:bg-white/5'
                                 }`}
                         >
                             <tab.icon className={`w-4 h-4 ${activeTab === tab.id ? 'text-radio-cyan' : ''}`} />
