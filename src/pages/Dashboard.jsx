@@ -112,6 +112,34 @@ export default function Dashboard() {
         }
     };
 
+    const handleUpdateLog = async (logData) => {
+        if (!effectiveUser) return;
+
+        const dbData = {
+            date: logData.date,
+            time: logData.time,
+            callsign: logData.callsign,
+            freq: logData.freq,
+            mode: logData.mode,
+            rst_sent: logData.rstSent || logData.rst_sent,
+            rst_rcvd: logData.rstRcvd || logData.rst_rcvd,
+            remarks: logData.remarks,
+        };
+
+        try {
+            const { error } = await supabase
+                .from('logs')
+                .update(dbData)
+                .eq('id', logData.id);
+
+            if (error) throw error;
+            setLogs(prev => prev.map(l => l.id === logData.id ? { ...l, ...logData } : l));
+        } catch (error) {
+            console.error("Error updating log:", error);
+            alert("Failed to update log entry.");
+        }
+    };
+
     const handleDeleteLog = async (id) => {
         try {
             const { error } = await supabase.from('logs').delete().eq('id', id);
