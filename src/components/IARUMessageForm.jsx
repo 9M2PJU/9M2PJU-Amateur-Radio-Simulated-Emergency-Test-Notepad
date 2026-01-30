@@ -357,12 +357,12 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
     };
 
     // Styling helpers to match the classic form look but in TACTICAL DARK MODE
-    const labelStyle = "text-[9px] font-bold text-radio-amber uppercase block text-center bg-transparent tracking-wide font-orbitron";
-    const inputStyle = "w-full bg-black/30 border-none text-radio-cyan font-mono font-bold text-center focus:ring-1 focus:ring-radio-cyan rounded-sm placeholder-radio-amber/30";
+    const labelStyle = "text-[8px] lg:text-[9px] font-bold text-radio-amber uppercase block text-center bg-transparent tracking-wide font-orbitron";
+    const inputStyle = "w-full bg-black/30 border-none text-radio-cyan font-mono font-bold text-center focus:ring-1 focus:ring-radio-cyan rounded-sm placeholder-radio-amber/30 py-0.5 lg:py-1 text-[10px] lg:text-sm";
     const sectionBorder = "border-radio-cyan/30";
 
     return (
-        <div className="flex flex-col lg:flex-row gap-4 p-4 relative h-full min-h-0">
+        <div className="flex flex-col lg:flex-row gap-2 lg:gap-4 p-2 lg:p-4 relative h-full min-h-0 overflow-hidden">
 
             {/* Message Viewer Modal */}
             {viewMsg && (
@@ -466,11 +466,11 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
 
             {/* The IARU FORM */}
             <div className="lg:flex-[5] flex-1 flex flex-col min-h-0 bg-tactical-surface text-radio-amber font-sans shadow-[0_0_30px_rgba(163,184,108,0.1)] relative overflow-hidden border border-radio-cyan/20 rounded-lg">
-                <div className="overflow-y-auto custom-scrollbar flex-1 flex flex-col">
+                <div className="overflow-hidden flex-1 flex flex-col">
                     {/* Header Strip */}
-                    <div className="flex-none bg-radio-amber/10 border-b-2 border-radio-amber/50 p-2 flex flex-col sm:flex-row justify-center items-center relative gap-1">
-                        <h2 className="text-xl sm:text-2xl font-bold italic tracking-[0.2em] text-radio-amber font-orbitron drop-shadow-[0_0_5px_rgba(245,158,11,0.5)] text-center">IARU MESSAGE</h2>
-                        <span className="sm:absolute sm:right-2 text-[9px] sm:text-[10px] italic text-radio-amber/70 font-mono tracking-widest bg-radio-amber/5 px-1 rounded">INTERNATIONAL</span>
+                    <div className="flex-none bg-radio-amber/10 border-b border-radio-amber/50 p-1 lg:p-2 flex flex-col sm:flex-row justify-center items-center relative gap-1">
+                        <h2 className="text-lg lg:text-2xl font-bold italic tracking-[0.2em] text-radio-amber font-orbitron drop-shadow-[0_0_5px_rgba(245,158,11,0.5)] text-center">IARU MESSAGE</h2>
+                        <span className="sm:absolute sm:right-2 text-[8px] lg:text-[10px] italic text-radio-amber/70 font-mono tracking-widest bg-radio-amber/5 px-1 rounded">INTERNATIONAL</span>
                     </div>
 
                     {/* Header Grid */}
@@ -536,24 +536,23 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
 
                     {/* TO Section */}
                     <div className={`flex-none relative border-b border-radio-cyan/30 p-1 bg-black/10`}>
-                        <label className="text-[10px] font-bold uppercase absolute top-1 left-2 text-radio-amber font-orbitron">TO:</label>
+                        <label className="text-[8px] lg:text-[10px] font-bold uppercase absolute top-0.5 left-2 text-radio-amber font-orbitron">TO:</label>
                         <textarea
                             name="to"
                             value={form.to}
                             onChange={handleChange}
-                            className="w-full mt-4 h-16 p-1 bg-black/30 border border-radio-cyan/20 rounded resize-none font-mono text-base uppercase text-white focus:border-radio-cyan/50 focus:ring-1 focus:ring-radio-cyan/50 outline-none leading-tight"
+                            className="w-full mt-3 h-10 lg:h-16 p-1 bg-black/30 border border-radio-cyan/20 rounded resize-none font-mono text-sm lg:text-base uppercase text-white focus:border-radio-cyan/50 focus:ring-1 focus:ring-radio-cyan/50 outline-none leading-tight"
                         />
                     </div>
 
-                    {/* Special Instructions */}
-                    <div className={`flex-none border-b border-radio-cyan/30 bg-tactical-highlight p-1 flex flex-col sm:flex-row items-start sm:items-center`}>
-                        <label className="text-[9px] sm:text-[10px] font-bold italic mb-1 sm:mb-0 sm:mr-2 whitespace-nowrap text-radio-amber/60 font-orbitron">SPECIAL DELIVERY INSTRUCTIONS</label>
+                    <div className={`flex-none border-b border-radio-cyan/30 bg-tactical-highlight p-1 flex flex-col lg:flex-row items-start lg:items-center`}>
+                        <label className="text-[8px] lg:text-[10px] font-bold italic mb-0.5 lg:mb-0 lg:mr-2 whitespace-nowrap text-radio-amber/60 font-orbitron">SPECIAL DELIVERY INSTRUCTIONS</label>
                         <input
                             name="specialInstructions"
                             value={form.specialInstructions}
                             onChange={handleChange}
                             placeholder="OPTIONAL INFORMATION"
-                            className="w-full bg-black/20 border border-radio-amber/20 rounded px-2 py-1 text-xs sm:text-sm uppercase text-radio-amber/80 placeholder-radio-amber/30 focus:border-radio-cyan/50 outline-none"
+                            className="w-full bg-black/20 border border-radio-amber/20 rounded px-2 py-0.5 lg:py-1 text-[10px] lg:text-sm uppercase text-radio-amber/80 placeholder-radio-amber/30 focus:border-radio-cyan/50 outline-none"
                         />
                     </div>
 
@@ -568,13 +567,13 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                     </div>
 
                     {/* From / Signature */}
-                    <div className={`flex-none border-b border-radio-cyan/30 p-2 flex items-center bg-black/10`}>
-                        <label className="text-xs font-bold uppercase mr-2 text-radio-amber font-orbitron">FROM:</label>
+                    <div className={`flex-none border-b border-radio-cyan/30 p-1 lg:p-2 flex items-center bg-black/10`}>
+                        <label className="text-[10px] lg:text-xs font-bold uppercase mr-2 text-radio-amber font-orbitron">FROM:</label>
                         <input
                             name="from"
                             value={form.from}
                             onChange={handleChange}
-                            className="flex-1 bg-black/30 border border-radio-cyan/20 rounded px-2 py-1 uppercase font-bold text-radio-cyan font-mono focus:border-radio-cyan/50 outline-none"
+                            className="flex-1 bg-black/30 border border-radio-cyan/20 rounded px-2 py-0.5 lg:py-1 uppercase font-bold text-radio-cyan font-mono focus:border-radio-cyan/50 outline-none text-[11px] lg:text-sm"
                         />
                     </div>
 
@@ -615,49 +614,49 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                 </div>
 
                 {/* Custom Transmission Inputs */}
-                <div className="p-2 bg-black/10 border-t border-radio-cyan/30 grid grid-cols-2 gap-2">
+                <div className="p-1 lg:p-2 bg-black/10 border-t border-radio-cyan/30 grid grid-cols-2 gap-2">
                     <div>
-                        <label className="text-[9px] font-bold text-radio-amber uppercase block mb-1 font-orbitron">Freq (MHz)</label>
+                        <label className="text-[8px] lg:text-[9px] font-bold text-radio-amber uppercase block mb-0.5 lg:mb-1 font-orbitron">Freq (MHz)</label>
                         <input
                             value={txDetails.freq}
                             onChange={e => setTxDetails({ ...txDetails, freq: e.target.value.toUpperCase() })}
-                            className="w-full bg-black/30 border border-radio-cyan/20 rounded px-2 py-1 text-xs font-mono text-radio-cyan focus:border-radio-cyan/50 outline-none" placeholder="145.500"
+                            className="w-full bg-black/30 border border-radio-cyan/20 rounded px-2 py-0.5 lg:py-1 text-[10px] lg:text-xs font-mono text-radio-cyan focus:border-radio-cyan/50 outline-none" placeholder="145.500"
                         />
                     </div>
                     <div>
-                        <label className="text-[9px] font-bold text-radio-amber uppercase block mb-1 font-orbitron">Mode</label>
+                        <label className="text-[8px] lg:text-[9px] font-bold text-radio-amber uppercase block mb-0.5 lg:mb-1 font-orbitron">Mode</label>
                         <input
                             value={txDetails.mode}
                             onChange={e => setTxDetails({ ...txDetails, mode: e.target.value.toUpperCase() })}
-                            className="w-full bg-black/30 border border-radio-cyan/20 rounded px-2 py-1 text-xs font-mono text-radio-cyan focus:border-radio-cyan/50 outline-none" placeholder="FM"
+                            className="w-full bg-black/30 border border-radio-cyan/20 rounded px-2 py-0.5 lg:py-1 text-[10px] lg:text-xs font-mono text-radio-cyan focus:border-radio-cyan/50 outline-none" placeholder="FM"
                         />
                     </div>
                 </div>
 
                 {/* Footer Controls */}
-                <div className={`p-4 bg-black/20 border-t border-radio-cyan/30 flex flex-col sm:flex-row justify-between items-center bg-tactical-surface gap-3`}>
+                <div className={`p-2 lg:p-4 bg-black/20 border-t border-radio-cyan/30 flex flex-col sm:flex-row justify-between items-center bg-tactical-surface gap-2 lg:gap-3`}>
                     <div className="flex gap-2 w-full sm:w-auto">
-                        <button onClick={saveMessage} className="flex-1 sm:flex-none bg-radio-green hover:bg-emerald-600 text-black font-bold py-2 px-6 rounded shadow-[0_0_10px_rgba(77,124,15,0.4)] font-orbitron tracking-wider transition-all text-sm">
+                        <button onClick={saveMessage} className="flex-1 sm:flex-none bg-radio-green hover:bg-emerald-600 text-black font-bold py-1.5 lg:py-2 px-3 lg:px-6 rounded shadow-[0_0_10px_rgba(77,124,15,0.4)] font-orbitron tracking-wider transition-all text-[10px] lg:text-sm">
                             SUBMIT
                         </button>
-                        <button onClick={() => setForm({ ...form, message: '', to: '', from: '' })} className="flex-1 sm:flex-none bg-transparent hover:bg-white/5 text-radio-cyan font-bold py-2 px-6 rounded border border-radio-cyan/50 font-orbitron tracking-wider transition-all text-sm">
+                        <button onClick={() => setForm({ ...form, message: '', to: '', from: '' })} className="flex-1 sm:flex-none bg-transparent hover:bg-white/5 text-radio-cyan font-bold py-1.5 lg:py-2 px-3 lg:px-6 rounded border border-radio-cyan/50 font-orbitron tracking-wider transition-all text-[10px] lg:text-sm">
                             RESET
                         </button>
-                        <button onClick={() => setShowOutbox(true)} className="flex-1 sm:flex-none bg-radio-amber/10 hover:bg-radio-amber/20 text-radio-amber font-bold py-2 px-6 rounded border border-radio-amber/50 font-orbitron tracking-wider transition-all text-sm whitespace-nowrap">
+                        <button onClick={() => setShowOutbox(true)} className="flex-1 sm:flex-none bg-radio-amber/10 hover:bg-radio-amber/20 text-radio-amber font-bold py-1.5 lg:py-2 px-3 lg:px-6 rounded border border-radio-amber/50 font-orbitron tracking-wider transition-all text-[10px] lg:text-sm whitespace-nowrap">
                             OUTBOX ({savedMessages.length})
                         </button>
                     </div>
-                    <div className="text-[10px] text-radio-amber/40 italic font-mono self-end sm:self-center">
+                    <div className="hidden sm:block text-[10px] text-radio-amber/40 italic font-mono self-end sm:self-center">
                         System Ready
                     </div>
                 </div>
             </div>
 
-            {/* Right Panel (Side Panel) - Maximized Vertical Space */}
-            <div className="flex flex-col gap-4 lg:flex-[2] flex-1 min-h-0 mt-4 lg:mt-0">
-                <div className="bg-black/40 border border-white/10 rounded-lg p-4 shadow-lg flex flex-col flex-1 h-full min-h-0">
-                    <h3 className="text-sm font-bold text-radio-amber/60 mb-2 font-orbitron uppercase tracking-widest border-b border-radio-amber/20 pb-2">Message Preview (Radiogram Format)</h3>
-                    <div className="font-mono text-xs text-radio-amber whitespace-pre-wrap overflow-y-auto flex-1 custom-scrollbar leading-relaxed p-4 bg-black/20 rounded border border-white/5">
+            {/* Right Panel (Side Panel) - Compact for Mobile */}
+            <div className="flex flex-col gap-2 lg:flex-[2] h-40 lg:h-full lg:flex-1 min-h-0">
+                <div className="bg-black/40 border border-white/10 rounded-lg p-2 lg:p-4 shadow-lg flex flex-col h-full min-h-0">
+                    <h3 className="text-[10px] lg:text-sm font-bold text-radio-amber/60 mb-1 lg:mb-2 font-orbitron uppercase tracking-widest border-b border-radio-amber/20 pb-1 lg:pb-2">Preview</h3>
+                    <div className="font-mono text-[9px] lg:text-xs text-radio-amber whitespace-pre-wrap overflow-y-auto flex-1 custom-scrollbar leading-tight lg:leading-relaxed p-2 bg-black/20 rounded border border-white/5">
                         {generateText(form)}
                     </div>
                 </div>

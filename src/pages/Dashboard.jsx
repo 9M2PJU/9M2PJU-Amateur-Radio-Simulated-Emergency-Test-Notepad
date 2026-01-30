@@ -386,7 +386,7 @@ export default function Dashboard() {
                 </header>
 
                 {/* Dynamic Viewport */}
-                <main className="flex-1 overflow-y-auto p-0 scroll-smooth pb-24 lg:pb-0 flex flex-col">
+                <main className={`flex-1 ${activeTab === 'iaru' ? 'overflow-hidden' : 'overflow-y-auto'} p-0 scroll-smooth pb-24 lg:pb-0 flex flex-col`}>
                     <div className="w-full h-full flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-700">
                         {activeTab === 'settings' && (
                             <StationSettings
@@ -423,9 +423,11 @@ export default function Dashboard() {
                             />
                         )}
 
-                        <footer className="py-12 text-center text-[10px] uppercase tracking-[0.4em] text-green-400 font-orbitron">
-                            <p>DIGITAL AMATEUR RADIO EMERGENCY SUITE (DARES) // <a href="https://hamradio.my" target="_blank" rel="noopener noreferrer" className="text-radio-cyan hover:text-white transition-colors border-b border-radio-cyan/30">9M2PJU</a></p>
-                        </footer>
+                        {activeTab !== 'iaru' && (
+                            <footer className="py-12 text-center text-[10px] uppercase tracking-[0.4em] text-green-400 font-orbitron">
+                                <p>DIGITAL AMATEUR RADIO EMERGENCY SUITE (DARES) // <a href="https://hamradio.my" target="_blank" rel="noopener noreferrer" className="text-radio-cyan hover:text-white transition-colors border-b border-radio-cyan/30">9M2PJU</a></p>
+                            </footer>
+                        )}
                     </div>
                 </main>
 
