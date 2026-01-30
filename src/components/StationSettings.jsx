@@ -1,7 +1,7 @@
 import React from 'react';
-import { Settings, Battery, Zap, MapPin } from 'lucide-react';
+import { Settings, Battery, Zap, MapPin, Save } from 'lucide-react';
 
-export default function StationSettings({ settings, updateSettings, toggleTheme, currentTheme }) {
+export default function StationSettings({ settings, updateSettings, onSaveProfile, toggleTheme, currentTheme }) {
     const handleChange = (e) => {
         const { name, value } = e.target;
         updateSettings({ ...settings, [name]: value.toUpperCase() });
@@ -76,6 +76,14 @@ export default function StationSettings({ settings, updateSettings, toggleTheme,
                 <p className="text-[10px] text-gray-600 uppercase font-mono tracking-widest">
                     Build: {new Date().toLocaleDateString('en-GB', { timeZone: 'Asia/Kuala_Lumpur' })}
                 </p>
+                {onSaveProfile && (
+                    <button
+                        onClick={() => onSaveProfile(settings)}
+                        className="flex items-center gap-2 bg-radio-cyan/10 hover:bg-radio-cyan/20 text-radio-cyan border border-radio-cyan/50 px-4 py-2 rounded transition-all font-orbitron text-xs font-bold uppercase tracking-wider"
+                    >
+                        <Save className="w-4 h-4" /> Save Profile
+                    </button>
+                )}
             </div>
         </div>
     );

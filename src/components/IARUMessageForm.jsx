@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useLocalStorage } from '../utils/useLocalStorage';
+import { supabase } from '../lib/supabase';
+import { useAuth } from '../context/AuthContext';
 import { FileText, Copy, Trash, Printer, FileDown, Mail } from 'lucide-react';
 import { jsPDF } from "jspdf";
 
 export default function IARUMessageForm({ stationSettings, onAddToLog }) {
+    const { effectiveUser } = useAuth();
     // ... (rest of state definitions same as before)
     const [useUTC, setUseUTC] = useState(true);
     const [isAutoTime, setIsAutoTime] = useState(true);
@@ -30,7 +32,31 @@ export default function IARUMessageForm({ stationSettings, onAddToLog }) {
         sentTime: ''
     });
 
-    const [savedMessages, setSavedMessages] = useLocalStorage('iaru_outbox', []);
+
+    const [savedMessages, setSavedMessages] = useState([]);
+
+    useEffect(() => {
+        if (effectiveUser) {
+            fetchMessages();
+        } else {
+            setSavedMessages([]);
+        }
+    }, [effectiveUser]);
+
+    const fetchMessages = async () => {
+        try {
+            const { data, error } = await supabase
+                .from('messages')
+                .select('*')
+                .eq('user_id', effectiveUser.id)
+                .order('created_at', { ascending: false });
+
+            if (error) throw error;
+            setSavedMessages(data);
+        } catch (error) {
+            console.error('Error fetching messages:', error);
+        }
+    };
 
     // Realtime Filing Time Sync (hh:mm only)
     useEffect(() => {
@@ -113,35 +139,86 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
         }
     };
 
-    const saveMessage = () => {
-        const msg = { ...form, id: Date.now() };
-        setSavedMessages([msg, ...savedMessages]);
-
-        // Auto-add to Tactical Logger
-        if (onAddToLog) {
-            onAddToLog({
-                id: Date.now(),
-                date: new Date().toISOString().split('T')[0],
-                time: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }),
-                callsign: form.to ? form.to.split('\n')[0] : 'STATION',
-                freq: txDetails.freq || '145.500',
-                mode: txDetails.mode || 'FM',
-                rstSent: '59',
-                rstRcvd: '59',
-                remarks: `NR ${form.number} ${form.precedence} TO ${form.to?.substring(0, 10)}...`,
-                operator: stationSettings.callsign || 'OP'
-            });
+    const saveMessage = async () => {
+        if (!effectiveUser) {
+            alert("Please login to save messages.");
+            return;
         }
 
-        alert('Message saved to Outbox and added to Tactical Logger.');
+        try {
+            const msgData = {
+                user_id: effectiveUser.id,
+                number: form.number,
+                precedence: form.precedence,
+                station_of_origin: form.stationOfOrigin,
+                check_count: form.check,
+                place_of_origin: form.placeOfOrigin,
+                filing_time: form.filingTime,
+                filing_date: form.filingDate,
+                to_field: form.to,
+                special_instructions: form.specialInstructions,
+                message_body: form.message,
+                from_field: form.from,
+                recvd_from: form.recvdFrom,
+                recvd_date: form.recvdDate,
+                recvd_time: form.recvdTime,
+                sent_to: form.sentTo,
+                sent_date: form.sentDate,
+                sent_time: form.sentTime,
+                created_at: new Date().toISOString()
+            };
+
+            const { data, error } = await supabase
+                .from('messages')
+                .insert([msgData])
+                .select()
+                .single();
+
+            if (error) throw error;
+
+            setSavedMessages([data, ...savedMessages]);
+
+            // Auto-add to Tactical Logger
+            if (onAddToLog) {
+                onAddToLog({
+                    id: Date.now(), // Temporarily ID until logger acts
+                    date: new Date().toISOString().split('T')[0],
+                    time: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }),
+                    callsign: form.to ? form.to.split('\n')[0] : 'STATION',
+                    freq: txDetails.freq || '145.500',
+                    mode: txDetails.mode || 'FM',
+                    rstSent: '59',
+                    rstRcvd: '59',
+                    remarks: `NR ${form.number} ${form.precedence} TO ${form.to?.substring(0, 10)}...`,
+                    operator: stationSettings.callsign || 'OP'
+                });
+            }
+
+            alert('Message saved to Outbox and added to Tactical Logger.');
+        } catch (error) {
+            console.error("Error saving message:", error);
+            alert("Failed to save message.");
+        }
     };
 
     const [viewMsg, setViewMsg] = useState(null);
 
-    const deleteMessage = (id) => {
+    const deleteMessage = async (id) => {
         if (window.confirm('Are you sure you want to delete this message?')) {
-            setSavedMessages(prev => prev.filter(msg => msg.id !== id));
-            if (viewMsg && viewMsg.id === id) setViewMsg(null);
+            try {
+                const { error } = await supabase
+                    .from('messages')
+                    .delete()
+                    .eq('id', id);
+
+                if (error) throw error;
+
+                setSavedMessages(prev => prev.filter(msg => msg.id !== id));
+                if (viewMsg && viewMsg.id === id) setViewMsg(null);
+            } catch (error) {
+                console.error("Error deleting message:", error);
+                alert("Failed to delete message.");
+            }
         }
     };
 
