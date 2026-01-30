@@ -2,6 +2,13 @@
 
 All notable changes to the **9M2PJU SET Pad (DARES)** will be documented in this file.
 
+## [5.0.1] - 2026-01-30
+### 🔧 Hotfixes & Enhancements
+- **Admin Stats**: Added "Outbox" message counts to the Super Admin user list for easy monitoring.
+- **Donation Modal**: Implemented a 10-second auto-close timer and QR code integration.
+- **Security Fix**: Patched RLS policies to ensure Super Admins can view all user messages during impersonation.
+- **Stability**: Fixed a critical build error in the Admin module.
+
 ## [5.0.0] - 2026-01-30
 ### 🚀 MAJOR: Cloud Architecture Upgrade (Supabase)
 - **Cloud Database**: Fully migrated from LocalStorage to **Supabase** (PostgreSQL). Messages, Logs, and Settings now sync across devices.
