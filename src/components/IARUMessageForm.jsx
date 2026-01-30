@@ -644,7 +644,7 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                             RESET
                         </button>
                         <button onClick={() => setShowOutbox(true)} className="flex-1 sm:flex-none bg-radio-amber/10 hover:bg-radio-amber/20 text-radio-amber font-bold py-2 px-6 rounded border border-radio-amber/50 font-orbitron tracking-wider transition-all text-sm whitespace-nowrap">
-                            OUTBOX {savedMessages.length > 0 && `(${savedMessages.length})`}
+                            OUTBOX ({savedMessages.length})
                         </button>
                     </div>
                     <div className="text-[10px] text-radio-amber/40 italic font-mono self-end sm:self-center">
