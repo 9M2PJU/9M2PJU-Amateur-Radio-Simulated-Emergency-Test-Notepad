@@ -583,29 +583,29 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                         <div className={`flex flex-col sm:grid sm:grid-cols-2 gap-0 border border-radio-cyan/30 rounded overflow-hidden`}>
                             <div className={`grid grid-cols-3 divide-x divide-radio-cyan/30 border-b sm:border-b-0 sm:border-r border-radio-cyan/30`}>
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[10px] md:text-xs block text-radio-amber/50 font-bold leading-none mb-1">RECVD FROM</label>
+                                    <label className="text-[8px] md:text-xs block text-radio-amber/50 font-bold leading-none mb-1">RECVD FROM</label>
                                     <input name="recvdFrom" value={form.recvdFrom} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[10px] md:text-xs block text-radio-amber/50 font-bold leading-none mb-1">DATE</label>
+                                    <label className="text-[8px] md:text-xs block text-radio-amber/50 font-bold leading-none mb-1">DATE</label>
                                     <input name="recvdDate" value={form.recvdDate} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[10px] md:text-xs block text-radio-amber/50 font-bold leading-none mb-1">TIME</label>
+                                    <label className="text-[8px] md:text-xs block text-radio-amber/50 font-bold leading-none mb-1">TIME</label>
                                     <input name="recvdTime" value={form.recvdTime} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                             </div>
                             <div className="grid grid-cols-3 divide-x divide-radio-cyan/30">
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[10px] md:text-xs block text-radio-amber/50 font-bold leading-none mb-1">SENT TO</label>
+                                    <label className="text-[8px] md:text-xs block text-radio-amber/50 font-bold leading-none mb-1">SENT TO</label>
                                     <input name="sentTo" value={form.sentTo} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[10px] md:text-xs block text-radio-amber/50 font-bold leading-none mb-1">DATE</label>
+                                    <label className="text-[8px] md:text-xs block text-radio-amber/50 font-bold leading-none mb-1">DATE</label>
                                     <input name="sentDate" value={form.sentDate} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[10px] md:text-xs block text-radio-amber/50 font-bold leading-none mb-1">TIME</label>
+                                    <label className="text-[8px] md:text-xs block text-radio-amber/50 font-bold leading-none mb-1">TIME</label>
                                     <input name="sentTime" value={form.sentTime} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                             </div>
@@ -652,11 +652,11 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                 </div>
             </div>
 
-            {/* Right Panel (Side Panel) - Compact for Mobile */}
-            <div className="flex flex-col gap-2 lg:flex-[2] h-40 lg:h-full lg:flex-1 min-h-0">
-                <div className="bg-black/40 border border-white/10 rounded-lg p-2 lg:p-4 shadow-lg flex flex-col h-full min-h-0">
-                    <h3 className="text-[10px] lg:text-sm font-bold text-radio-amber/60 mb-1 lg:mb-2 font-orbitron uppercase tracking-widest border-b border-radio-amber/20 pb-1 lg:pb-2">Preview</h3>
-                    <div className="font-mono text-[9px] lg:text-xs text-radio-amber whitespace-pre-wrap overflow-y-auto flex-1 custom-scrollbar leading-tight lg:leading-relaxed p-2 bg-black/20 rounded border border-white/5">
+            {/* Right Panel (Side Panel) - Hidden on Mobile, Shown on Desktop */}
+            <div className="hidden lg:flex flex-col gap-4 lg:flex-[2] h-full min-h-0">
+                <div className="bg-black/40 border border-white/10 rounded-lg p-4 shadow-lg flex flex-col h-full min-h-0">
+                    <h3 className="text-sm font-bold text-radio-amber/60 mb-2 font-orbitron uppercase tracking-widest border-b border-radio-amber/20 pb-2">Message Preview (Radiogram Format)</h3>
+                    <div className="font-mono text-xs text-radio-amber whitespace-pre-wrap overflow-y-auto flex-1 custom-scrollbar leading-relaxed p-4 bg-black/20 rounded border border-white/5">
                         {generateText(form)}
                     </div>
                 </div>
