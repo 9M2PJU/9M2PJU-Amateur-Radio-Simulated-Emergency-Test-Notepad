@@ -37,7 +37,7 @@ function App() {
   // ... (handleInstall remains same)
 
   const handleAddToLog = (msg) => {
-    // ...
+    setLogs(prevLogs => [msg, ...prevLogs]);
   };
 
   return (

@@ -235,14 +235,14 @@ export default function TacticalLogger({ logs, setLogs, stationSettings }) {
                 <table className="w-full text-left text-sm">
                     <thead className="bg-black/40 text-gray-400 uppercase text-xs font-bold font-orbitron">
                         <tr>
-                            <th className="p-3 w-24">Date</th>
-                            <th className="p-3 w-20">Time</th>
-                            <th className="p-3">Callsign</th>
-                            <th className="p-3">Freq</th>
-                            <th className="p-3">Mode</th>
-                            <th className="p-3">RST</th>
-                            <th className="p-3">Remarks</th>
-                            <th className="p-3 text-right">Action</th>
+                            <th className="p-3 w-24 whitespace-nowrap">Date</th>
+                            <th className="p-3 w-20 whitespace-nowrap">Time</th>
+                            <th className="p-3 whitespace-nowrap">Callsign</th>
+                            <th className="p-3 whitespace-nowrap">Freq</th>
+                            <th className="p-3 whitespace-nowrap">Mode</th>
+                            <th className="p-3 whitespace-nowrap">RST</th>
+                            <th className="p-3 whitespace-nowrap">Remarks</th>
+                            <th className="p-3 text-right whitespace-nowrap">Action</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-white/5 bg-black/20 backdrop-blur-sm">

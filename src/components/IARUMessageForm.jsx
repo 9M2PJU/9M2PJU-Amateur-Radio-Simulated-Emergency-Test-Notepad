@@ -471,7 +471,7 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
             </div>
 
             {/* Right Panel (Side Panel) - Maximized Vertical Space */}
-            <div className="hidden lg:flex flex-col gap-6 flex-1 min-h-0">
+            <div className="flex flex-col gap-6 flex-1 min-h-0 mt-4 lg:mt-0">
                 <div className="bg-black/40 border border-white/10 rounded-lg p-4 shadow-lg flex flex-col flex-1 h-full min-h-0">
                     <h3 className="text-sm font-bold text-gray-400 mb-2 font-orbitron uppercase tracking-widest border-b border-gray-700 pb-2">Message Preview (Radiogram Format)</h3>
                     <div className="font-mono text-xs text-radio-amber whitespace-pre-wrap overflow-y-auto flex-1 custom-scrollbar leading-relaxed p-2 bg-black/20 rounded border border-white/5">
