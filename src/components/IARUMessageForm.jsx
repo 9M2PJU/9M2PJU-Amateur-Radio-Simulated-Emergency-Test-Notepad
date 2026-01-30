@@ -7,6 +7,7 @@ export default function IARUMessageForm({ stationSettings, onAddToLog }) {
     // ... (rest of state definitions same as before)
     const [useUTC, setUseUTC] = useState(true);
     const [isAutoTime, setIsAutoTime] = useState(true);
+    const [txDetails, setTxDetails] = useState({ freq: '145.500', mode: 'FM' });
 
     const [form, setForm] = useState({
         number: '1',
@@ -123,8 +124,9 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                 date: new Date().toISOString().split('T')[0],
                 time: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }),
                 callsign: form.to ? form.to.split('\n')[0] : 'STATION',
-                freq: 'MSG',
-                mode: 'RADIOGRAM',
+                callsign: form.to ? form.to.split('\n')[0] : 'STATION',
+                freq: txDetails.freq || '145.500',
+                mode: txDetails.mode || 'FM',
                 rstSent: '59',
                 rstRcvd: '59',
                 remarks: `NR ${form.number} ${form.precedence} TO ${form.to?.substring(0, 10)}...`,
@@ -451,6 +453,26 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                {/* Custom Transmission Inputs */}
+                <div className="p-2 bg-black/10 border-t border-radio-cyan/30 grid grid-cols-2 gap-2">
+                    <div>
+                        <label className="text-[9px] font-bold text-radio-amber uppercase block mb-1 font-orbitron">Freq (MHz)</label>
+                        <input
+                            value={txDetails.freq}
+                            onChange={e => setTxDetails({ ...txDetails, freq: e.target.value.toUpperCase() })}
+                            className="w-full bg-black/30 border border-radio-cyan/20 rounded px-2 py-1 text-xs font-mono text-radio-cyan focus:border-radio-cyan/50 outline-none" placeholder="145.500"
+                        />
+                    </div>
+                    <div>
+                        <label className="text-[9px] font-bold text-radio-amber uppercase block mb-1 font-orbitron">Mode</label>
+                        <input
+                            value={txDetails.mode}
+                            onChange={e => setTxDetails({ ...txDetails, mode: e.target.value.toUpperCase() })}
+                            className="w-full bg-black/30 border border-radio-cyan/20 rounded px-2 py-1 text-xs font-mono text-radio-cyan focus:border-radio-cyan/50 outline-none" placeholder="FM"
+                        />
                     </div>
                 </div>
 
