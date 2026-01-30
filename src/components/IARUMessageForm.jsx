@@ -96,7 +96,30 @@ export default function IARUMessageForm({ stationSettings, onAddToLog }) {
         setForm(prev => ({ ...prev, [name]: value.toUpperCase() }));
     };
 
-    const generateText = (data = form) => {
+    const normalizeMessage = (data) => {
+        return {
+            number: data.number,
+            precedence: data.precedence,
+            stationOfOrigin: data.stationOfOrigin || data.station_of_origin || '',
+            check: data.check || data.check_count || '0',
+            placeOfOrigin: data.placeOfOrigin || data.place_of_origin || '',
+            filingDate: data.filingDate || data.filing_date || '',
+            filingTime: data.filingTime || data.filing_time || '',
+            to: data.to || data.to_field || '',
+            specialInstructions: data.specialInstructions || data.special_instructions || '',
+            message: data.message || data.message_body || '',
+            from: data.from || data.from_field || '',
+            recvdFrom: data.recvdFrom || data.recvd_from || '',
+            recvdDate: data.recvdDate || data.recvd_date || '',
+            recvdTime: data.recvdTime || data.recvd_time || '',
+            sentTo: data.sentTo || data.sent_to || '',
+            sentDate: data.sentDate || data.sent_date || '',
+            sentTime: data.sentTime || data.sent_time || ''
+        };
+    };
+
+    const generateText = (inputData = form) => {
+        const data = normalizeMessage(inputData);
         return `
 IARU Message
 

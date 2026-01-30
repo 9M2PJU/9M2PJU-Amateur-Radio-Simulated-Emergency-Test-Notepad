@@ -167,6 +167,17 @@ export default function Dashboard() {
     const [showDonationModal, setShowDonationModal] = useState(false);
 
     useEffect(() => {
+        // PERMISSION CHECK:
+        // 1. Must have a profile loaded
+        // 2. Must not be in the VIP list (Hardcoded safety)
+        // 3. Must have show_donation = true in DB
+
+        if (!profile) return;
+
+        const vipEmails = ['9m2pju@hamradio.my', '9w2rut@marts.org.my'];
+        if (vipEmails.includes(profile.email)) return;
+        if (profile.show_donation === false) return;
+
         // Show donation modal once per session (sessionStorage) or if never dismissed
         const hasSeenDonation = sessionStorage.getItem('hasSeenDonation');
         if (!hasSeenDonation) {
@@ -177,7 +188,7 @@ export default function Dashboard() {
             }, 2000);
             return () => clearTimeout(timer);
         }
-    }, [effectiveUser]); // Re-check on user change/login
+    }, [profile]); // Check when profile loads (login)
 
     const handleCloseDonation = () => {
         setShowDonationModal(false);

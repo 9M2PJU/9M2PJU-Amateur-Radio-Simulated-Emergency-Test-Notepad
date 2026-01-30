@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../context/AuthContext';
-import { Shield, Eye, UserX, Loader } from 'lucide-react';
+import { Shield, Eye, UserX, Loader, ToggleLeft, ToggleRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function SuperAdmin() {
@@ -67,6 +67,26 @@ export default function SuperAdmin() {
         impersonate(null);
     };
 
+    const toggleDonation = async (userId, currentStatus) => {
+        try {
+            const newStatus = !currentStatus;
+            const { error } = await supabase
+                .from('profiles')
+                .update({ show_donation: newStatus })
+                .eq('id', userId);
+
+            if (error) throw error;
+
+            // Optimistic update
+            setUsers(prev => prev.map(u =>
+                u.id === userId ? { ...u, show_donation: newStatus } : u
+            ));
+        } catch (error) {
+            console.error("Error updating donation status:", error);
+            alert("Failed to update status");
+        }
+    };
+
     if (!profile?.is_super_admin) {
         return <div className="p-8 text-center text-red-500 font-bold font-mono">UNAUTHORIZED ACCESS. INCIDENT LOGGED.</div>;
     }
@@ -114,6 +134,7 @@ export default function SuperAdmin() {
                                         <th className="p-4">Email</th>
                                         <th className="p-4">Grid</th>
                                         <th className="p-4 text-center">Outbox</th>
+                                        <th className="p-4 text-center">Donation</th>
                                         <th className="p-4 text-right">Actions</th>
                                     </tr>
                                 </thead>
@@ -131,7 +152,19 @@ export default function SuperAdmin() {
                                                     {user.messageCount || 0}
                                                 </span>
                                             </td>
-                                            <td className="p-4 text-right">
+                                            <td className="p-4 text-center">
+                                                <button
+                                                    onClick={() => toggleDonation(user.id, user.show_donation !== false)}
+                                                    className={`hover:text-white transition-colors ${user.show_donation !== false ? 'text-green-400' : 'text-gray-600'}`}
+                                                    title={user.show_donation !== false ? "Donation Popup ON" : "Donation Popup OFF"}
+                                                >
+                                                    {user.show_donation !== false ?
+                                                        <ToggleRight className="w-6 h-6" /> :
+                                                        <ToggleLeft className="w-6 h-6" />
+                                                    }
+                                                </button>
+                                            </td>
+                                            <td className="p-4 text-right min-w-[140px] flex justify-end gap-2">
                                                 <button
                                                     onClick={() => handleImpersonate(user.id)}
                                                     disabled={impersonatedUser === user.id}
