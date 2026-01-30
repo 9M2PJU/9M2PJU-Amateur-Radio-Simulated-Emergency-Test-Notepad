@@ -188,6 +188,7 @@ export default function SuperAdmin() {
 function SystemConfigPanel() {
     const [duration, setDuration] = useState('');
     const [frequency, setFrequency] = useState('');
+    const [autoLogout, setAutoLogout] = useState('');
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
 
@@ -209,8 +210,15 @@ function SystemConfigPanel() {
                 .eq('key', 'donation_popup_frequency')
                 .single();
 
+            const { data: logoutData } = await supabase
+                .from('system_config')
+                .select('value')
+                .eq('key', 'auto_logout_minutes')
+                .single();
+
             setDuration(durationData?.value?.seconds || 10);
             setFrequency(frequencyData?.value?.minutes || 60);
+            setAutoLogout(logoutData?.value?.minutes || 5);
         } catch (error) {
             console.error("Error fetching system config:", error);
         } finally {
@@ -233,6 +241,13 @@ function SystemConfigPanel() {
                 key: 'donation_popup_frequency',
                 value: { minutes: parseInt(frequency) },
                 description: 'Frequency in minutes for the donation popup recurrence'
+            }, { onConflict: 'key' });
+
+            // Save Auto Logout
+            await supabase.from('system_config').upsert({
+                key: 'auto_logout_minutes',
+                value: { minutes: parseInt(autoLogout) },
+                description: 'Automatic logout timeout for idle users in minutes'
             }, { onConflict: 'key' });
 
             alert("Configuration saved successfully!");
@@ -275,6 +290,19 @@ function SystemConfigPanel() {
                         />
                     </div>
                 </div>
+
+                <div className="pt-2">
+                    <span className="text-[10px] text-gray-500 font-mono block mb-1 uppercase tracking-tighter">Auto Logout (Idle Minutes)</span>
+                    <input
+                        type="number"
+                        min="1"
+                        max="1440"
+                        value={autoLogout}
+                        onChange={(e) => setAutoLogout(e.target.value)}
+                        className="input-tactical w-full font-mono text-center text-radio-cyan"
+                    />
+                </div>
+
                 <button
                     onClick={handleSave}
                     disabled={loading || saving}

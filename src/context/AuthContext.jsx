@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 
 const AuthContext = createContext();
@@ -8,6 +8,8 @@ export function AuthProvider({ children }) {
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
     const [impersonatedUser, setImpersonatedUser] = useState(null);
+    const [autoLogoutMinutes, setAutoLogoutMinutes] = useState(5); // Default 5 mins
+    const timerRef = useRef(null);
 
     useEffect(() => {
         // Check active session
@@ -16,6 +18,7 @@ export function AuthProvider({ children }) {
             setUser(session?.user ?? null);
             if (session?.user) {
                 fetchProfile(session.user.id);
+                fetchSystemConfig();
             } else {
                 setLoading(false);
             }
@@ -27,6 +30,7 @@ export function AuthProvider({ children }) {
             setUser(session?.user ?? null);
             if (session?.user) {
                 fetchProfile(session.user.id);
+                fetchSystemConfig();
             } else {
                 setProfile(null);
                 setImpersonatedUser(null);
@@ -37,21 +41,31 @@ export function AuthProvider({ children }) {
         return () => subscription.unsubscribe();
     }, []);
 
+    const fetchSystemConfig = async () => {
+        try {
+            const { data } = await supabase
+                .from('system_config')
+                .select('value')
+                .eq('key', 'auto_logout_minutes')
+                .single();
+
+            if (data?.value?.minutes) {
+                setAutoLogoutMinutes(data.value.minutes);
+            }
+        } catch (error) {
+            console.error("AuthContext: Error fetching logout config:", error);
+        }
+    };
+
     const fetchProfile = async (userId) => {
         try {
-            console.log("AuthContext: Fetching profile for", userId);
             const { data, error } = await supabase
                 .from('profiles')
                 .select('*')
                 .eq('id', userId)
                 .single();
 
-            if (error) {
-                console.error("AuthContext: Error fetching profile:", error);
-                throw error;
-            }
-
-            console.log("AuthContext: Profile loaded:", data);
+            if (error) throw error;
             setProfile(data);
         } catch (error) {
             console.error('Error fetching profile:', error);
@@ -73,29 +87,49 @@ export function AuthProvider({ children }) {
     };
 
     const logout = async () => {
+        if (timerRef.current) clearTimeout(timerRef.current);
         const { error } = await supabase.auth.signOut();
         sessionStorage.removeItem('hasSeenDonation');
         if (error) throw error;
     };
 
     const impersonate = async (targetUser) => {
-        // Only allow if current real user is super admin
         if (!profile?.is_super_admin) {
             throw new Error("Unauthorized");
         }
-
         if (targetUser === null) {
             setImpersonatedUser(null);
             return;
         }
-
-        // Just sets the context state, requests will use this ID for RLS impersonation context if we were using RLS functions, 
-        // but for now we'll handle it via manual queries or client-side context logic, 
-        // OR we can't truly "impersonate" at RLS level easily without Postgres functions. 
-        // For this app's requirement: "super admin can see any users logger data and outbox".
-        // We will expose the `effectiveUser` to components.
         setImpersonatedUser(targetUser);
     };
+
+    // Inactivity Timer Implementation
+    useEffect(() => {
+        if (!user) return;
+
+        const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'];
+
+        const handleActivity = () => {
+            if (timerRef.current) clearTimeout(timerRef.current);
+
+            timerRef.current = setTimeout(() => {
+                console.log(`Auto-logout triggered: ${autoLogoutMinutes} minutes of inactivity.`);
+                logout();
+            }, autoLogoutMinutes * 60 * 1000);
+        };
+
+        // Initialize timer
+        handleActivity();
+
+        // Listen for user activity
+        events.forEach(event => window.addEventListener(event, handleActivity));
+
+        return () => {
+            if (timerRef.current) clearTimeout(timerRef.current);
+            events.forEach(event => window.removeEventListener(event, handleActivity));
+        };
+    }, [user, autoLogoutMinutes]);
 
     const effectiveUser = impersonatedUser ? { id: impersonatedUser } : user;
 
@@ -109,7 +143,7 @@ export function AuthProvider({ children }) {
             logout,
             impersonate,
             impersonatedUser,
-            effectiveUser // Components should use this to Fetch Data
+            effectiveUser
         }}>
             {!loading && children}
         </AuthContext.Provider>
