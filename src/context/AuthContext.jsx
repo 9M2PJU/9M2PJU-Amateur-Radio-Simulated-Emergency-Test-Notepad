@@ -37,6 +37,40 @@ export function AuthProvider({ children }) {
         return () => subscription.unsubscribe();
     }, []);
 
+    const fetchProfile = async (userId) => {
+        try {
+            console.log("AuthContext: Fetching profile for", userId);
+            const { data, error } = await supabase
+                .from('profiles')
+                .select('*')
+                .eq('id', userId)
+                .single();
+
+            if (error) {
+                console.error("AuthContext: Error fetching profile:", error);
+                throw error;
+            }
+
+            console.log("AuthContext: Profile loaded:", data);
+            setProfile(data);
+        } catch (error) {
+            console.error('Error fetching profile:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const login = async (email, password) => {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        return data;
+    };
+
+    const register = async (email, password) => {
+        const { data, error } = await supabase.auth.signUp({ email, password });
+        if (error) throw error;
+        return data;
+    };
 
     const logout = async () => {
         const { error } = await supabase.auth.signOut();
