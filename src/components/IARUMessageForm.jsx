@@ -53,6 +53,15 @@ export default function IARUMessageForm({ stationSettings, onAddToLog }) {
 
             if (error) throw error;
             setSavedMessages(data);
+
+            // Auto-calculate next message number
+            if (data && data.length > 0) {
+                const maxNum = data.reduce((max, msg) => {
+                    const num = parseInt(msg.number);
+                    return !isNaN(num) && num > max ? num : max;
+                }, 0);
+                setForm(prev => ({ ...prev, number: (maxNum + 1).toString() }));
+            }
         } catch (error) {
             console.error('Error fetching messages:', error);
         }
@@ -218,6 +227,17 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
             }
 
             alert('Message saved to Outbox and added to Tactical Logger.');
+
+            // Auto-increment number for next message
+            const nextNum = (parseInt(form.number) + 1).toString();
+            setForm(prev => ({
+                ...prev,
+                number: nextNum,
+                check: '0',
+                message: '',
+                specialInstructions: ''
+            }));
+
         } catch (error) {
             console.error("Error saving message:", error);
             alert("Failed to save message.");
