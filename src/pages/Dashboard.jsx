@@ -327,7 +327,13 @@ export default function Dashboard() {
                         )}
 
                         {activeTab === 'logger' && (
-                            <TacticalLogger logs={logs} onAddLog={handleAddLog} onDeleteLog={handleDeleteLog} stationSettings={stationSettings} />
+                            <TacticalLogger
+                                logs={logs}
+                                onAddLog={handleAddLog}
+                                onDeleteLog={handleDeleteLog}
+                                onUpdateLog={handleUpdateLog}
+                                stationSettings={stationSettings}
+                            />
                         )}
 
                         {activeTab === 'morse' && (

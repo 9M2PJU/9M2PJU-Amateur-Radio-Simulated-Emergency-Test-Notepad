@@ -584,29 +584,29 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                         <div className={`flex flex-col sm:grid sm:grid-cols-2 gap-0 border border-radio-cyan/30 rounded overflow-hidden`}>
                             <div className={`grid grid-cols-3 divide-x divide-radio-cyan/30 border-b sm:border-b-0 sm:border-r border-radio-cyan/30`}>
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[7px] md:text-[8px] block text-radio-amber/50 font-bold leading-none mb-1">RECVD FROM</label>
+                                    <label className="text-[10px] md:text-xs block text-radio-amber/50 font-bold leading-none mb-1">RECVD FROM</label>
                                     <input name="recvdFrom" value={form.recvdFrom} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[7px] md:text-[8px] block text-radio-amber/50 font-bold leading-none mb-1">DATE</label>
+                                    <label className="text-[10px] md:text-xs block text-radio-amber/50 font-bold leading-none mb-1">DATE</label>
                                     <input name="recvdDate" value={form.recvdDate} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[7px] md:text-[8px] block text-radio-amber/50 font-bold leading-none mb-1">TIME</label>
+                                    <label className="text-[10px] md:text-xs block text-radio-amber/50 font-bold leading-none mb-1">TIME</label>
                                     <input name="recvdTime" value={form.recvdTime} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                             </div>
                             <div className="grid grid-cols-3 divide-x divide-radio-cyan/30">
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[7px] md:text-[8px] block text-radio-amber/50 font-bold leading-none mb-1">SENT TO</label>
+                                    <label className="text-[10px] md:text-xs block text-radio-amber/50 font-bold leading-none mb-1">SENT TO</label>
                                     <input name="sentTo" value={form.sentTo} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[7px] md:text-[8px] block text-radio-amber/50 font-bold leading-none mb-1">DATE</label>
+                                    <label className="text-[10px] md:text-xs block text-radio-amber/50 font-bold leading-none mb-1">DATE</label>
                                     <input name="sentDate" value={form.sentDate} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[7px] md:text-[8px] block text-radio-amber/50 font-bold leading-none mb-1">TIME</label>
+                                    <label className="text-[10px] md:text-xs block text-radio-amber/50 font-bold leading-none mb-1">TIME</label>
                                     <input name="sentTime" value={form.sentTime} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                             </div>
