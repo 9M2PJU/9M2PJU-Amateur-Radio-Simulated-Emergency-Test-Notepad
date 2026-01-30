@@ -362,7 +362,7 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
     const sectionBorder = "border-radio-cyan/30";
 
     return (
-        <div className="flex flex-col lg:flex-row gap-4 p-2 lg:p-4 flex-1">
+        <div className="flex flex-col lg:flex-row gap-4 p-2 lg:p-4 w-full">
 
             {/* Message Viewer Modal */}
             {viewMsg && (
@@ -465,8 +465,8 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
             )}
 
             {/* The IARU FORM */}
-            <div className="flex-1 flex flex-col bg-tactical-surface text-radio-amber font-sans shadow-[0_0_30px_rgba(163,184,108,0.1)] border border-radio-cyan/20 rounded-lg">
-                <div className="flex-1 flex flex-col">
+            <div className="w-full lg:flex-[5] flex flex-col bg-tactical-surface text-radio-amber font-sans shadow-[0_0_30px_rgba(163,184,108,0.1)] border border-radio-cyan/20 rounded-lg">
+                <div className="flex flex-col">
                     {/* Header Strip */}
                     <div className="flex-none bg-radio-amber/10 border-b border-radio-amber/50 p-1 lg:p-2 flex flex-col sm:flex-row justify-center items-center relative gap-1">
                         <h2 className="text-lg lg:text-2xl font-bold italic tracking-[0.2em] text-radio-amber font-orbitron drop-shadow-[0_0_5px_rgba(245,158,11,0.5)] text-center">IARU MESSAGE</h2>
