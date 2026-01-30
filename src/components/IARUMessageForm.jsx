@@ -362,7 +362,7 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
     const sectionBorder = "border-radio-cyan/30";
 
     return (
-        <div className="block lg:flex lg:flex-row gap-4 p-2 lg:p-4 relative container-iaru pb-12 lg:pb-0">
+        <div className="flex flex-col lg:flex-row gap-4 p-2 lg:p-4 flex-1">
 
             {/* Message Viewer Modal */}
             {viewMsg && (
@@ -465,8 +465,8 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
             )}
 
             {/* The IARU FORM */}
-            <div className="lg:flex-[5] flex-none lg:flex-1 flex flex-col min-h-0 bg-tactical-surface text-radio-amber font-sans shadow-[0_0_30px_rgba(163,184,108,0.1)] relative border border-radio-cyan/20 rounded-lg">
-                <div className="flex-none lg:flex-1 flex flex-col">
+            <div className="flex-1 flex flex-col bg-tactical-surface text-radio-amber font-sans shadow-[0_0_30px_rgba(163,184,108,0.1)] border border-radio-cyan/20 rounded-lg">
+                <div className="flex-1 flex flex-col">
                     {/* Header Strip */}
                     <div className="flex-none bg-radio-amber/10 border-b border-radio-amber/50 p-1 lg:p-2 flex flex-col sm:flex-row justify-center items-center relative gap-1">
                         <h2 className="text-lg lg:text-2xl font-bold italic tracking-[0.2em] text-radio-amber font-orbitron drop-shadow-[0_0_5px_rgba(245,158,11,0.5)] text-center">IARU MESSAGE</h2>
@@ -652,9 +652,9 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                 </div>
             </div>
 
-            {/* Right Panel (Side Panel) - Shown below on Mobile */}
-            <div className="flex flex-col gap-4 lg:flex-[2] flex-none lg:flex-1 min-h-0 mt-4 lg:mt-0">
-                <div className="bg-black/40 border border-white/10 rounded-lg p-4 shadow-lg flex flex-col lg:h-full min-h-0">
+            {/* Right Panel - Message Preview */}
+            <div className="flex flex-col gap-4 lg:w-1/3 mt-4 lg:mt-0">
+                <div className="bg-black/40 border border-white/10 rounded-lg p-4 shadow-lg flex flex-col">
                     <h3 className="text-sm font-bold text-radio-amber/60 mb-2 font-orbitron uppercase tracking-widest border-b border-radio-amber/20 pb-2">Message Preview (Radiogram Format)</h3>
                     <div className="font-mono text-xs text-radio-amber whitespace-pre-wrap lg:overflow-y-auto lg:flex-1 custom-scrollbar leading-relaxed p-4 bg-black/20 rounded border border-white/5">
                         {generateText(form)}
