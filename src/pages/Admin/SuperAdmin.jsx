@@ -92,7 +92,7 @@ export default function SuperAdmin() {
     }
 
     return (
-        <div className="min-h-screen bg-tactical-bg text-gray-100 font-inter p-6">
+        <div className="h-screen overflow-y-auto bg-tactical-bg text-gray-100 font-inter p-6">
             <div className="max-w-6xl mx-auto space-y-6">
                 <header className="flex justify-between items-center border-b border-white/10 pb-6">
                     <div className="flex items-center gap-3">
