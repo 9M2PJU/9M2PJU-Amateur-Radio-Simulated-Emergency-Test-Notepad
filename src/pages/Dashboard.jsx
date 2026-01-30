@@ -194,17 +194,21 @@ export default function Dashboard() {
 
     const [showDonationModal, setShowDonationModal] = useState(false);
     const [systemConfig, setSystemConfig] = useState({});
-
     useEffect(() => {
         const fetchSystemConfig = async () => {
             try {
+                // Fetch frequency specifically
                 const { data, error } = await supabase
                     .from('system_config')
-                    .select('*')
-                    .single(); // Assuming there's only one row for system config
+                    .select('value')
+                    .eq('key', 'donation_popup_frequency')
+                    .single();
 
-                if (error) throw error;
-                setSystemConfig(data);
+                if (error && error.code !== 'PGRST116') throw error;
+
+                if (data?.value) {
+                    setSystemConfig(data.value); // { minutes: 60 }
+                }
             } catch (error) {
                 console.error('Error fetching system config:', error);
             }
@@ -235,22 +239,27 @@ export default function Dashboard() {
             return;
         }
 
-        // Show donation modal once per session (sessionStorage) or if never dismissed
-        // Updated to use localStorage timestamp for persistence across sessions
-        const lastDismissed = localStorage.getItem('lastDonationDismissed');
-        const ONE_DAY_MS = 24 * 60 * 60 * 1000; // 24 hours
+        // FREQUENCY CHECK
+        const frequencyMinutes = systemConfig.minutes || 60; // Default 60 mins from config or fallback
+        const frequencyMs = frequencyMinutes * 60 * 1000;
 
-        if (!lastDismissed || (Date.now() - parseInt(lastDismissed, 10) > ONE_DAY_MS)) {
-            console.log("Donation Check: Showing modal in 2s...");
+        const lastDismissed = localStorage.getItem('lastDonationDismissed');
+        const now = Date.now();
+
+        console.log(`Donation Check: Frequency is ${frequencyMinutes} mins. Last seen: ${lastDismissed}`);
+
+        if (!lastDismissed || (now - parseInt(lastDismissed, 10) > frequencyMs)) {
+            console.log("Donation Check: Showing modal (Threshold passed or never seen).");
             // Small delay for better UX
             const timer = setTimeout(() => {
                 setShowDonationModal(true);
             }, 2000);
             return () => clearTimeout(timer);
         } else {
-            console.log("Donation Check: Already seen recently. Skipping.");
+            const timeLeft = frequencyMs - (now - parseInt(lastDismissed, 10));
+            console.log(`Donation Check: Too soon. Waiting another ${Math.ceil(timeLeft / 1000 / 60)} mins.`);
         }
-    }, [profile]); // Check when profile loads (login)
+    }, [profile, systemConfig]); // Check when profile OR config loads
 
     const handleCloseDonation = () => {
         setShowDonationModal(false);
