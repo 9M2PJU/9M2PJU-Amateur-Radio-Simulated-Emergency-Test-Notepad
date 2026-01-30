@@ -386,7 +386,7 @@ export default function Dashboard() {
                 </header>
 
                 {/* Dynamic Viewport */}
-                <main className="flex-1 overflow-y-auto p-0 scroll-smooth pb-24 lg:pb-0 flex flex-col">
+                <main className="flex-1 overflow-y-auto p-0 scroll-smooth pb-32 pb-safe lg:pb-0 flex flex-col">
                     <div className="w-full h-full flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-700">
                         {activeTab === 'settings' && (
                             <StationSettings
