@@ -8,6 +8,7 @@ import MorseConverter from '../components/MorseConverter';
 import CipherConverter from '../components/CipherConverter';
 import TimeWidget from '../components/TimeWidget';
 import CursorTrail from '../components/CursorTrail';
+import DonationModal from '../components/DonationModal';
 import { Radio, List, Settings, FileText, AudioWaveform, Lock, LogOut, Shield } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
@@ -163,6 +164,25 @@ export default function Dashboard() {
         setShowInstallModal(false);
     };
 
+    const [showDonationModal, setShowDonationModal] = useState(false);
+
+    useEffect(() => {
+        // Show donation modal once per session (sessionStorage) or if never dismissed
+        const hasSeenDonation = sessionStorage.getItem('hasSeenDonation');
+        if (!hasSeenDonation) {
+            // Small delay for better UX
+            const timer = setTimeout(() => {
+                setShowDonationModal(true);
+                sessionStorage.setItem('hasSeenDonation', 'true');
+            }, 2000);
+            return () => clearTimeout(timer);
+        }
+    }, [effectiveUser]); // Re-check on user change/login
+
+    const handleCloseDonation = () => {
+        setShowDonationModal(false);
+    };
+
     const handleAddToLog = (msg) => {
         setLogs(prevLogs => [msg, ...prevLogs]);
     };
@@ -199,6 +219,9 @@ export default function Dashboard() {
                     </div>
                 </div>
             )}
+
+            {/* Donation Modal */}
+            {showDonationModal && <DonationModal onClose={handleCloseDonation} />}
 
             {/* Sidebar for Desktop (xl+) */}
             <aside className="hidden lg:flex flex-col w-72 bg-tactical-surface/40 backdrop-blur-2xl border-r border-white/5 z-20 relative overflow-hidden">
