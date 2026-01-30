@@ -428,7 +428,7 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
             )}
 
             {/* The IARU FORM */}
-            <div className="lg:flex-[3] flex-1 flex flex-col min-h-0 bg-tactical-surface text-radio-amber font-sans shadow-[0_0_30px_rgba(163,184,108,0.1)] relative overflow-hidden border border-radio-cyan/20 rounded-lg">
+            <div className="lg:flex-[5] flex-1 flex flex-col min-h-0 bg-tactical-surface text-radio-amber font-sans shadow-[0_0_30px_rgba(163,184,108,0.1)] relative overflow-hidden border border-radio-cyan/20 rounded-lg">
                 <div className="overflow-y-auto custom-scrollbar flex-1 flex flex-col">
                     {/* Header Strip */}
                     <div className="flex-none bg-radio-amber/10 border-b-2 border-radio-amber/50 p-2 flex flex-col sm:flex-row justify-center items-center relative gap-1">
@@ -614,17 +614,17 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
             </div>
 
             {/* Right Panel (Side Panel) - Maximized Vertical Space */}
-            <div className="flex flex-col gap-6 lg:flex-1 flex-1 min-h-0 mt-4 lg:mt-0">
-                <div className="bg-black/40 border border-white/10 rounded-lg p-4 shadow-lg flex flex-col flex-1 h-full min-h-0">
+            <div className="flex flex-col gap-4 lg:flex-[2] flex-1 min-h-0 mt-4 lg:mt-0">
+                <div className="bg-black/40 border border-white/10 rounded-lg p-4 shadow-lg flex flex-col flex-[2] min-h-0">
                     <h3 className="text-sm font-bold text-radio-amber/60 mb-2 font-orbitron uppercase tracking-widest border-b border-radio-amber/20 pb-2">Message Preview (Radiogram Format)</h3>
-                    <div className="font-mono text-xs text-radio-amber whitespace-pre-wrap overflow-y-auto flex-1 custom-scrollbar leading-relaxed p-2 bg-black/20 rounded border border-white/5">
+                    <div className="font-mono text-xs text-radio-amber whitespace-pre-wrap overflow-y-auto flex-1 custom-scrollbar leading-relaxed p-4 bg-black/20 rounded border border-white/5">
                         {generateText(form)}
                     </div>
                 </div>
 
-                <div className="panel-tactical p-4 flex flex-col gap-2 shrink-0">
+                <div className="panel-tactical p-4 flex flex-col gap-2 flex-1 min-h-0">
                     <h4 className="text-[10px] font-bold text-radio-cyan font-orbitron mb-2 uppercase tracking-widest">Saved Outbox ({savedMessages.length})</h4>
-                    <div className="space-y-2 max-h-48 overflow-y-auto custom-scrollbar pr-2">
+                    <div className="space-y-2 overflow-y-auto custom-scrollbar pr-2 flex-1">
                         {savedMessages.length === 0 && <div className="text-xs text-radio-amber/40 italic text-center py-4">No messages in outbox.</div>}
                         {savedMessages.map(msg => (
                             <div key={msg.id} className="bg-black/40 border border-white/10 p-2 rounded flex justify-between items-center hover:bg-white/5 transition-colors group cursor-pointer" onClick={() => setViewMsg(msg)}>
