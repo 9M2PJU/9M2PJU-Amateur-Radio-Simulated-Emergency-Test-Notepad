@@ -119,7 +119,7 @@ export default function Dashboard() {
             alert("Profile updated successfully on cloud.");
         } catch (error) {
             console.error("Error updating profile:", error);
-            alert("Failed to update profile.");
+            alert(`Failed to update profile: ${error.message}`);
         }
     };
 
