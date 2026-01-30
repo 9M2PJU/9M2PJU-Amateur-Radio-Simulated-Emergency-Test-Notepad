@@ -2,11 +2,10 @@
 
 All notable changes to the **9M2PJU SET Pad (DARES)** will be documented in this file.
 
-## [5.1.7] - 2026-01-30
-### 📱 Mobile UI Fix (Natural Flow)
-- **Flexbox Reset**: Removed restrictive `flex-1` and `min-h-[100vh]` constraints on mobile that were causing content clipping.
-- **Enhanced Scroller**: Replaced `pb` padding with a massive `h-64` visible spacer inside the scroller to guarantee navigation clearance.
-- **Natural Expansion**: Elements now grow naturally based on their content, ensuring the Message Preview is never hidden.
+## [5.1.8] - 2026-01-30
+### 📱 Mobile UI Fix (Scroll Restoration)
+- **Architectural Fix**: Restored `overflow-hidden` to outer Dashboard containers. This fixes the issue where scrolling was completely disabled on mobile due to incorrect viewport height calculations.
+- **Stable Scroller**: Re-synchronized the `flex-1` layout with the `overflow-y-auto` main area for a smooth, native scroll feel.
 
 ## [5.1.0] - 2026-01-30
 ### 🚀 Features & Enhancements
