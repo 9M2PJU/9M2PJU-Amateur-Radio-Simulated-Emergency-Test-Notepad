@@ -40,7 +40,7 @@ export default function Register() {
                 <div className="flex flex-col items-center mb-8">
                     <img src="/dares-logo.png" alt="DARES Logo" className="w-24 h-24 object-contain mb-4 drop-shadow-[0_0_15px_rgba(34,197,94,0.5)] animate-pulse-slow" />
                     <h1 className="text-2xl font-bold font-orbitron text-glow tracking-widest text-center">NEW STATION ENTRY</h1>
-                    <span className="text-[10px] text-radio-green/80 tracking-[0.2em] font-mono mt-2 font-bold text-center">DIGITAL AMATEUR RADIO EMERGENCY SUITE (DARES)</span>
+                    <span className="text-[10px] text-green-400 tracking-[0.2em] font-mono mt-2 font-bold text-center">DIGITAL AMATEUR RADIO EMERGENCY SUITE (DARES)</span>
                     <span className="text-xs text-radio-green/70 tracking-[0.3em] font-mono mt-4 border-t border-radio-green/20 pt-2 w-full text-center">ESTABLISH CREDENTIALS</span>
                 </div>
 
