@@ -245,6 +245,7 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
     };
 
     const [viewMsg, setViewMsg] = useState(null);
+    const [showOutbox, setShowOutbox] = useState(false);
 
     const deleteMessage = async (id) => {
         if (window.confirm('Are you sure you want to delete this message?')) {
@@ -422,6 +423,42 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                             >
                                 <Trash className="w-4 h-4" /> Delete
                             </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Outbox Modal */}
+            {showOutbox && (
+                <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 backdrop-blur-sm" onClick={() => setShowOutbox(false)}>
+                    <div className="bg-tactical-surface border border-tactical-highlight rounded-lg shadow-2xl w-full max-w-md max-h-[80vh] flex flex-col" onClick={e => e.stopPropagation()}>
+                        <div className="flex items-center justify-between p-4 border-b border-radio-amber/20 bg-slate-900/50 rounded-t-lg">
+                            <h3 className="font-bold text-white uppercase flex items-center gap-2">
+                                <FileText className="w-5 h-5 text-radio-amber" />
+                                Saved Outbox {savedMessages.length > 0 && `(${savedMessages.length})`}
+                            </h3>
+                            <button onClick={() => setShowOutbox(false)} className="text-radio-amber/60 hover:text-white transition-colors">
+                                <span className="sr-only">Close</span>
+                                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                            </button>
+                        </div>
+                        <div className="p-4 overflow-y-auto flex-1 custom-scrollbar space-y-2">
+                            {savedMessages.length === 0 && <div className="text-xs text-radio-amber/40 italic text-center py-4">No messages in outbox.</div>}
+                            {savedMessages.map(msg => (
+                                <div key={msg.id} className="bg-black/40 border border-white/10 p-3 rounded flex justify-between items-center hover:bg-white/5 transition-colors group cursor-pointer" onClick={() => { setViewMsg(msg); setShowOutbox(false); }}>
+                                    <div>
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <span className={`text-[10px] font-bold px-1 rounded border ${msg.precedence === 'E' ? 'border-red-500 text-red-500' : clsPriority(msg.precedence)}`}>{msg.precedence}</span>
+                                            <span className="text-xs font-bold text-radio-cyan">NR {msg.number}</span>
+                                        </div>
+                                        <div className="text-[10px] text-radio-amber/60">TO: {msg.to?.split('\n')[0].substring(0, 15)}</div>
+                                    </div>
+                                    <div className="flex flex-col items-end gap-1">
+                                        <span className="text-[9px] text-radio-amber/40">{msg.filingTime}</span>
+                                        <button onClick={(e) => { e.stopPropagation(); deleteMessage(msg.id); }} className="text-red-500 hover:text-red-400 p-1 bg-white/5 rounded"><Trash className="w-3 h-3" /></button>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -606,6 +643,9 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                         <button onClick={() => setForm({ ...form, message: '', to: '', from: '' })} className="flex-1 sm:flex-none bg-transparent hover:bg-white/5 text-radio-cyan font-bold py-2 px-6 rounded border border-radio-cyan/50 font-orbitron tracking-wider transition-all text-sm">
                             RESET
                         </button>
+                        <button onClick={() => setShowOutbox(true)} className="flex-1 sm:flex-none bg-radio-amber/10 hover:bg-radio-amber/20 text-radio-amber font-bold py-2 px-6 rounded border border-radio-amber/50 font-orbitron tracking-wider transition-all text-sm whitespace-nowrap">
+                            OUTBOX {savedMessages.length > 0 && `(${savedMessages.length})`}
+                        </button>
                     </div>
                     <div className="text-[10px] text-radio-amber/40 italic font-mono self-end sm:self-center">
                         System Ready
@@ -615,34 +655,10 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
 
             {/* Right Panel (Side Panel) - Maximized Vertical Space */}
             <div className="flex flex-col gap-4 lg:flex-[2] flex-1 min-h-0 mt-4 lg:mt-0">
-                <div className="bg-black/40 border border-white/10 rounded-lg p-4 shadow-lg flex flex-col flex-[2] min-h-0">
+                <div className="bg-black/40 border border-white/10 rounded-lg p-4 shadow-lg flex flex-col flex-1 h-full min-h-0">
                     <h3 className="text-sm font-bold text-radio-amber/60 mb-2 font-orbitron uppercase tracking-widest border-b border-radio-amber/20 pb-2">Message Preview (Radiogram Format)</h3>
                     <div className="font-mono text-xs text-radio-amber whitespace-pre-wrap overflow-y-auto flex-1 custom-scrollbar leading-relaxed p-4 bg-black/20 rounded border border-white/5">
                         {generateText(form)}
-                    </div>
-                </div>
-
-                <div className="panel-tactical p-4 flex flex-col gap-2 flex-1 min-h-0">
-                    <h4 className="text-[10px] font-bold text-radio-cyan font-orbitron mb-2 uppercase tracking-widest">Saved Outbox ({savedMessages.length})</h4>
-                    <div className="space-y-2 overflow-y-auto custom-scrollbar pr-2 flex-1">
-                        {savedMessages.length === 0 && <div className="text-xs text-radio-amber/40 italic text-center py-4">No messages in outbox.</div>}
-                        {savedMessages.map(msg => (
-                            <div key={msg.id} className="bg-black/40 border border-white/10 p-2 rounded flex justify-between items-center hover:bg-white/5 transition-colors group cursor-pointer" onClick={() => setViewMsg(msg)}>
-                                <div>
-                                    <div className="flex items-center gap-2 mb-1">
-                                        <span className={`text-[10px] font-bold px-1 rounded border ${msg.precedence === 'E' ? 'border-red-500 text-red-500' : clsPriority(msg.precedence)}`}>{msg.precedence}</span>
-                                        <span className="text-xs font-bold text-radio-cyan">NR {msg.number}</span>
-                                    </div>
-                                    <div className="text-[10px] text-radio-amber/60">TO: {msg.to?.split('\n')[0].substring(0, 15)}</div>
-                                </div>
-                                <div className="flex flex-col items-end gap-1">
-                                    <span className="text-[9px] text-radio-amber/40">{msg.filingTime}</span>
-                                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <button onClick={(e) => { e.stopPropagation(); deleteMessage(msg.id); }} className="text-red-500 hover:text-red-400 p-1"><Trash className="w-3 h-3" /></button>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
                     </div>
                 </div>
             </div>
