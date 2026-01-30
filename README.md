@@ -1,69 +1,71 @@
 # 🌊 9M2PJU SET Pad (DARES)
 ### DIGITAL AMATEUR RADIO EMERGENCY SUITE
-Powered by **9M2PJU**
-
-[![Web App](https://img.shields.io/badge/Status-Online-brightgreen?style=for-the-badge&logo=vercel)](https://setpad.hamradio.my)
-[![Version](https://img.shields.io/badge/version-1.3.2-cyan?style=for-the-badge&logo=github)](https://github.com/9M2PJU/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/releases)
-[![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](https://github.com/9M2PJU/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/blob/main/LICENSE)
-
-<br />
-
-> **A mission-critical tactical suite for the Malaysian Amateur Radio Simulated Emergency Test.**  
-> *Built for speed, crypto-security, and offline field operations.*
-
-[**🚀 Launch Mission Control**](https://setpad.hamradio.my)
-
-</div>
 
 <p align="center">
   <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2672&auto=format&fit=crop" width="100%" alt="Tactical Radio Background" style="border-radius: 10px; border: 1px solid #06b6d4;">
 </p>
 
-## 💎 The Edge
-| Feature | Description | Identity |
-| :--- | :--- | :--- |
-| **LOGGER** | Rapid contact entry with keyboard-first workflow. | ⚡ Speed |
-| **Radiogram Engine** | Formal IARU message generation (UTC/Local) with Print/Email/PDF support. | 📄 Compliance |
-| **Morse Tool (CW)** | Text-to-Morse audio playback for signal verification. | 📡 Signal |
-| **Cipher Converter** | Advanced crypto (Playfair, Transposition, Caesar) for tactical traffic. | 🔐 Security |
-| **Orbitron UI** | High-contrast neon aesthetics for low-light ops. | 🌙 Night Mode |
-
-## 🛠️ Field Operations Guide
-
-### 1. Identity phase
-Connect your callsign and grid square in the **Station Config**. This identity is stamped on every log and message generated.
-
-### 2. Signal Tools
-Use the **Morse (CW)** tab for signal audio training or verification. Switch to **Cipher** for classical encryption of tactical data.
-
-### 3. Traffic Handling
-Draft formal Radiograms in the **IARU Radiogram** tab. Use **Direct Email** for quick delivery or **PDF/Print** for physical backups.
-
-### 4. Direct Export
-When the exercise concludes, one-click **Export CSV** generates a compliant report for your SET coordinator.
-
-## 📦 Technical Specs
-
-```mermaid
-graph TD
-    A[React 18] --> B[Vite]
-    B --> C[Tailwind CSS]
-    C --> D[Lucide Icons]
-    A --> E[LocalStorage Persistence]
-```
-
-- **Framework**: React + Vite (Ultrafast HMR)
-- **Styling**: Tailwind CSS + Orbitron Design System
-- **Persistence**: 100% Client-side (No backend, Maximum Privacy)
-- **Timezone**: `Asia/Kuala_Lumpur` (MYT) / UTC Toggled
-
-## 📜 License
-Mission authorized under the **MIT License**.
+> **The Ultimate Tactical Suite for Mission-Critical Emergency Communications.**  
+> *Engineered for speed, precision, and uncompromised field performance.*
 
 ---
 
+## 💎 Mission Capabilities (DARES)
+
+**We do not just log contacts. We manage chaos.**
+
+| Module | Purpose | Tactical Advantage |
+| :--- | :--- | :--- |
+| **CLOUD SYNC** | Seamless real-time data persistence across devices. | ☁️ Always On |
+| **LOGGER** | Rapid-fire contact entry with auto-time/date stamping. | ⚡ Zero Latency |
+| **RADIOGRAM** | Standards-compliant IARU message generation engine. | 📄 Formal Traffic |
+| **CIPHER** | Military-grade field encryption (Playfair, Transposition). | 🔐 Secure Comms |
+| **ADMIN** | Advanced user management and station impersonation. | 👁️ Overwatch |
+| **CW DECODER** | Integrated Morse tools for signal verification. | 📡 Signal Intel |
+
+---
+
+## 🛠️ Field Usage Protocols
+
+### 1. ESTABLISH IDENTITY
+Authenticate securely to access your command center. Your **Callsign** and **Grid Square** are automatically synchronized to the cloud, stamping every tactical action with your unique operator ID.
+
+### 2. TRAFFIC HANDLING
+Draft, Validate, and Transmit formal **IARU Radiograms**. 
+- **Auto-Formatting**: We handle the preamble structure; you focus on the message.
+- **Direct Dispatch**: One-click PDF generation or email relay for rapid dissemination.
+
+### 3. TACTICAL LOGGING
+The **Logger** is built for high-stress environments.
+- **Keyboard-First**: Keep hands on the keys.
+- **Night Ops**: High-contrast "Neon" aesthetics ensure visibility in zero-light conditions without compromising night vision.
+- **Live Sync**: Log entries are instantly backed up. Never lose a contact.
+
+### 4. SECURE COMMS
+When voice channels are compromised or privacy is paramount, utilize the **Cipher Suite**.
+- **Playfair & Transposition**: Classical field ciphers compliant with emergency protocols.
+- **Verification**: Instant encrypt/decrypt toggle for message integrity checks.
+
+---
+
+## 📦 Technical Superiority
+
+- **Architecture**: Modern React engine for blisteringly fast UI response.
+- **Reliability**: PWA-ready for installation on field rugged tablets and laptops.
+- **Security**: Row-Level Security (RLS) ensures your mission data is yours alone.
+- **Design System**: **Orbitron** typography and **Tailwind** styling for a futuristic, command-deck interface.
+
+---
+
+## 📜 Authorization
+
+Authorized for use under the **MIT License**.
+*Deployed for the Malaysian Amateur Radio Simulated Emergency Test (MYSET).*
+
 <div align="center">
-   <img src="https://raw.githubusercontent.com/9M2PJU/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/main/public/favicon.svg" width="32" alt="Logo">
    <br />
-   <small>MADE WITH PRIDE FOR 🇲🇾 BY <a href="https://hamradio.my">9M2PJU</a></small>
+   <img src="/dares-logo.png" width="64" alt="DARES Logo">
+   <br />
+   <br />
+   <small>DEVELOPED WITH PRECISION BY <a href="https://hamradio.my">9M2PJU</a></small>
 </div>
