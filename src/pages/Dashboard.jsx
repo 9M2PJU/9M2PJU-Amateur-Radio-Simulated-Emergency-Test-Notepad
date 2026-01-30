@@ -202,19 +202,34 @@ export default function Dashboard() {
 
         if (!profile) return;
 
+        console.log("Donation Check: Profile loaded:", profile.email);
+        console.log("Donation Check: show_donation flag:", profile.show_donation);
+
         const vipEmails = ['9m2pju@hamradio.my'];
-        if (vipEmails.includes(profile.email)) return;
-        if (profile.show_donation === false) return;
+        if (vipEmails.includes(profile.email)) {
+            console.log("Donation Check: User is VIP. Skipping.");
+            return;
+        }
+
+        if (profile.show_donation === false) {
+            console.log("Donation Check: User has toggled OFF donations. Skipping.");
+            return;
+        }
 
         // Show donation modal once per session (sessionStorage) or if never dismissed
         const hasSeenDonation = sessionStorage.getItem('hasSeenDonation');
+        console.log("Donation Check: hasSeenDonation session key:", hasSeenDonation);
+
         if (!hasSeenDonation) {
+            console.log("Donation Check: Showing modal in 2s...");
             // Small delay for better UX
             const timer = setTimeout(() => {
                 setShowDonationModal(true);
                 sessionStorage.setItem('hasSeenDonation', 'true');
             }, 2000);
             return () => clearTimeout(timer);
+        } else {
+            console.log("Donation Check: Already seen in this session. Skipping.");
         }
     }, [profile]); // Check when profile loads (login)
 

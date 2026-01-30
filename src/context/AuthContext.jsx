@@ -74,6 +74,7 @@ export function AuthProvider({ children }) {
 
     const logout = async () => {
         const { error } = await supabase.auth.signOut();
+        sessionStorage.removeItem('hasSeenDonation');
         if (error) throw error;
     };
 
