@@ -25,15 +25,34 @@ export default function Dashboard() {
     });
 
     // Effect to populate station settings from Profile on load
+    // Effect to populate station settings from Profile on load OR when effectiveUser changes (Impersonation)
     useEffect(() => {
-        if (profile) {
-            setStationSettings(prev => ({
-                ...prev,
-                callsign: profile.callsign || prev.callsign || '',
-                grid: profile.grid || prev.grid || ''
-            }));
-        }
-    }, [profile]);
+        const syncProfile = async () => {
+            if (!effectiveUser) return;
+
+            // If checking own profile, we might use context 'profile', but for code simplicity and impersonation support,
+            // let's fetch the fresh profile for ANY effectiveUser ID.
+            try {
+                const { data, error } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', effectiveUser.id)
+                    .single();
+
+                if (data) {
+                    setStationSettings(prev => ({
+                        ...prev,
+                        callsign: data.callsign || prev.callsign || '',
+                        grid: data.grid || prev.grid || ''
+                    }));
+                }
+            } catch (err) {
+                console.error("Error syncing profile:", err);
+            }
+        };
+
+        syncProfile();
+    }, [effectiveUser]);
 
     const [logs, setLogs] = useState([]);
 

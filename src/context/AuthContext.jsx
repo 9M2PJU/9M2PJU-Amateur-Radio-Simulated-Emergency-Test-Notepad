@@ -90,7 +90,7 @@ export function AuthProvider({ children }) {
         setImpersonatedUser(targetUser);
     };
 
-    const effectiveUser = impersonatedUser || user;
+    const effectiveUser = impersonatedUser ? { id: impersonatedUser } : user;
 
     return (
         <AuthContext.Provider value={{
