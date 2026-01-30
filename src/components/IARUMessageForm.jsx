@@ -366,14 +366,14 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
 
             {/* Message Viewer Modal */}
             {viewMsg && (
-                <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 backdrop-blur-sm" onClick={() => setViewMsg(null)}>
+                <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 backdrop-blur-sm" onClick={() => { setViewMsg(null); setShowOutbox(true); }}>
                     <div className="bg-tactical-surface border border-tactical-highlight rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col" onClick={e => e.stopPropagation()}>
                         <div className="flex items-center justify-between p-4 border-b border-radio-amber/20 bg-slate-900/50 rounded-t-lg">
                             <h3 className="font-bold text-white uppercase flex items-center gap-2">
                                 <FileText className="w-5 h-5 text-radio-amber" />
                                 Message Viewer
                             </h3>
-                            <button onClick={() => setViewMsg(null)} className="text-radio-amber/60 hover:text-white transition-colors">
+                            <button onClick={() => { setViewMsg(null); setShowOutbox(true); }} className="text-radio-amber/60 hover:text-white transition-colors">
                                 <span className="sr-only">Close</span>
                                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                             </button>
