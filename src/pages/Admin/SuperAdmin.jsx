@@ -63,29 +63,9 @@ export default function SuperAdmin() {
         impersonate(userId);
     };
 
-    const handleStopImpersonating = () => {
-        impersonate(null);
-    };
 
-    const toggleDonation = async (userId, currentStatus) => {
-        try {
-            const newStatus = !currentStatus;
-            const { error } = await supabase
-                .from('profiles')
-                .update({ show_donation: newStatus })
-                .eq('id', userId);
 
-            if (error) throw error;
 
-            // Optimistic update
-            setUsers(prev => prev.map(u =>
-                u.id === userId ? { ...u, show_donation: newStatus } : u
-            ));
-        } catch (error) {
-            console.error("Error updating donation status:", error);
-            alert("Failed to update status");
-        }
-    };
 
     if (!profile?.is_super_admin) {
         return <div className="p-8 text-center text-red-500 font-bold font-mono">UNAUTHORIZED ACCESS. INCIDENT LOGGED.</div>;
