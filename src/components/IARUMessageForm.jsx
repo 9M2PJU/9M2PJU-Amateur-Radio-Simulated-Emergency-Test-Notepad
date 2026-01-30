@@ -428,7 +428,7 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
             )}
 
             {/* The IARU FORM */}
-            <div className="flex-1 flex flex-col min-h-0 bg-tactical-surface text-radio-amber font-sans shadow-[0_0_30px_rgba(163,184,108,0.1)] relative overflow-hidden border border-radio-cyan/20 rounded-lg">
+            <div className="lg:flex-[3] flex-1 flex flex-col min-h-0 bg-tactical-surface text-radio-amber font-sans shadow-[0_0_30px_rgba(163,184,108,0.1)] relative overflow-hidden border border-radio-cyan/20 rounded-lg">
                 <div className="overflow-y-auto custom-scrollbar flex-1 flex flex-col">
                     {/* Header Strip */}
                     <div className="flex-none bg-radio-amber/10 border-b-2 border-radio-amber/50 p-2 flex flex-col sm:flex-row justify-center items-center relative gap-1">
@@ -510,13 +510,13 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
 
                     {/* Special Instructions */}
                     <div className={`flex-none border-b border-radio-cyan/30 bg-tactical-highlight p-1 flex flex-col sm:flex-row items-start sm:items-center`}>
-                        <label className="text-[9px] sm:text-[10px] font-bold italic mb-1 sm:mb-0 sm:mr-2 whitespace-nowrap text-gray-400 font-orbitron">SPECIAL DELIVERY INSTRUCTIONS</label>
+                        <label className="text-[9px] sm:text-[10px] font-bold italic mb-1 sm:mb-0 sm:mr-2 whitespace-nowrap text-radio-amber/60 font-orbitron">SPECIAL DELIVERY INSTRUCTIONS</label>
                         <input
                             name="specialInstructions"
                             value={form.specialInstructions}
                             onChange={handleChange}
                             placeholder="OPTIONAL INFORMATION"
-                            className="w-full bg-black/20 border border-gray-700 rounded px-2 py-1 text-xs sm:text-sm uppercase text-gray-300 placeholder-gray-600 focus:border-radio-cyan/50 outline-none"
+                            className="w-full bg-black/20 border border-radio-amber/20 rounded px-2 py-1 text-xs sm:text-sm uppercase text-radio-amber/80 placeholder-radio-amber/30 focus:border-radio-cyan/50 outline-none"
                         />
                     </div>
 
@@ -543,33 +543,33 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
 
                     {/* Operator Use */}
                     <div className="flex-none p-1">
-                        <label className="text-[10px] font-bold block mb-1 text-gray-500 font-orbitron tracking-wider">RADIO OPERATOR USE:</label>
+                        <label className="text-[10px] font-bold block mb-1 text-radio-amber/50 font-orbitron tracking-wider">RADIO OPERATOR USE:</label>
                         <div className={`flex flex-col sm:grid sm:grid-cols-2 gap-0 border border-radio-cyan/30 rounded overflow-hidden`}>
                             <div className={`grid grid-cols-3 divide-x divide-radio-cyan/30 border-b sm:border-b-0 sm:border-r border-radio-cyan/30`}>
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[7px] md:text-[8px] block text-gray-500 font-bold leading-none mb-1">RECVD FROM</label>
+                                    <label className="text-[7px] md:text-[8px] block text-radio-amber/50 font-bold leading-none mb-1">RECVD FROM</label>
                                     <input name="recvdFrom" value={form.recvdFrom} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[7px] md:text-[8px] block text-gray-500 font-bold leading-none mb-1">DATE</label>
+                                    <label className="text-[7px] md:text-[8px] block text-radio-amber/50 font-bold leading-none mb-1">DATE</label>
                                     <input name="recvdDate" value={form.recvdDate} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[7px] md:text-[8px] block text-gray-500 font-bold leading-none mb-1">TIME</label>
+                                    <label className="text-[7px] md:text-[8px] block text-radio-amber/50 font-bold leading-none mb-1">TIME</label>
                                     <input name="recvdTime" value={form.recvdTime} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                             </div>
                             <div className="grid grid-cols-3 divide-x divide-radio-cyan/30">
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[7px] md:text-[8px] block text-gray-500 font-bold leading-none mb-1">SENT TO</label>
+                                    <label className="text-[7px] md:text-[8px] block text-radio-amber/50 font-bold leading-none mb-1">SENT TO</label>
                                     <input name="sentTo" value={form.sentTo} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[7px] md:text-[8px] block text-gray-500 font-bold leading-none mb-1">DATE</label>
+                                    <label className="text-[7px] md:text-[8px] block text-radio-amber/50 font-bold leading-none mb-1">DATE</label>
                                     <input name="sentDate" value={form.sentDate} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                                 <div className="col-span-1 p-1 text-center bg-black/20">
-                                    <label className="text-[7px] md:text-[8px] block text-gray-500 font-bold leading-none mb-1">TIME</label>
+                                    <label className="text-[7px] md:text-[8px] block text-radio-amber/50 font-bold leading-none mb-1">TIME</label>
                                     <input name="sentTime" value={form.sentTime} onChange={handleChange} className="w-full text-center font-mono text-[10px] md:text-xs uppercase bg-transparent text-white outline-none" placeholder="..." />
                                 </div>
                             </div>
@@ -607,16 +607,16 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                             RESET
                         </button>
                     </div>
-                    <div className="text-[10px] text-gray-600 italic font-mono self-end sm:self-center">
+                    <div className="text-[10px] text-radio-amber/40 italic font-mono self-end sm:self-center">
                         System Ready
                     </div>
                 </div>
             </div>
 
             {/* Right Panel (Side Panel) - Maximized Vertical Space */}
-            <div className="flex flex-col gap-6 flex-1 min-h-0 mt-4 lg:mt-0">
+            <div className="flex flex-col gap-6 lg:flex-1 flex-1 min-h-0 mt-4 lg:mt-0">
                 <div className="bg-black/40 border border-white/10 rounded-lg p-4 shadow-lg flex flex-col flex-1 h-full min-h-0">
-                    <h3 className="text-sm font-bold text-gray-400 mb-2 font-orbitron uppercase tracking-widest border-b border-gray-700 pb-2">Message Preview (Radiogram Format)</h3>
+                    <h3 className="text-sm font-bold text-radio-amber/60 mb-2 font-orbitron uppercase tracking-widest border-b border-radio-amber/20 pb-2">Message Preview (Radiogram Format)</h3>
                     <div className="font-mono text-xs text-radio-amber whitespace-pre-wrap overflow-y-auto flex-1 custom-scrollbar leading-relaxed p-2 bg-black/20 rounded border border-white/5">
                         {generateText(form)}
                     </div>
@@ -625,7 +625,7 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                 <div className="panel-tactical p-4 flex flex-col gap-2 shrink-0">
                     <h4 className="text-[10px] font-bold text-radio-cyan font-orbitron mb-2 uppercase tracking-widest">Saved Outbox ({savedMessages.length})</h4>
                     <div className="space-y-2 max-h-48 overflow-y-auto custom-scrollbar pr-2">
-                        {savedMessages.length === 0 && <div className="text-xs text-gray-600 italic text-center py-4">No messages in outbox.</div>}
+                        {savedMessages.length === 0 && <div className="text-xs text-radio-amber/40 italic text-center py-4">No messages in outbox.</div>}
                         {savedMessages.map(msg => (
                             <div key={msg.id} className="bg-black/40 border border-white/10 p-2 rounded flex justify-between items-center hover:bg-white/5 transition-colors group cursor-pointer" onClick={() => setViewMsg(msg)}>
                                 <div>
@@ -633,10 +633,10 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
                                         <span className={`text-[10px] font-bold px-1 rounded border ${msg.precedence === 'E' ? 'border-red-500 text-red-500' : clsPriority(msg.precedence)}`}>{msg.precedence}</span>
                                         <span className="text-xs font-bold text-radio-cyan">NR {msg.number}</span>
                                     </div>
-                                    <div className="text-[10px] text-gray-400">TO: {msg.to?.split('\n')[0].substring(0, 15)}</div>
+                                    <div className="text-[10px] text-radio-amber/60">TO: {msg.to?.split('\n')[0].substring(0, 15)}</div>
                                 </div>
                                 <div className="flex flex-col items-end gap-1">
-                                    <span className="text-[9px] text-gray-600">{msg.filingTime}</span>
+                                    <span className="text-[9px] text-radio-amber/40">{msg.filingTime}</span>
                                     <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <button onClick={(e) => { e.stopPropagation(); deleteMessage(msg.id); }} className="text-red-500 hover:text-red-400 p-1"><Trash className="w-3 h-3" /></button>
                                     </div>
