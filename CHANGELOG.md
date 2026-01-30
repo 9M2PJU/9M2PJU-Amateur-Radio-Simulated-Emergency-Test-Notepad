@@ -2,10 +2,12 @@
 
 All notable changes to the **9M2PJU SET Pad (DARES)** will be documented in this file.
 
-## [5.1.9] - 2026-01-30
-### 📱 Mobile UI Fix (Stability)
-- **Block Layout Migration**: Switched from `flex flex-col` to a standard `block` layout for mobile components. This ensures maximum compatibility and restores native browser scrolling.
-- **Scroll Buffer**: Enlarged the bottom spacer to `h-80` (320px) to provide massive clearance above the fixed bottom navigation.
+## [5.2.0] - 2026-01-30
+### 📱 Mobile UI Fix (Nuclear Fix)
+- **CRITICAL**: Replaced complex flex chains with `min-h-screen` to guarantee content visibility on mobile
+- **Layout Simplification**: Removed all `flex-1` classes that were causing height collapse
+- **Guaranteed Scrolling**: Content now uses natural document flow with `overflow-y-auto` parent
+- **Bottom Clearance**: Applied `pb-32` directly to content wrapper for navigation clearance
 
 ## [5.1.0] - 2026-01-30
 ### 🚀 Features & Enhancements
