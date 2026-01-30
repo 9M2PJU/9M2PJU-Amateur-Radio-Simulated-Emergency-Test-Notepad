@@ -2,11 +2,11 @@
 
 All notable changes to the **9M2PJU SET Pad (DARES)** will be documented in this file.
 
-## [5.1.6] - 2026-01-30
-### 📱 Mobile UI Fix (Architecture)
-- **Unrestricted Overflow**: Removed `overflow-hidden` from main containers on mobile to prevent clipping of expanded content.
-- **Natural Content Flow**: Adjusted flex properties to allow the Message Preview to expand its height naturally without being constrained by fixed parent viewports.
-- **Nuclear Clearance**: Increased bottom clearance to 300px to ensure accessibility on all mobile aspect ratios.
+## [5.1.7] - 2026-01-30
+### 📱 Mobile UI Fix (Natural Flow)
+- **Flexbox Reset**: Removed restrictive `flex-1` and `min-h-[100vh]` constraints on mobile that were causing content clipping.
+- **Enhanced Scroller**: Replaced `pb` padding with a massive `h-64` visible spacer inside the scroller to guarantee navigation clearance.
+- **Natural Expansion**: Elements now grow naturally based on their content, ensuring the Message Preview is never hidden.
 
 ## [5.1.0] - 2026-01-30
 ### 🚀 Features & Enhancements
