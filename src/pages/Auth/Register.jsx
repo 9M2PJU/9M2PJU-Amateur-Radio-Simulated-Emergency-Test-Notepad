@@ -5,7 +5,9 @@ import { UserPlus } from 'lucide-react';
 
 export default function Register() {
     const [email, setEmail] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const { register } = useAuth();
@@ -15,6 +17,11 @@ export default function Register() {
         e.preventDefault();
         setError(null);
         setLoading(true);
+        if (password !== confirmPassword) {
+            setError("Passwords do not match.");
+            setLoading(false);
+            return;
+        }
         try {
             await register(email, password);
             // Since email confirmation is disabled, user is logged in automatically or can login immediately
@@ -58,6 +65,17 @@ export default function Register() {
                             required
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            className="w-full bg-black/50 border border-radio-green/30 rounded px-4 py-2 text-radio-green font-mono focus:border-radio-green outline-none transition-colors"
+                            placeholder="••••••"
+                        />
+                    </div>
+                    <div>
+                        <label className="text-[10px] uppercase font-bold text-radio-amber tracking-widest block mb-1">Confirm Passkey</label>
+                        <input
+                            type="password"
+                            required
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
                             className="w-full bg-black/50 border border-radio-green/30 rounded px-4 py-2 text-radio-green font-mono focus:border-radio-green outline-none transition-colors"
                             placeholder="••••••"
                         />
