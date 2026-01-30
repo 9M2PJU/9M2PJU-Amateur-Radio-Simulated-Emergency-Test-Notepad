@@ -2,10 +2,11 @@
 
 All notable changes to the **9M2PJU SET Pad (DARES)** will be documented in this file.
 
-## [5.1.5] - 2026-01-30
-### 📱 Mobile UI Fix (Extreme)
-- **Triple Clearance Strategy**: Implemented extreme bottom padding (`pb-64`), a massive physical spacer (`h-48`), and component margins (`mb-20`) on mobile.
-- **Scroll Guarantee**: Guaranteed that all preview messages scroll completely clear of the fixed bottom navigation bar on all mobile devices.
+## [5.1.6] - 2026-01-30
+### 📱 Mobile UI Fix (Architecture)
+- **Unrestricted Overflow**: Removed `overflow-hidden` from main containers on mobile to prevent clipping of expanded content.
+- **Natural Content Flow**: Adjusted flex properties to allow the Message Preview to expand its height naturally without being constrained by fixed parent viewports.
+- **Nuclear Clearance**: Increased bottom clearance to 300px to ensure accessibility on all mobile aspect ratios.
 
 ## [5.1.0] - 2026-01-30
 ### 🚀 Features & Enhancements

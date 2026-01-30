@@ -271,7 +271,7 @@ export default function Dashboard() {
     };
 
     return (
-        <div className={`flex flex-col lg:flex-row h-[100dvh] text-radio-amber font-inter overflow-hidden bg-cover bg-center selection:bg-radio-cyan selection:text-black ${theme === 'light' ? 'light-mode text-slate-900' : ''}`}
+        <div className={`flex flex-col lg:flex-row h-[100dvh] text-radio-amber font-inter lg:overflow-hidden bg-cover bg-center selection:bg-radio-cyan selection:text-black ${theme === 'light' ? 'light-mode text-slate-900' : ''}`}
             style={{ backgroundImage: theme === 'light' ? "none" : "url('https://images.unsplash.com/photo-1595878715977-2a8f8d0c0cdd?q=80&w=2670&auto=format&fit=crop')" }}>
 
             {/* Camo Pattern Overlay for Dark Mode */}
@@ -367,7 +367,7 @@ export default function Dashboard() {
             </aside>
 
             {/* Main Content Pane */}
-            <div className="flex-1 flex flex-col relative z-10 overflow-hidden">
+            <div className="flex-1 flex flex-col relative z-10 lg:overflow-hidden">
                 {/* Mobile/Tablet Header */}
                 <header className="lg:hidden flex-none bg-tactical-surface/50 backdrop-blur-md border-b border-white/5 p-4 z-20 pt-8">
                     <div className="flex items-center justify-between">
@@ -386,8 +386,8 @@ export default function Dashboard() {
                 </header>
 
                 {/* Dynamic Viewport */}
-                <main className="flex-1 overflow-y-auto p-0 scroll-smooth pb-64 pb-safe lg:pb-0 flex flex-col">
-                    <div className="w-full min-h-full flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-700">
+                <main className="flex-1 overflow-y-auto p-0 scroll-smooth pb-[300px] lg:pb-0 flex flex-col">
+                    <div className="w-full h-auto lg:h-full flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-700">
                         {activeTab === 'settings' && (
                             <StationSettings
                                 settings={stationSettings}

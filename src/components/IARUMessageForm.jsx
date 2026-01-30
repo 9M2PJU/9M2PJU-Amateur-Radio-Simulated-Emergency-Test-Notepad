@@ -654,9 +654,9 @@ Sent by Amateur Radio Operator: ${stationSettings.callsign || '9M2PJU'}
 
             {/* Right Panel (Side Panel) - Shown below on Mobile */}
             <div className="flex flex-col gap-4 lg:flex-[2] flex-none lg:flex-1 min-h-0 mt-4 lg:mt-0">
-                <div className="bg-black/40 border border-white/10 rounded-lg p-4 shadow-lg flex flex-col lg:h-full min-h-0">
+                <div className="bg-black/40 border border-white/10 rounded-lg p-4 shadow-lg flex flex-col lg:h-full min-h-0 mb-32 lg:mb-0">
                     <h3 className="text-sm font-bold text-radio-amber/60 mb-2 font-orbitron uppercase tracking-widest border-b border-radio-amber/20 pb-2">Message Preview (Radiogram Format)</h3>
-                    <div className="font-mono text-xs text-radio-amber whitespace-pre-wrap lg:overflow-y-auto flex-1 custom-scrollbar leading-relaxed p-4 bg-black/20 rounded border border-white/5">
+                    <div className="font-mono text-xs text-radio-amber whitespace-pre-wrap lg:overflow-y-auto lg:flex-1 custom-scrollbar leading-relaxed p-4 bg-black/20 rounded border border-white/5">
                         {generateText(form)}
                     </div>
                 </div>
