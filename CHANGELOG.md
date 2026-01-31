@@ -2,6 +2,19 @@
 
 All notable changes to the **9M2PJU SET Pad (DARES)** will be documented in this file.
 
+## [5.3.0] - 2026-01-31
+### 📚 Documentation & Community
+- **Support**: Added "Buy Me a Coffee" donation link for project sustainability.
+- **Badges**: Added Shield.io badges for Release, License, and Issues tracking.
+- **Star History**: Integrated real-time Star History chart to track project growth.
+
+
+## [5.3.0] - 2026-01-31
+### 🌟 Community & Documentation
+- **Star History**: Added dynamic Github Star History chart to README.
+- **Donation Integration**: Added "Buy Me A Coffee" support links and badges.
+- **Documentation**: Enhanced README with status badges (Version, License, Platform).
+
 ## [5.2.0] - 2026-01-30
 ### 📱 Mobile UI Fix (Nuclear Fix)
 - **CRITICAL**: Replaced complex flex chains with `min-h-screen` to guarantee content visibility on mobile

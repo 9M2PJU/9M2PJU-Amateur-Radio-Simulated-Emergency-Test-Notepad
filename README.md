@@ -1,12 +1,45 @@
 # 🌊 9M2PJU SET Pad (DARES)
 ### DIGITAL AMATEUR RADIO EMERGENCY SUITE
 
+<div align="center">
+
+![Version](https://img.shields.io/badge/version-5.3.0-blue.svg?style=for-the-badge)
+![License](https://img.shields.io/badge/license-MIT-green.svg?style=for-the-badge)
+![Status](https://img.shields.io/badge/status-stable-success.svg?style=for-the-badge)
+![Platform](https://img.shields.io/badge/platform-web%20%7C%20pwa-orange.svg?style=for-the-badge)
+
+</div>
+
 <p align="center">
   <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2672&auto=format&fit=crop" width="100%" alt="Tactical Radio Background" style="border-radius: 10px; border: 1px solid #06b6d4;">
 </p>
 
+<p align="center">
+  <a href="https://github.com/9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/releases">
+    <img src="https://img.shields.io/github/v/release/9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad?style=for-the-badge&color=06b6d4" alt="Release">
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/github/license/9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad?style=for-the-badge&color=f59e0b" alt="License">
+  </a>
+  <a href="https://github.com/9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/issues">
+    <img src="https://img.shields.io/github/issues/9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad?style=for-the-badge&color=ef4444" alt="Issues">
+  </a>
+</p>
+
 > **The Ultimate Tactical Suite for Mission-Critical Emergency Communications.**  
 > *Engineered for speed, precision, and uncompromised field performance.*
+
+---
+
+## 🌟 Star History
+
+<a href="https://star-history.com/#9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad&type=Date" />
+ </picture>
+</a>
 
 ---
 
@@ -63,6 +96,14 @@ When voice channels are compromised or privacy is paramount, utilize the **Ciphe
 Authorized for use under the **MIT License**.
 *Deployed for the Malaysian Amateur Radio Simulated Emergency Test (MYSET).*
 
+---
+
+## ☕ Support the Mission
+
+If this tool helps you in the field, consider fueling the development.
+
+<a href="https://www.buymeacoffee.com/9m2pju" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
 <div align="center">
    <br />
    <img src="/dares-logo.png" width="64" alt="DARES Logo">
@@ -70,3 +111,17 @@ Authorized for use under the **MIT License**.
    <br />
    <small>DEVELOPED WITH PRECISION BY <a href="https://hamradio.my">9M2PJU</a></small>
 </div>
+
+---
+
+## ❤️ Support the Mission
+
+If this tool helps you in your mission, consider supporting the development.
+
+<a href="https://www.buymeacoffee.com/9m2pju" target="_blank">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" >
+</a>
+
+## 🌟 Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad&type=Date)](https://star-history.com/#9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad&Date)
