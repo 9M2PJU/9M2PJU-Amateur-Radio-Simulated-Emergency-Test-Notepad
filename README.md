@@ -107,12 +107,12 @@ If this tool helps you in the field, consider fueling the development.
   <br/>
   <br/>
   <p>Or scan via DuitNow / TNG eWallet</p>
-  <img src="duitnow-qr.png" width="200" alt="DuitNow QR" style="border-radius: 10px; border: 2px solid #06b6d4;">
+  <img src="public/duitnow-qr.png" width="200" alt="DuitNow QR" style="border-radius: 10px; border: 2px solid #06b6d4;">
 </div>
 
 <div align="center">
    <br />
-   <img src="/dares-logo.png" width="64" alt="DARES Logo">
+   <img src="public/dares-logo.png" width="64" alt="DARES Logo">
    <br />
    <br />
    <small>DEVELOPED WITH PRECISION BY <a href="https://hamradio.my">9M2PJU</a></small>
