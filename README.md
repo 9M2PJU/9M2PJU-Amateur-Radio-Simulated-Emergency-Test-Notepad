@@ -3,27 +3,25 @@
 
 <div align="center">
 
-![Version](https://img.shields.io/badge/version-5.3.0-blue.svg?style=for-the-badge)
-![License](https://img.shields.io/badge/license-MIT-green.svg?style=for-the-badge)
-![Status](https://img.shields.io/badge/status-stable-success.svg?style=for-the-badge)
-![Platform](https://img.shields.io/badge/platform-web%20%7C%20pwa-orange.svg?style=for-the-badge)
+  <a href="https://github.com/9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/releases">
+    <img src="https://img.shields.io/github/v/release/9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad?style=for-the-badge&color=06b6d4" alt="Release">
+  </a>
+  
+  <a href="LICENSE">
+    <img src="https://img.shields.io/github/license/9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad?style=for-the-badge&color=f59e0b" alt="License">
+  </a>
+  
+  <a href="https://github.com/9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/issues">
+    <img src="https://img.shields.io/github/issues/9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad?style=for-the-badge&color=ef4444" alt="Issues">
+  </a>
+  
+  ![Status](https://img.shields.io/badge/status-stable-success.svg?style=for-the-badge)
+  ![Platform](https://img.shields.io/badge/platform-web%20%7C%20pwa-orange.svg?style=for-the-badge)
 
 </div>
 
 <p align="center">
   <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2672&auto=format&fit=crop" width="100%" alt="Tactical Radio Background" style="border-radius: 10px; border: 1px solid #06b6d4;">
-</p>
-
-<p align="center">
-  <a href="https://github.com/9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/releases">
-    <img src="https://img.shields.io/github/v/release/9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad?style=for-the-badge&color=06b6d4" alt="Release">
-  </a>
-  <a href="LICENSE">
-    <img src="https://img.shields.io/github/license/9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad?style=for-the-badge&color=f59e0b" alt="License">
-  </a>
-  <a href="https://github.com/9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad/issues">
-    <img src="https://img.shields.io/github/issues/9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad?style=for-the-badge&color=ef4444" alt="Issues">
-  </a>
 </p>
 
 > **The Ultimate Tactical Suite for Mission-Critical Emergency Communications.**  
@@ -120,6 +118,3 @@ If this tool helps you in the field, consider fueling the development.
    <small>DEVELOPED WITH PRECISION BY <a href="https://hamradio.my">9M2PJU</a></small>
 </div>
 
-## 🌟 Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad&type=Date)](https://star-history.com/#9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad&Date)
