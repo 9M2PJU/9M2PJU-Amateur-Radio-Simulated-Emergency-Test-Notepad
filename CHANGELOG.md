@@ -3,6 +3,7 @@
 ### Added
 - Donation popup now reappears if the user returns to the app (window focus) after it was auto-dismissed while hidden.
 - Added informational text to donation popup: "Note: If you have donated, this popup will not appear."
+- **Fixed**: Donation dismissal is now scoped to the individual user account, preventing one user's dismissal from hiding the popup for others on the same device.
 
 
 ## [5.3.0] - 2026-01-31

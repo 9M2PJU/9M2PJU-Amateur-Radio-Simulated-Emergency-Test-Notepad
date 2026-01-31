@@ -248,10 +248,11 @@ export default function Dashboard() {
         const frequencyMinutes = systemConfig.minutes || 60; // Default 60 mins from config or fallback
         const frequencyMs = frequencyMinutes * 60 * 1000;
 
-        const lastDismissed = localStorage.getItem('lastDonationDismissed');
+        const storageKey = profile?.id ? `lastDonationDismissed_${profile.id}` : 'lastDonationDismissed';
+        const lastDismissed = localStorage.getItem(storageKey);
         const now = Date.now();
 
-        console.log(`Donation Check: Frequency is ${frequencyMinutes} mins. Last seen: ${lastDismissed}`);
+        console.log(`Donation Check: Frequency is ${frequencyMinutes} mins. Last seen for ${profile?.id || 'anon'}: ${lastDismissed}`);
 
         if (!lastDismissed || (now - parseInt(lastDismissed, 10) > frequencyMs)) {
             console.log("Donation Check: Showing modal (Threshold passed or never seen).");
@@ -280,15 +281,10 @@ export default function Dashboard() {
 
         if (wasHidden) {
             console.log("Donation Check: Modal closed while hidden. NOT updating dismiss timer effectively.");
-            // We do NOT update 'lastDonationDismissed' so that next focus triggers it again.
-            // Or, we could set it to a very old date to force immediate re-show on next check.
-            // But simply doing nothing means the OLD 'lastDismissed' (if any) is still valid.
-            // If they have NEVER dismissed it, lastDismissed is null, so it will show again.
-            // If they dismissed it 2 hours ago, and this one popped up and was ignored, 
-            // the 2 hours ago timestamp is > frequency, so it will show again.
         } else {
             console.log("Donation Check: User dismissed modal (or saw it auto-close). Updating timer.");
-            localStorage.setItem('lastDonationDismissed', Date.now().toString());
+            const storageKey = profile?.id ? `lastDonationDismissed_${profile.id}` : 'lastDonationDismissed';
+            localStorage.setItem(storageKey, Date.now().toString());
         }
     };
 
