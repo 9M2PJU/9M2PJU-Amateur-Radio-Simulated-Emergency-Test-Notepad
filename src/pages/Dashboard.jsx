@@ -217,7 +217,11 @@ export default function Dashboard() {
         fetchSystemConfig();
     }, []);
 
-    useEffect(() => {
+    const checkDonationRules = () => {
+        // QUICK CHECK: If modal is ALREADY shown, don't run checks again to avoid re-triggering or overlapping logic
+        // But since we use a local state variable, we can't easily check 'state' inside this callback if it's stale.
+        // However, setting showDonationModal(true) when it's already true is harmless.
+
         // PERMISSION CHECK:
         // 1. Must have a profile loaded
         // 2. Must not be in the VIP list (Hardcoded safety)
@@ -226,7 +230,8 @@ export default function Dashboard() {
         if (!profile) return;
 
         console.log("Donation Check: Profile loaded:", profile.email);
-        console.log("Donation Check: show_donation flag:", profile.show_donation);
+        // show_donation flag is boolean
+        // console.log("Donation Check: show_donation flag:", profile.show_donation);
 
         const vipEmails = ['9m2pju@hamradio.my'];
         if (vipEmails.includes(profile.email)) {
@@ -259,11 +264,32 @@ export default function Dashboard() {
             const timeLeft = frequencyMs - (now - parseInt(lastDismissed, 10));
             console.log(`Donation Check: Too soon. Waiting another ${Math.ceil(timeLeft / 1000 / 60)} mins.`);
         }
+    };
+
+    useEffect(() => {
+        // Run check on mount / profile load / config load
+        checkDonationRules();
+
+        // Also run check when window gains focus
+        window.addEventListener('focus', checkDonationRules);
+        return () => window.removeEventListener('focus', checkDonationRules);
     }, [profile, systemConfig]); // Check when profile OR config loads
 
-    const handleCloseDonation = () => {
+    const handleCloseDonation = (wasHidden = false) => {
         setShowDonationModal(false);
-        localStorage.setItem('lastDonationDismissed', Date.now().toString());
+
+        if (wasHidden) {
+            console.log("Donation Check: Modal closed while hidden. NOT updating dismiss timer effectively.");
+            // We do NOT update 'lastDonationDismissed' so that next focus triggers it again.
+            // Or, we could set it to a very old date to force immediate re-show on next check.
+            // But simply doing nothing means the OLD 'lastDismissed' (if any) is still valid.
+            // If they have NEVER dismissed it, lastDismissed is null, so it will show again.
+            // If they dismissed it 2 hours ago, and this one popped up and was ignored, 
+            // the 2 hours ago timestamp is > frequency, so it will show again.
+        } else {
+            console.log("Donation Check: User dismissed modal (or saw it auto-close). Updating timer.");
+            localStorage.setItem('lastDonationDismissed', Date.now().toString());
+        }
     };
 
     const handleAddToLog = (msg) => {

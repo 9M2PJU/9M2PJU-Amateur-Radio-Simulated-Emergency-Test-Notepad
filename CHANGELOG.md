@@ -1,6 +1,9 @@
-# Changelog
 
-All notable changes to the **9M2PJU SET Pad (DARES)** will be documented in this file.
+## [1.1.0] - 2026-01-31
+### Added
+- Donation popup now reappears if the user returns to the app (window focus) after it was auto-dismissed while hidden.
+- Added informational text to donation popup: "Note: If you have donated, this popup will not appear."
+
 
 ## [5.3.0] - 2026-01-31
 ### 📚 Documentation & Community
