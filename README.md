@@ -21,7 +21,7 @@
 </div>
 
 <p align="center">
-  <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2672&auto=format&fit=crop" width="100%" alt="Tactical Radio Background" style="border-radius: 10px; border: 1px solid #06b6d4;">
+  <img src="public/screenshot-preview.png" width="100%" alt="9M2PJU SET Pad Interface" style="border-radius: 10px; border: 1px solid #06b6d4;">
 </p>
 
 > **The Ultimate Tactical Suite for Mission-Critical Emergency Communications.**  
