@@ -1,9 +1,13 @@
 
 ## [1.1.0] - 2026-01-31
 ### Added
-- Donation popup now reappears if the user returns to the app (window focus) after it was auto-dismissed while hidden.
-- Added informational text to donation popup: "Note: If you have donated, this popup will not appear."
-- **Fixed**: Donation dismissal is now scoped to the individual user account, preventing one user's dismissal from hiding the popup for others on the same device.
+- **Periodic Donation Toast**: A non-intrusive toast notification appears every 5 minutes to remind users to donate (hidden for donators).
+- **Session-Based Popup**: Donation popup now appears on **every login** (fresh session) but not on page reloads, ensuring better visibility without annoyance.
+- **Improved Logic**: Donation popup auto-closes purely by timer now (no close button), and "focus" logic ensures it reappears if missed while the tab was hidden.
+
+### Fixed
+- **Scoped Dismissal**: Donation dismissal is now scoped to the individual user account to prevent cross-user conflicts.
+- **Cleanup**: Session storage is correctly cleared on logout.
 
 
 ## [5.3.0] - 2026-01-31

@@ -46,25 +46,10 @@ export default function DonationModal({ onClose }) {
         return () => clearInterval(timer);
     }, [timeLeft, onClose]);
 
-    // Handle manual close (user clicked X or backdrop) - definitely NOT hidden/missed
-    const handleManualClose = () => {
-        onClose(false);
-    };
-
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-in fade-in duration-300">
             <div className="panel-tactical max-w-sm w-full text-center space-y-4 border-radio-amber animate-in zoom-in-95 duration-300 relative overflow-hidden">
 
-                {/* Close Button (X) */}
-                <button
-                    onClick={handleManualClose}
-                    className="absolute top-2 right-2 text-gray-500 hover:text-white transition-colors p-2"
-                >
-                    <span className="sr-only">Close</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                </button>
 
                 {/* Progress Bar */}
                 <div className="absolute top-0 left-0 h-1 bg-radio-amber transition-all duration-1000 ease-linear" style={{ width: `${(timeLeft / duration) * 100}%` }}></div>

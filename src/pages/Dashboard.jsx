@@ -9,6 +9,7 @@ import CipherConverter from '../components/CipherConverter';
 import TimeWidget from '../components/TimeWidget';
 import CursorTrail from '../components/CursorTrail';
 import DonationModal from '../components/DonationModal';
+import Toast from '../components/Toast';
 import { Radio, List, Settings, FileText, AudioWaveform, Lock, LogOut, Shield } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
@@ -244,26 +245,21 @@ export default function Dashboard() {
             return;
         }
 
-        // FREQUENCY CHECK
-        const frequencyMinutes = systemConfig.minutes || 60; // Default 60 mins from config or fallback
-        const frequencyMs = frequencyMinutes * 60 * 1000;
-
+        // CHECK IF ALREADY SHOWN IN THIS SESSION
         const storageKey = profile?.id ? `lastDonationDismissed_${profile.id}` : 'lastDonationDismissed';
-        const lastDismissed = localStorage.getItem(storageKey);
-        const now = Date.now();
+        const hasSeenInSession = sessionStorage.getItem(storageKey);
 
-        console.log(`Donation Check: Frequency is ${frequencyMinutes} mins. Last seen for ${profile?.id || 'anon'}: ${lastDismissed}`);
+        console.log(`Donation Check: Session Key (${storageKey}): ${hasSeenInSession ? 'Seen' : 'Not Seen'}`);
 
-        if (!lastDismissed || (now - parseInt(lastDismissed, 10) > frequencyMs)) {
-            console.log("Donation Check: Showing modal (Threshold passed or never seen).");
+        if (!hasSeenInSession) {
+            console.log("Donation Check: Showing modal (First time in this session).");
             // Small delay for better UX
             const timer = setTimeout(() => {
                 setShowDonationModal(true);
             }, 2000);
             return () => clearTimeout(timer);
         } else {
-            const timeLeft = frequencyMs - (now - parseInt(lastDismissed, 10));
-            console.log(`Donation Check: Too soon. Waiting another ${Math.ceil(timeLeft / 1000 / 60)} mins.`);
+            console.log("Donation Check: Already seen in this session. Skipping.");
         }
     };
 
@@ -276,15 +272,38 @@ export default function Dashboard() {
         return () => window.removeEventListener('focus', checkDonationRules);
     }, [profile, systemConfig]); // Check when profile OR config loads
 
+    const [showDonationToast, setShowDonationToast] = useState(false);
+
+    useEffect(() => {
+        if (!profile || profile.show_donation === false || profile.is_donator) return;
+
+        // Toast logic: Show every X minutes
+        const TOAST_INTERVAL = 5 * 60 * 1000; // 5 minutes
+
+        const interval = setInterval(() => {
+            // Only show if modal is NOT open
+            if (!showDonationModal) {
+                setShowDonationToast(true);
+            }
+        }, TOAST_INTERVAL);
+
+        return () => clearInterval(interval);
+    }, [profile, showDonationModal]);
+
+    const handleToastClick = () => {
+        setShowDonationToast(false);
+        setShowDonationModal(true);
+    };
+
     const handleCloseDonation = (wasHidden = false) => {
         setShowDonationModal(false);
 
         if (wasHidden) {
             console.log("Donation Check: Modal closed while hidden. NOT updating dismiss timer effectively.");
         } else {
-            console.log("Donation Check: User dismissed modal (or saw it auto-close). Updating timer.");
+            console.log("Donation Check: User dismissed modal (or saw it auto-close). Marking session as seen.");
             const storageKey = profile?.id ? `lastDonationDismissed_${profile.id}` : 'lastDonationDismissed';
-            localStorage.setItem(storageKey, Date.now().toString());
+            sessionStorage.setItem(storageKey, 'true');
         }
     };
 
@@ -327,6 +346,17 @@ export default function Dashboard() {
 
             {/* Donation Modal */}
             {showDonationModal && <DonationModal onClose={handleCloseDonation} />}
+
+            {/* Periodic Toast */}
+            {showDonationToast && (
+                <Toast
+                    message="Enjoying the app? Click here to buy me a coffee & keep the servers running!"
+                    onClick={handleToastClick}
+                    onClose={() => setShowDonationToast(false)}
+                />
+            )}
+
+
 
             {/* Sidebar for Desktop (xl+) */}
             <aside className="hidden lg:flex flex-col w-72 bg-tactical-surface/40 backdrop-blur-2xl border-r border-white/5 z-20 relative overflow-hidden">

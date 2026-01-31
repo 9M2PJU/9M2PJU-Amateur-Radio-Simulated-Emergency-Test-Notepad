@@ -89,7 +89,13 @@ export function AuthProvider({ children }) {
     const logout = async () => {
         if (timerRef.current) clearTimeout(timerRef.current);
         const { error } = await supabase.auth.signOut();
-        sessionStorage.removeItem('hasSeenDonation');
+
+        // Clear donation session tracking
+        if (user?.id) {
+            sessionStorage.removeItem(`lastDonationDismissed_${user.id}`);
+        }
+        sessionStorage.removeItem('lastDonationDismissed'); // Cleanup legacy/fallback
+
         if (error) throw error;
     };
 
