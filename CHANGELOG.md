@@ -4,7 +4,7 @@ All notable changes to the **9M2PJU SET Pad (DARES)** will be documented in this
 
 ## [5.3.0] - 2026-01-31
 ### 📚 Documentation & Community
-- **Support**: Added "Buy Me a Coffee" donation link for project sustainability.
+- **Support**: Added "Buy Me a Coffee" and "DuitNow QR" donation options for project sustainability.
 - **Badges**: Added Shield.io badges for Release, License, and Issues tracking.
 - **Star History**: Integrated real-time Star History chart to track project growth.
 

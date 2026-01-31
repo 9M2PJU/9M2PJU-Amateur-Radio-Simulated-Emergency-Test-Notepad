@@ -102,7 +102,15 @@ Authorized for use under the **MIT License**.
 
 If this tool helps you in the field, consider fueling the development.
 
-<a href="https://www.buymeacoffee.com/9m2pju" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+<div align="center">
+  <a href="https://www.buymeacoffee.com/9m2pju" target="_blank">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;">
+  </a>
+  <br/>
+  <br/>
+  <p>Or scan via DuitNow / TNG eWallet</p>
+  <img src="duitnow-qr.png" width="200" alt="DuitNow QR" style="border-radius: 10px; border: 2px solid #06b6d4;">
+</div>
 
 <div align="center">
    <br />
@@ -111,16 +119,6 @@ If this tool helps you in the field, consider fueling the development.
    <br />
    <small>DEVELOPED WITH PRECISION BY <a href="https://hamradio.my">9M2PJU</a></small>
 </div>
-
----
-
-## ❤️ Support the Mission
-
-If this tool helps you in your mission, consider supporting the development.
-
-<a href="https://www.buymeacoffee.com/9m2pju" target="_blank">
-    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" >
-</a>
 
 ## 🌟 Star History
 
