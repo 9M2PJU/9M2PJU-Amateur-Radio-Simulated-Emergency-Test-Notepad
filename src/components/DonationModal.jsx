@@ -79,7 +79,7 @@ export default function DonationModal({ onClose }) {
 
                 <div className="text-[10px] text-gray-500 font-mono border-t border-white/5 pt-3 mt-2 space-y-1">
                     <div>AUTO-CLOSING IN {timeLeft}s</div>
-                    <div className="text-emerald-500/60 italic">Note: If you have donated, this popup will not appear.</div>
+                    <div className="text-emerald-500/60 italic">Note: If you have donated, we will remove t his popup for your account.</div>
                 </div>
             </div>
         </div>
