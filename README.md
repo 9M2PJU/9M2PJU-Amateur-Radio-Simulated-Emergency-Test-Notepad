@@ -126,7 +126,6 @@ When voice channels are compromised or privacy is paramount, utilize the **Ciphe
 ## 📜 Authorization
 
 Authorized for use under the **MIT License**.
-*Deployed for the Malaysian Amateur Radio Simulated Emergency Test (MYSET).*
 
 ---
 
