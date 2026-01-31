@@ -37,7 +37,41 @@
    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad&type=Date" />
    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=9m2pju/9M2PJU-Amateur-Radio-Simulated-Emergency-Test-Notepad&type=Date" />
  </picture>
-</a>
+---
+
+## 📋 Table of Contents
+- [Mission Capabilities](#-mission-capabilities-dares)
+- [System Architecture](#-system-architecture)
+- [Field Usage Protocols](#-field-usage-protocols)
+- [Technical Superiority](#-technical-superiority)
+- [Authorization](#-authorization)
+- [Support the Mission](#-support-the-mission)
+
+---
+
+## 🏗️ System Architecture
+
+```mermaid
+graph TD
+    User([Operator]) -->|Auth & Logs| Client[Web Client / PWA]
+    Client -->|Sync Data| Supabase[Supabase Cloud]
+    Client -->|Local Storage| OfflineDB[(LocalDB)]
+    
+    subgraph Core Modules
+        Client --> Logger[Tactical Logger]
+        Client --> Radiogram[IARU Msg Generator]
+        Client --> Cipher[Cipher Suite]
+        Client --> Admin[Admin Dashboard]
+    end
+
+    subgraph External
+        Supabase -->|Auth| AuthProvider[Email/Password]
+        Supabase -->|Database| PG[PostgreSQL]
+    end
+
+    Logger -->|Export| PDF[PDF / ADIF]
+    Radiogram -->|Transmit| Email[Email Relay]
+```
 
 ---
 
